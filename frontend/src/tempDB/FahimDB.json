@@ -1,0 +1,215 @@
+{
+  "cities": [
+    {
+      "name": "Lahoreowo",
+      "district": "Lahore",
+      "province": "Punjab",
+      "prefix": "LHE",
+      "id": 4
+    },
+    {
+      "name": "Islamabad",
+      "district": "Islamabad",
+      "province": "Capital",
+      "prefix": "ISB",
+      "id": 5
+    },
+    {
+      "name": "Peshawar",
+      "district": "Peshawar",
+      "province": "Khyber Pakhtunkhwa",
+      "prefix": "PEW",
+      "id": 6
+    },
+    {
+      "name": "Faisalabad",
+      "district": "Faisalabad",
+      "province": "Punjab",
+      "prefix": "FSD",
+      "id": 7
+    }
+  ],
+  "zones": [
+    {
+      "name": "Lahore Zone 1",
+      "active": false,
+      "cities": [
+        "Lahore"
+      ],
+      "zoneManager": "Akram",
+      "id": 1
+    },
+    {
+      "name": "Lahore Zone 2",
+      "active": false,
+      "cities": [
+        "Faisalabad"
+      ],
+      "zoneManager": "Akram",
+      "id": 2
+    },
+    {
+      "name": "pk",
+      "active": false,
+      "cities": [
+        "Islamabad"
+      ],
+      "zoneManager": "mnbhj",
+      "id": 3
+    }
+  ],
+  "shopCategories": [
+    {
+      "name": "Furniture",
+      "id": 16,
+      "edible": false
+    },
+    {
+      "name": "Home Appliances",
+      "id": 17,
+      "edible": false
+    },
+    {
+      "name": "Kitchen Appliances",
+      "id": 18,
+      "edible": false
+    },
+    {
+      "name": "Cosmetics",
+      "id": 19,
+      "edible": false
+    },
+    {
+      "name": "Gifts",
+      "id": 20,
+      "edible": false
+    },
+    {
+      "name": "Pets",
+      "id": 21,
+      "edible": false
+    },
+    {
+      "name": "Other",
+      "id": 22,
+      "edible": false
+    },
+    {
+      "name": "aqib",
+      "edible": true,
+      "id": 23
+    },
+    {
+      "name": "lahoreeee",
+      "edible": true,
+      "id": 24
+    }
+  ],
+  "shopTypes": [
+    {
+      "name": "Furniture",
+      "id": 12
+    },
+    {
+      "name": "Home Appliances",
+      "id": 13
+    },
+    {
+      "name": "Kitchen Appliances",
+      "id": 14
+    },
+    {
+      "name": "Cosmetics",
+      "id": 15
+    },
+    {
+      "name": "fsd",
+      "id": 16
+    }
+  ],
+  "shops": [
+    {
+      "shopID": "ghjkl;lkjhj",
+      "shopCategory": "Pets",
+      "shopType": "Kitchen Appliances",
+      "vacant": true,
+      "bazar": "ghjk",
+      "size": "8*9",
+      "id": 1
+    },
+    {
+      "shopID": "ghjkl;lkj",
+      "shopCategory": "Gifts",
+      "shopType": "Home Appliances",
+      "vacant": false,
+      "bazar": "gh",
+      "size": "9*9",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "username": "jonathan",
+      "email": "jojo1@example.com",
+      "password": "hamon",
+      "phone": "1234567890",
+      "status": "inactive",
+      "userType": "Admin",
+      "id": 1
+    },
+    {
+      "username": "joeseph",
+      "email": "jojo2@example.com",
+      "password": "hermitspurple",
+      "phone": "0987654321",
+      "status": "active",
+      "userType": "ZoneManager",
+      "id": 2
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 3
+    },
+    {
+      "username": "fa22-bcs-091@cuilahore.edu.pk",
+      "email": "texashouse003@gmail.com",
+      "password": "dxfgdfs",
+      "phone": "dfbvdf",
+      "status": "inactive",
+      "userType": "ZoneManager",
+      "id": 4
+    },
+    {
+      "username": "sdfdsg",
+      "email": "texashouse003@gmail.com",
+      "password": "dfgsd",
+      "phone": "dsfg",
+      "status": "inactive",
+      "userType": "Admin",
+      "id": 5
+    },
+    {
+      "username": "zdfbzd",
+      "email": "texashouse003@gmail.com",
+      "password": "cxvbxc",
+      "phone": "zdfzd",
+      "status": "inactive",
+      "userType": "ZoneManager",
+      "id": 6
+    },
+    {
+      "username": "abc",
+      "email": "abc@gmail.com",
+      "password": "abc",
+      "phone": "1234567890",
+      "status": "active",
+      "userType": "BazarManager",
+      "id": 7
+    }
+  ],
+  "bazars": [ ]
+}

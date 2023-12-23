@@ -1,0 +1,150 @@
+{
+  "users": [
+    {
+      "username": "jonathan",
+      "email": "jojo1@example.com",
+      "password": "hamon",
+      "phone": "1234567890",
+      "status": "active",
+      "userType": "Admin",
+      "id": 1
+    },
+    {
+      "username": "joeseph",
+      "email": "jojo2@example.com",
+      "password": "hermitspurple",
+      "phone": "0987654321",
+      "status": "active",
+      "userType": "Supervisor",
+      "id": 2
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "status": "inactive",
+      "userType": "SuperAdmin",
+      "id": 3
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 4
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 5
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 6
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 8
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin",
+      "id": 9
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "jotaro",
+      "email": "jojo3@gmail.com",
+      "password": "starplatinum",
+      "phone": "000000000",
+      "userType": "SuperAdmin"
+    },
+    {
+      "username": "xc x",
+      "email": "zxv@ds.com",
+      "password": "zzc",
+      "phone": " czzdbf",
+      "status": "inactive",
+      "userType": "SuperAdmin",
+      "id": 10
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+.list-shop-categories-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .list-shop-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .shop-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .shop-category-name {
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .view-button,
+  .edit-button,
+  .create-button,
+  .cancel-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .view-button {
+    background-color: #007bff;
+  }
+  
+  .edit-button {
+    background-color: #ffc107;
+  }
+  
+  .create-button {
+    background-color: #28a745;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+  }
+  .view-shop-category-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .shop-category-detail {
+    margin-bottom: 10px;
+  }
+  
+  .delete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #dc3545;
+    cursor: pointer;
+  }
+  .edit-shop-category {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .edit-shop-category label {
+    font-weight: bold;
+  }
+  
+  .edit-shop-category input[type="text"],
+  .edit-shop-category input[type="checkbox"] {
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .edit-shop-category button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+  }
+  .create-shop-category {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .create-shop-category label {
+    font-weight: bold;
+  }
+  
+  .create-shop-category input[type="text"],
+  .create-shop-category input[type="checkbox"] {
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .create-shop-category button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+  }
+  

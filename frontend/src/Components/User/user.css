@@ -1,0 +1,157 @@
+body {
+  background: linear-gradient(-45deg, #d5f2ec, #adcec7, #a8bdbd, #ffffff);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+  /* overflow: hidden; */
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+main.user-list {
+  
+  --main-color: rgba(178, 221, 217, 0.9);
+  --secondary-color: rgba(230, 243, 238, 0.9);
+  --tertiary-color: #58a3a1;
+  width: 100%;
+  color: #333; /* Darker text color for contrast */
+  backdrop-filter: blur(10px); /* Adding a blur effect for glassy effect */
+  background-color: #fff3;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2); /* Adding a shadow for a glassy effect */
+  border-radius: .8rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+}
+.modal{
+  
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  color: #333; /* Darker text color for contrast */
+}
+
+.tableHeader {
+  /* width: 100%; */
+  /* height: 100%; */
+  background-color: rgba(155, 212, 206, 0.7);
+  padding: .5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.tableBody{
+  /* max-width: 100%; */
+  width: calc(100%-.6rem);
+  /* max-height: calc(89%-.8rem); */
+  background-color: rgba(139, 187, 187, 0.651);
+  margin: .6rem;
+  border-radius: .6rem;
+  overflow: scroll;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.tableBody::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.tableBody::-webkit-scrollbar-thumb {
+  border-radius: .5rem;
+  background-color: #0004;
+  visibility: hidden;
+}
+
+.tableBody:hover::-webkit-scrollbar-thumb {
+visibility: visible;
+}
+
+th,
+tr,
+td {
+  padding: 1.1rem;
+  /* border-bottom: 1px solid #ccc; */
+}
+
+thead {
+  font-weight: 400;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  background-color:#58a3a09f ;
+  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 0.8rem;
+  backdrop-filter: blur(10px); /* Adding a blur effect for glassy effect */
+  color: #333; /* Darker text color for contrast */
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.createButton {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.6rem;
+  background-color: rgba(102, 182, 176, 0.7);
+  border-radius: 5rem;
+  padding: 0.5rem o.5rem;
+  color: #ffffff; /* Darker text color for contrast */
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  border: none;
+  cursor: pointer;
+  transition: ease-in-out 0.1s;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2); /* Adding a shadow for a glassy effect */
+}
+
+.createButton:hover {
+  transform: scale(1.1);
+  background-color: rgba(80, 165, 87, 0.9);
+  transition: ease-in-out 0.1s;
+}
+
+/* Conditional Styling */
+tr.row {
+  background-color: #fff7;
+  transition: background-color 0.3s ease-in-out; /* Smooth color transition */
+  color: #333;
+}
+
+tr.row.inactive {
+  background-color: rgba(215, 190, 178, 0.8);
+  color: #3f1514; /* Adjusted text color for inactive rows */
+}
+
+tr.row:hover {
+  /* box-shadow: 0 6px 12px rgba(253, 252, 252, 0.6); */
+  box-shadow: rgba(255, 255, 255, 0.8) 0 0 20px 3px ;
+
+  transform: scale(1.02);
+  background-color: #fff3; /* Adjusted color for inactive rows with transparency */
+  transition: ease-in-out 0.1s;
+   /* Enhanced shadow on hover */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #0002;
+}
