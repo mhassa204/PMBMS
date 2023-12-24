@@ -14,13 +14,14 @@ import ZoneList from "@components/zone/zoneList";
 import CreateZone from "@components/zone/createZone";
 import Dashboard from "@pages/dashboard/dashboard";
 import Settings from "@pages/settings/settings";
+import LandingPage from "@/pages/LandingPage";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/create-bazar" element={<CreateBazar />} />
           <Route path="/create-city" element={<CreateCity />} />
           <Route path="/city-list" element={<CityList />} />
@@ -36,7 +37,6 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="settings" element={<Settings />} />
           </Route>
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Routes>
       </Router>
     </div>
