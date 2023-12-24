@@ -12,6 +12,7 @@ import ViewZone from "./components/zone/viewZone";
 import EditZone from "./components/zone/editZone";
 import ZoneList from "./components/zone/zoneList";
 import CreateZone from "./components/zone/createZone";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/create-bazar" element={<CreateBazar />} />
           <Route path="/create-city" element={<CreateCity />} />
           <Route path="/city-list" element={<CityList />} />
