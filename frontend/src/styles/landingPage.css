@@ -25,6 +25,15 @@
     cursor: pointer;
 }
 
+.transitionBtn{
+    transition: all 0.3s ease; 
+}
+
+.transitionBtn:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
 .gapBtn{
   
     gap: 20px;
