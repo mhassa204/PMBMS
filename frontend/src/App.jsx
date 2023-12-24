@@ -12,9 +12,9 @@ import ViewZone from "@components/zone/viewZone";
 import EditZone from "@components/zone/editZone";
 import ZoneList from "@components/zone/zoneList";
 import CreateZone from "@components/zone/createZone";
-import Dashboard from "@pages/dashboard/dashboard";
+import Dashboard from "@pages/dashboard/Dashboard";
 import Settings from "@pages/settings/settings";
-import LandingPage from "@/pages/LandingPage";
+import LandingPage from "@pages/LandingPage";
 
 function App() {
   return (

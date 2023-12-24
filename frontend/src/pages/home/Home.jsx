@@ -210,7 +210,7 @@ export default function Home() {
                     </ListItemPrefix>
                     <Typography
                       color="blue-gray"
-                      className="mr-auto font-semibold"
+                      className="mr-auto text-[16px] font-semibold"
                     >
                       Dashboard
                     </Typography>
@@ -269,7 +269,7 @@ export default function Home() {
                     </ListItemPrefix>
                     <Typography
                       color="blue-gray"
-                      className="mr-auto font-semibold"
+                      className="mr-auto text-[16px] font-semibold"
                     >
                       E-Commerce
                     </Typography>
