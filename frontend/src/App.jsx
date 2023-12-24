@@ -14,7 +14,7 @@ import ZoneList from "@components/zone/zoneList";
 import CreateZone from "@components/zone/createZone";
 import Dashboard from "@pages/dashboard/dashboard";
 import Settings from "@pages/settings/settings";
-import LandingPage from "@/pages/LandingPage";
+import LandingPage from "@pages/LandingPage";
 
 function App() {
   return (
