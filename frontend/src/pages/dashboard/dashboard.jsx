@@ -6,7 +6,7 @@ import Piechart1 from "@components/charts/Piechart1";
 
 export default function Dashboard() {
   return (
-    <div className="bg-blue-100 p-2">
+    <div className="bg-blue-100 pt-3 p-2">
       <div className="flex">
         <div>
           <div className="flex gap-2 mb-2">

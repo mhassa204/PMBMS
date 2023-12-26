@@ -1,9 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
-import SideBar from "../SideBar";
-import { BellIcon } from "@heroicons/react/24/solid";
+import {
+  BellIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+  GiftIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 import profilePic from "@images/me.png";
-import { FaAngleDown, FaSearch } from "react-icons/fa";
+import {
+  FaAngleDown,
+  FaCity,
+  FaMoneyBillWave,
+  FaSearch,
+  FaShieldAlt,
+  FaShopware,
+  FaTag,
+} from "react-icons/fa";
 import "@pages/home/home.css";
+import { BsShop } from "react-icons/bs";
+import { MdFreeCancellation, MdReportOff } from "react-icons/md";
 import { Outlet, Link } from "react-router-dom";
 import {
   Card,
@@ -22,8 +37,12 @@ import {
   Cog6ToothIcon,
   InboxIcon,
   PowerIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobeEurope } from "@fortawesome/free-solid-svg-icons";
+import { MdAssignmentReturned } from "react-icons/md";
 
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -57,19 +76,121 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (window.location.pathname === "/dashboard" || "/admin/dashboard") {
+    if (window.location.pathname === "/admin/dashboard") {
       setActive("dashboard");
     } else if (window.location.pathname === "/admin/settings") {
       setActive("settings");
+    } else if (window.location.pathname === "/admin/user-list") {
+      setActive("user-list");
+    } else if (window.location.pathname === "/admin/city-list") {
+      setActive("city-list");
+    } else if (window.location.pathname === "/admin/stall-types") {
+      setActive("stall-types");
+    } else if (window.location.pathname === "/admin/stall-categories") {
+      setActive("stall-categories");
+    } else if (window.location.pathname === "/admin/bazar-list") {
+      setActive("bazar-list");
+    } else if (window.location.pathname === "/admin/cancellation-reasons") {
+      setActive("cancellation-reasons");
+    } else if (window.location.pathname === "/admin/stall-holders") {
+      setActive("stall-holders");
+    } else if (window.location.pathname === "/admin/income-category") {
+      setActive("income-category");
+    } else if (window.location.pathname === "/admin/zone-list") {
+      setActive("zone-list");
     }
-    // } else if (window.location.pathname === "/admin/companies") {
-    //   setActive("AdminCompanies");
-    // } else if (window.location.pathname === "/admin/jobs") {
-    //   setActive("AdminJobs");
-    // } else if (window.location.pathname === "/admin/settings") {
-    //   setActive("AdminSettings");
-    // }
   }, []);
+
+  const basicSetupListItems = [
+    {
+      to: "zone-list",
+      active: "zone-list",
+
+      icon: (
+        <FontAwesomeIcon icon={faGlobeEurope} className={`w-4 h-4 me-2 ms-1`} />
+      ),
+      text: "Zones",
+    },
+    {
+      to: "city-list",
+      active: "city-list",
+      icon: <FaCity className={`w-4 h-4 me-2 ms-1`} />,
+      text: "City",
+    },
+    {
+      to: "user-list",
+      active: "user-list",
+      icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
+      text: "Users",
+    },
+    {
+      to: "stall-categories",
+      active: "stall-categories",
+      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Stall Category",
+    },
+    {
+      to: "cancellation-reasons",
+      active: "cancellation-reasons",
+      icon: <MdFreeCancellation className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Cancellation Reasons",
+    },
+    {
+      to: "income-category",
+      active: "income-category",
+      icon: <CurrencyDollarIcon className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Income Category",
+    },
+    {
+      to: "stall-types",
+      active: "stall-types",
+      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Stall Types",
+    },
+    {
+      to: "bazar-list",
+      active: "bazar-list",
+      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Bazar",
+    },
+    {
+      to: "stall-holders",
+      active: "stall-holders",
+      icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
+      text: "Stall Holder",
+    },
+  ];
+
+  const transactionListItems = [
+    {
+      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Stalls",
+    },
+    {
+      icon: <MdAssignmentReturned className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Allotments",
+    },
+    {
+      icon: <FaMoneyBillWave className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Fine Policy",
+    },
+    {
+      icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Vouchers",
+    },
+    {
+      icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Voucher Generation",
+    },
+    {
+      icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Admin Voucher",
+    },
+    {
+      icon: <FaShieldAlt className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Security Adjustments",
+    },
+  ];
 
   return (
     <div className="main">
@@ -150,7 +271,7 @@ export default function Home() {
       </div>
       <div className="flex main-body ">
         <div className=" w-[260px] min-h-[90vh]">
-          <Card className="h-full sidebar w-[260px] flex flex-column border-r-2 border-gray-100">
+          <Card className="h-full sidebar mt-2 w-[260px] flex flex-column border-r-2 border-gray-100">
             <List className={"flex flex-column"}>
               <Link
                 to="dashboard"
@@ -173,19 +294,6 @@ export default function Home() {
                   Dashboard
                 </ListItem>
               </Link>
-              <ListItem
-                onClick={() => setActive("Basic Info")}
-                className={`${styles.listItem} ${
-                  active === "Basic Info" ? styles.selectedListItem : ""
-                } `}
-              >
-                <ListItemPrefix>
-                  <PresentationChartBarIcon
-                    className={`${styles.prefixIcon}`}
-                  />
-                </ListItemPrefix>
-                Basic Info
-              </ListItem>
 
               <Accordion
                 open={open === 1}
@@ -204,7 +312,8 @@ export default function Home() {
                     className={`p-3 border-none ${styles.listItem}`}
                   >
                     <ListItemPrefix>
-                      <PresentationChartBarIcon
+                      <InformationCircleIcon
+                        strokeWidth={3}
                         className={`${styles.prefixIcon}`}
                       />
                     </ListItemPrefix>
@@ -212,39 +321,34 @@ export default function Home() {
                       color="blue-gray"
                       className="mr-auto text-[16px] font-semibold"
                     >
-                      Dashboard
+                      Basic Setup
                     </Typography>
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1 ">
                   <List className={`${styles.list}`}>
-                    <ListItem className={`${styles.listItem}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon
-                          strokeWidth={3}
-                          className={`${styles.prefixIcon}`}
-                        />
-                      </ListItemPrefix>
-                      Analytics
-                    </ListItem>
-                    <ListItem className={`${styles.listItem}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon
-                          strokeWidth={3}
-                          className={`${styles.prefixIcon}`}
-                        />
-                      </ListItemPrefix>
-                      Reporting
-                    </ListItem>
-                    <ListItem className={`${styles.listItem}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon
-                          strokeWidth={3}
-                          className={`${styles.prefixIcon}`}
-                        />
-                      </ListItemPrefix>
-                      Projects
-                    </ListItem>
+                    {basicSetupListItems.map((item, index) => (
+                      <Link
+                        to={item.to}
+                        className="text-decoration-none "
+                        style={{ color: "#0d1130" }}
+                        onClick={() => {
+                          setActive(item.active);
+                        }}
+                      >
+                        <ListItem
+                          className={`${styles.listItem} ${
+                            active === item.active
+                              ? styles.selectedListItem
+                              : ""
+                          } `}
+                        >
+                          {/* <ListItem key={index} className={`${styles.listItem}`}> */}
+                          <ListItemPrefix>{item.icon}</ListItemPrefix>
+                          {item.text}
+                        </ListItem>
+                      </Link>
+                    ))}
                   </List>
                 </AccordionBody>
               </Accordion>
@@ -265,56 +369,27 @@ export default function Home() {
                     className={`p-3 border-none ${styles.listItem}`}
                   >
                     <ListItemPrefix>
-                      <ShoppingBagIcon className={`${styles.prefixIcon}`} />
+                      <CreditCardIcon className={`${styles.prefixIcon}`} />
                     </ListItemPrefix>
                     <Typography
                       color="blue-gray"
                       className="mr-auto text-[16px] font-semibold"
                     >
-                      E-Commerce
+                      Transactions
                     </Typography>
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
                   <List className={`${styles.list}`}>
-                    <ListItem className={`${styles.listItem}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon
-                          strokeWidth={3}
-                          className={`${styles.prefixIcon}`}
-                        />
-                      </ListItemPrefix>
-                      Orders
-                    </ListItem>
-                    <ListItem className={`${styles.listItem}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon
-                          strokeWidth={3}
-                          className={`${styles.prefixIcon}`}
-                        />
-                      </ListItemPrefix>
-                      Products
-                    </ListItem>
+                    {transactionListItems.map((item, index) => (
+                      <ListItem key={index} className={`${styles.listItem}`}>
+                        <ListItemPrefix>{item.icon}</ListItemPrefix>
+                        {item.text}
+                      </ListItem>
+                    ))}
                   </List>
                 </AccordionBody>
               </Accordion>
-              <ListItem className={`${styles.listItem}`}>
-                <ListItemPrefix>
-                  <InboxIcon className={`${styles.prefixIcon}`} />
-                </ListItemPrefix>
-                Inbox
-              </ListItem>
-              <ListItem
-                onClick={() => setActive("Profile")}
-                className={`${styles.listItem} ${
-                  active === "Profile" ? styles.selectedListItem : ""
-                } `}
-              >
-                <ListItemPrefix>
-                  <UserCircleIcon className={`${styles.prefixIcon}`} />
-                </ListItemPrefix>
-                Profile
-              </ListItem>
               <Link
                 to="settings"
                 className="text-decoration-none "
@@ -324,7 +399,6 @@ export default function Home() {
                 }}
               >
                 <ListItem
-                  // onClick={() => setActive("Settings")}
                   className={`${styles.listItem} ${
                     active === "settings" ? styles.selectedListItem : ""
                   } `}
