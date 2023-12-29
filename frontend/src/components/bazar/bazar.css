@@ -39,3 +39,7 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+.bazar-list {
+    overflow-x: auto;
+}
