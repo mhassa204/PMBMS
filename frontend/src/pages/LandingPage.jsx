@@ -20,12 +20,7 @@ const LandingPage = () => {
     <div>
       <section className="bg-blue-50">
         <nav className="flex items-center justify-between navBar">
-          <p
-            className="font-bold text-lg cursor-pointer"
-            style={{ color: "#16356a" }}
-          >
-            govBazar
-          </p>
+          <p className="font-bold text-lg cursor-pointer">govBazar</p>
           <div className="md:hidden">
             <button
               onClick={toggleMenu}

@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "@pages/home/Home";
-import CreateBazar from "@components/bazar/createBazar";
 import ViewCity from "@components/city/ViewCity";
 import EditCity from "@components/city/EditCity";
 import CityList from "@components/city/CityList";
@@ -15,6 +14,9 @@ import CreateZone from "@components/zone/createZone";
 import Dashboard from "@pages/dashboard/Dashboard";
 import Settings from "@pages/settings/settings";
 import LandingPage from "@pages/LandingPage";
+import CreateUser from "@components/user/CreateUser";
+import CreateBazar from "@components/bazar/CreateBazar";
+import CreateBazaar from "@components/bazar/CreateBazaar";
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/landing-page" element={<LandingPage />} />
+          <Route path="/create-bazaar" element={<CreateBazaar />} />
           <Route path="/create-bazar" element={<CreateBazar />} />
           <Route path="/create-city" element={<CreateCity />} />
           <Route path="/city-list" element={<CityList />} />
@@ -32,6 +35,7 @@ function App() {
           <Route path="/zone-list" element={<ZoneList />} />
           <Route path="/zone-edit" element={<EditZone />} />
           <Route path="/view-zones" element={<ViewZone />} />
+          <Route path="/create-user" element={<CreateUser />} />
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './zone.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./zone.css";
 
 const CreateZone = ({ onCreate }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     active: false,
-    cities: [''],
-    zoneManager: '',
+    cities: [""],
+    zoneManager: "",
   });
 
   const [cityList, setCityList] = useState([]);
@@ -15,15 +15,15 @@ const CreateZone = ({ onCreate }) => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8000/cities')
+      .get("http://localhost:8000/cities")
       .then((response) => setCityList(response.data))
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => console.error("Error:", error));
   }, []);
 
   const handleChange = (e, index) => {
     const { name, value, type, checked } = e.target;
 
-    if (name === 'cities') {
+    if (name === "cities") {
       const newCities = [...formData.cities];
       newCities[index] = value;
 
@@ -35,13 +35,16 @@ const CreateZone = ({ onCreate }) => {
     } else {
       setFormData({
         ...formData,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: type === "checkbox" ? checked : value,
       });
     }
   };
 
   const handleAddCity = () => {
-    setFormData((prevData) => ({ ...prevData, cities: [...prevData.cities, ''] }));
+    setFormData((prevData) => ({
+      ...prevData,
+      cities: [...prevData.cities, ""],
+    }));
   };
 
   const handleRemoveCity = (index) => {
@@ -62,14 +65,16 @@ const CreateZone = ({ onCreate }) => {
     });
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post("http://localhost:8000/zones", formData);
-      console.log('Zone created successfully!');
-      
+      const response = await axios.post(
+        "http://localhost:8000/zones",
+        formData
+      );
+      console.log("Zone created successfully!");
+
       onCreate(response.data);
 
       setFormData({
@@ -78,16 +83,14 @@ const CreateZone = ({ onCreate }) => {
         cities: [""],
         zoneManager: "",
       });
-  
+
       // Reset the selected cities
       setSelectedCities([]);
     } catch (error) {
-      console.error('Error creating zone:', error);
+      console.error("Error creating zone:", error);
     }
   };
-  
-  
-  
+
   const getAvailableCities = () => {
     return cityList.filter((city) => !selectedCities.includes(city.name));
   };
@@ -156,11 +159,7 @@ const CreateZone = ({ onCreate }) => {
         </div>
       ))}
 
-      <button
-        type="button"
-        onClick={handleAddCity}
-        className="add-button"
-      >
+      <button type="button" onClick={handleAddCity} className="add-button">
         Add City
       </button>
 

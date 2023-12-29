@@ -38,6 +38,19 @@
   }
 }
 
+p, h2, h3{
+  color: "#16356a";
+}
+
+.bgBlue{
+  background-color: "#16356a";
+}
+
+.textBlue{
+  color: "#16356a";
+}
+
+
 .card {
   padding: 2em;
 }
