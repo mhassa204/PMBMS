@@ -27,12 +27,16 @@ import StallHolder from "@components/stall/StallHolder";
 import IncomeCategory from "@components/income/IncomeCategory";
 import CancellationReasons from "@components/cancellation/CancellationReasons";
 
+//forms
+import CreateStall from "@components/stall/CreateStall";
+
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/landing-page" element={<LandingPage />} />
+          <Route path="/create-stall" element={<CreateStall />} />
 
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />

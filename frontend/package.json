@@ -27,6 +27,7 @@
     "react-bootstrap": "^2.9.2",
     "react-calendar": "^4.7.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.2",
     "react-icons": "^4.12.0",
     "react-pro-sidebar": "^1.1.0-alpha.1",
     "react-redux": "^9.0.4",
