@@ -4,7 +4,7 @@ import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 
-const CreateStall = () => {
+export default function FinePolicyForm() {
   const methods = useForm();
 
   const onSubmit = (data) => {
@@ -58,44 +58,22 @@ const CreateStall = () => {
     },
   ];
 
-  const category = [
+  const IncomeCategory = [
     {
-      label: "Food",
-      value: "Food",
+      label: "Outlet",
+      value: "Outlet",
     },
     {
-      label: "Clothing",
-      value: "Clothing",
+      label: "Stall",
+      value: "Stall",
     },
     {
-      label: "Electronics",
-      value: "Electronics",
+      label: "Bazar",
+      value: "Bazar",
     },
     {
       label: "Others",
       value: "Others",
-    },
-  ];
-
-  const fine = [
-    {
-      label: "True",
-      value: "True",
-    },
-    {
-      label: "False",
-      value: "False",
-    },
-  ];
-
-  const stallType = [
-    {
-      label: "Permanent",
-      value: "Permanent",
-    },
-    {
-      label: "Temporary",
-      value: "Temporary",
     },
   ];
 
@@ -105,39 +83,53 @@ const CreateStall = () => {
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputField label="Stall Name" type="text" name="name" required />
-          <InputField label="Stall Code" type="text" name="code" required />
-          <InputField name="bazar" label="Bazar Name" type="text" required />
-          <Dropdown
-            label="Stall Category"
-            name="category"
-            options={category}
-            type="basic-single"
-            required
+          <InputField
+            label="Bazar Name"
+            name="bazarName"
+            type="text"
+            required={true}
           />
           <Dropdown
-            label="Stall Type"
-            name="type"
-            options={stallType}
-            type="basic-multi-select"
-            searchable={false}
-            required
+            label="Income Category"
+            name="incomeCategory"
+            type="basic-select"
+            options={IncomeCategory}
+            required={true}
           />
-          <InputField label="Stall Size" type="text" name="size" required />
+          <InputField
+            label="Fine Name"
+            name="name"
+            type="text"
+            required={true}
+          />
+          <InputField
+            label="Fine % After 10th Date"
+            name="fine-10th"
+            type="number"
+            required={true}
+          />
+          <InputField
+            label="Fine % After 20th Date"
+            name="fine-20th"
+            type="number"
+            required={true}
+          />
+          <InputField
+            label="Fine % After 25th Date"
+            name="fine-25th"
+            type="number"
+            required={true}
+          />
           <Dropdown
-            label="Status"
-            name="status"
+            label="Stall Status"
+            name="stallStatus"
+            type="basic-select"
             options={stallStatus}
-            searchable={true}
-            required
+            required={true}
           />
-          <Dropdown name="fine" label="Fine" options={fine} required />
-          <InputField name="rent" label="Monthly Rent" type="number" required />
-          <ButtonComponent type={"submit"} name={"Create Stall"} />
+          <ButtonComponent name="Submit" type="submit" />
         </form>
       </FormProvider>
     </div>
   );
-};
-
-export default CreateStall;
+}

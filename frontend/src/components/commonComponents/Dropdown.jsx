@@ -2,7 +2,15 @@ import React from "react";
 import Select from "react-select";
 import { useFormContext } from "react-hook-form";
 
-const Dropdown = ({ label, type, searchable, name, options, ...rest }) => {
+const Dropdown = ({
+  label,
+  type,
+  required,
+  searchable,
+  name,
+  options,
+  ...rest
+}) => {
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
@@ -21,7 +29,7 @@ const Dropdown = ({ label, type, searchable, name, options, ...rest }) => {
         className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
         htmlFor={name}
       >
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <Select
         id={name}

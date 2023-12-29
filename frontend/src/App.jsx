@@ -31,6 +31,7 @@ import CancellationReasons from "@components/cancellation/CancellationReasons";
 
 //forms
 import CreateStall from "@components/stall/CreateStall";
+import CreatePolicyForm from "@components/fine/FinePolicyForm";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="/view-zones" element={<ViewZone />} />
           <Route path="/create-user" element={<CreateUser />} />
           <Route path="/create-stall" element={<CreateStall />} />
+          <Route path="/create-policy" element={<CreatePolicyForm />} />
 
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />
