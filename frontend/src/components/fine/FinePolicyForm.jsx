@@ -88,6 +88,7 @@ export default function FinePolicyForm() {
             name="bazarName"
             type="text"
             required={true}
+            placeholder="Enter bazar name"
           />
           <Dropdown
             label="Income Category"
@@ -95,30 +96,41 @@ export default function FinePolicyForm() {
             type="basic-select"
             options={IncomeCategory}
             required={true}
+            placeholder="Select an income category"
           />
           <InputField
             label="Fine Name"
             name="name"
             type="text"
             required={true}
+            placeholder="Enter fine name"
           />
           <InputField
             label="Fine % After 10th Date"
             name="fine-10th"
             type="number"
             required={true}
+            // minLength={1}
+            // maxLength={100}
+            placeholder="Enter fine % after 10th date"
           />
           <InputField
             label="Fine % After 20th Date"
             name="fine-20th"
             type="number"
             required={true}
+            // minLength={1}
+            // maxLength={100}
+            placeholder="Enter fine % after 20th date"
           />
           <InputField
             label="Fine % After 25th Date"
             name="fine-25th"
             type="number"
             required={true}
+            // minLength={1}
+            // maxLength={100}
+            placeholder="Enter fine % after 25th date"
           />
           <Dropdown
             label="Stall Status"
@@ -126,6 +138,7 @@ export default function FinePolicyForm() {
             type="basic-select"
             options={stallStatus}
             required={true}
+            placeholder="Select a stall status"
           />
           <ButtonComponent name="Submit" type="submit" />
         </form>

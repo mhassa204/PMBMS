@@ -1,3 +1,4 @@
+import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
@@ -27,7 +28,7 @@ const CreateBazaar = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
+    <div className="max-w-3xl mx-auto my-10 p-6 bg-white border textBlue">
       <h2 className="text-2xl font-semibold mb-4">Create Bazaar</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -271,12 +272,7 @@ const CreateBazaar = () => {
         </div>
 
         <div className=" col-span-2 flex justify-center">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-          >
-            Submit
-          </button>
+          <ButtonComponent name={"Create Bazar"} />
         </div>
       </form>
     </div>

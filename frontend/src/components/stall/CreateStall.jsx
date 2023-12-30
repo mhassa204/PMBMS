@@ -105,14 +105,34 @@ const CreateStall = () => {
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputField label="Stall Name" type="text" name="name" required />
-          <InputField label="Stall Code" type="text" name="code" required />
-          <InputField name="bazar" label="Bazar Name" type="text" required />
+          <InputField
+            label="Stall Name"
+            placeholder="Enter stall name"
+            type="text"
+            name="name"
+            required
+          />
+          <InputField
+            label="Stall Code"
+            placeholder="Enter stall code"
+            type="text"
+            name="code"
+            required
+          />
+          <InputField
+            name="bazar"
+            placeholder="Enter bazar name"
+            label="Bazar Name"
+            type="text"
+            required
+          />
           <Dropdown
             label="Stall Category"
             name="category"
             options={category}
             type="basic-single"
+            searchable={false}
+            placeholder="Select a stall category"
             required
           />
           <Dropdown
@@ -121,18 +141,38 @@ const CreateStall = () => {
             options={stallType}
             type="basic-multi-select"
             searchable={false}
+            placeholder="Select a stall type"
             required
           />
-          <InputField label="Stall Size" type="text" name="size" required />
+          <InputField
+            label="Stall Size"
+            placeholder="Enter stall size"
+            type="text"
+            name="size"
+            required
+          />
           <Dropdown
             label="Status"
             name="status"
             options={stallStatus}
             searchable={true}
+            placeholder="Select a status"
             required
           />
-          <Dropdown name="fine" label="Fine" options={fine} required />
-          <InputField name="rent" label="Monthly Rent" type="number" required />
+          <Dropdown
+            name="fine"
+            placeholder="Select a fine"
+            label="Fine"
+            options={fine}
+            required
+          />
+          <InputField
+            name="rent"
+            placeholder="Enter monthly rent"
+            label="Monthly Rent"
+            type="number"
+            required
+          />
           <ButtonComponent type={"submit"} name={"Create Stall"} />
         </form>
       </FormProvider>

@@ -15,7 +15,7 @@ import Dashboard from "@pages/dashboard/Dashboard";
 import Settings from "@pages/settings/settings";
 import LandingPage from "@pages/LandingPage";
 import CreateUser from "@components/user/CreateUser";
-import CreateBazar from "@components/bazar/CreateBazar";
+// import CreateBazar from "@components/bazar/CreateBazar";
 import CreateBazaar from "@components/bazar/CreateBazaar";
 import CreateUserForm from "@components/user/CreateUserForm";
 import DeleteUser from "@components/user/DeleteUser";
@@ -32,6 +32,7 @@ import CancellationReasons from "@components/cancellation/CancellationReasons";
 //forms
 import CreateStall from "@components/stall/CreateStall";
 import CreatePolicyForm from "@components/fine/FinePolicyForm";
+import VoucherCreation from "@components/voucher/VoucherCreation";
 
 function App() {
   return (
@@ -39,8 +40,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/landing-page" element={<LandingPage />} />
-          <Route path="/create-bazaar" element={<CreateBazaar />} />
-          <Route path="/create-bazar" element={<CreateBazar />} />
+          {/* <Route path="/create-bazaar" element={<CreateBazaar />} /> */}
+          {/* <Route path="/create-bazar" element={<CreateBazar />} /> */}
           <Route path="/create-city" element={<CreateCity />} />
           <Route path="/city-list" element={<CityList />} />
           <Route path="/city-edit" element={<EditCity />} />
@@ -53,6 +54,7 @@ function App() {
           <Route path="/create-user" element={<CreateUser />} />
           <Route path="/create-stall" element={<CreateStall />} />
           <Route path="/create-policy" element={<CreatePolicyForm />} />
+          <Route path="/create-voucher" element={<VoucherCreation />} />
 
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />
@@ -67,6 +69,9 @@ function App() {
               path="cancellation-reasons"
               element={<CancellationReasons />}
             />
+
+            <Route path="create-bazar" element={<CreateBazaar />} />
+
             <Route path="stall-holders" element={<StallHolder />} />
             <Route path="income-category" element={<IncomeCategory />} />
             <Route path="zone" element={<ZoneList />} />
@@ -74,7 +79,7 @@ function App() {
             <Route path="edit-user" element={<EditUserForm />} />
             <Route path="delete-user" element={<DeleteUser />} />
             <Route path="view-user" element={<ViewUser />} />
-            <Route path="create-bazar" element={<CreateBazar />} />
+            {/* <Route path="create-bazar" element={<CreateBazar />} /> */}
             <Route path="create-city" element={<CreateCity />} />
             <Route path="city-list" element={<CityList />} />
             <Route path="city-edit" element={<EditCity />} />

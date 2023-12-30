@@ -17,8 +17,11 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
+import DeleteButton from "@components/commonComponents/DeleteButton";
+import { useNavigate } from "react-router-dom";
 
 export default function Bazars() {
+  const navigate = useNavigate();
   const TABS = [
     {
       label: "All",
@@ -34,65 +37,154 @@ export default function Bazars() {
     },
   ];
 
-  const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
-
+  const TABLE_HEAD = [
+    "Bazar Name",
+    "Bazar Address",
+    "Status",
+    "Default Rent of Permanant Stall",
+    "Total Stalls",
+    "Prefix",
+    "Bazar Image",
+    "City",
+    "Bazar Manager",
+    "Zone Manager",
+    "Temporary Stall",
+    "Default Rent of Temporary Stall",
+    "Actions",
+  ];
   const TABLE_ROWS = [
     {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      name: "John Michael",
-      email: "john@creative-tim.com",
-      job: "Manager",
-      org: "Organization",
-      online: true,
-      date: "23/04/18",
+      bazarName: "John Michael",
+      bazarAddress: "123 Main Street",
+      Status: "Active",
+      defaultRentOfPermanentStall: "$500",
+      totalStalls: 10,
+      Prefix: "BZ",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
+      City: "New York",
+      bazarManager: "Alice Doe",
+      zoneManager: "Bob Smith",
+      temporaryStall: "Yes",
+      defaultRentOfTemporaryStall: "$300",
     },
     {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-      name: "Alexa Liras",
-      email: "alexa@creative-tim.com",
-      job: "Programator",
-      org: "Developer",
-      online: false,
-      date: "23/04/18",
+      bazarName: "Alexa Liras",
+      bazarAddress: "456 Elm Street",
+      Status: "Inactive",
+      defaultRentOfPermanentStall: "$450",
+      totalStalls: 8,
+      Prefix: "BA",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+      City: "Los Angeles",
+      bazarManager: "Charlie Brown",
+      zoneManager: "David Johnson",
+      temporaryStall: "No",
+      defaultRentOfTemporaryStall: "$250",
     },
     {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-      name: "Laurent Perrier",
-      email: "laurent@creative-tim.com",
-      job: "Executive",
-      org: "Projects",
-      online: false,
-      date: "19/09/17",
+      bazarName: "Laurent Perrier",
+      bazarAddress: "789 Oak Street",
+      Status: "Pending",
+      defaultRentOfPermanentStall: "$600",
+      totalStalls: 12,
+      Prefix: "LP",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
+      City: "Chicago",
+      bazarManager: "Eva White",
+      zoneManager: "Frank Adams",
+      temporaryStall: "Yes",
+      defaultRentOfTemporaryStall: "$350",
     },
     {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      name: "Michael Levi",
-      email: "michael@creative-tim.com",
-      job: "Programator",
-      org: "Developer",
-      online: true,
-      date: "24/12/08",
+      bazarName: "Michael Levi",
+      bazarAddress: "101 Pine Street",
+      Status: "Active",
+      defaultRentOfPermanentStall: "$550",
+      totalStalls: 11,
+      Prefix: "ML",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+      City: "Houston",
+      bazarManager: "Grace Miller",
+      zoneManager: "Henry Clark",
+      temporaryStall: "No",
+      defaultRentOfTemporaryStall: "$275",
     },
     {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-      name: "Richard Gran",
-      email: "richard@creative-tim.com",
-      job: "Manager",
-      org: "Executive",
-      online: false,
-      date: "04/10/21",
+      bazarName: "Richard Gran",
+      bazarAddress: "202 Cedar Street",
+      Status: "Inactive",
+      defaultRentOfPermanentStall: "$480",
+      totalStalls: 9,
+      Prefix: "RG",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
+      City: "San Francisco",
+      bazarManager: "Ivy Turner",
+      zoneManager: "Jack Turner",
+      temporaryStall: "Yes",
+      defaultRentOfTemporaryStall: "$325",
+    },
+    {
+      bazarName: "Alice Doe",
+      bazarAddress: "303 Maple Street",
+      Status: "Active",
+      defaultRentOfPermanentStall: "$520",
+      totalStalls: 13,
+      Prefix: "AD",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
+      City: "Miami",
+      bazarManager: "Kevin Baker",
+      zoneManager: "Laura Evans",
+      temporaryStall: "No",
+      defaultRentOfTemporaryStall: "$280",
+    },
+    {
+      bazarName: "Charlie Brown",
+      bazarAddress: "404 Birch Street",
+      Status: "Blocked",
+      defaultRentOfPermanentStall: "$490",
+      totalStalls: 10,
+      Prefix: "CB",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+      City: "Seattle",
+      bazarManager: "Mia Garcia",
+      zoneManager: "Nick Carter",
+      temporaryStall: "Yes",
+      defaultRentOfTemporaryStall: "$300",
+    },
+    {
+      bazarName: "David Johnson",
+      bazarAddress: "505 Elm Street",
+      Status: "Expired",
+      defaultRentOfPermanentStall: "$470",
+      totalStalls: 8,
+      Prefix: "DJ",
+      bazarImage:
+        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+      City: "Denver",
+      bazarManager: "Olivia Foster",
+      zoneManager: "Paul Taylor",
+      temporaryStall: "No",
+      defaultRentOfTemporaryStall: "$260",
     },
   ];
+
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Users list
+              Bazars list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all users
+              See information about all bazars
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -102,8 +194,11 @@ export default function Bazars() {
             <Button
               className="flex bg-[#0b6323] rounded-none items-center gap-2"
               size="sm"
+              onClick={() => {
+                navigate("/admin/create-bazar");
+              }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new bazar
             </Button>
           </div>
         </div>
@@ -147,7 +242,7 @@ export default function Bazars() {
       </CardHeader>
 
       <CardBody className="px-4 ">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
@@ -171,19 +266,35 @@ export default function Bazars() {
           </thead>
           <tbody>
             {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
+              (
+                {
+                  bazarName,
+                  bazarAddress,
+                  Status,
+                  defaultRentOfPermanentStall,
+                  totalStalls,
+                  Prefix,
+                  bazarImage,
+                  City,
+                  bazarManager,
+                  zoneManager,
+                  temporaryStall,
+                  defaultRentOfTemporaryStall,
+                },
+                index
+              ) => {
                 const isLast = index === TABLE_ROWS.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name} className="bg-white">
+                  <tr key={index} className="bg-white">
                     <td className={classes}>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center min-w-[200px] gap-3">
                         <Avatar
-                          src={img}
-                          alt={name}
+                          src={bazarImage}
+                          alt={bazarName}
                           size=""
                           className="h-10 w-10 rounded-full"
                         />
@@ -193,14 +304,14 @@ export default function Bazars() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {name}
+                            {bazarName}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {email}
+                            {bazarAddress}
                           </Typography>
                         </div>
                       </div>
@@ -212,14 +323,14 @@ export default function Bazars() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {job}
+                          {bazarManager}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
                         >
-                          {org}
+                          {zoneManager}
                         </Typography>
                       </div>
                     </td>
@@ -228,8 +339,8 @@ export default function Bazars() {
                         <Chip
                           variant="ghost"
                           size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
+                          value={Status}
+                          color={Status === "Active" ? "green" : "blue-gray"}
                         />
                       </div>
                     </td>
@@ -239,16 +350,87 @@ export default function Bazars() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}
+                        {defaultRentOfPermanentStall}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Edit User">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {totalStalls}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {Prefix}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {City}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {temporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {defaultRentOfTemporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {zoneManager}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {temporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {defaultRentOfTemporaryStall}
+                      </Typography>
+                    </td>
+
+                    <td className={classes}>
+                      <div className="flex gap-2">
                         <EditButton />
-                        {/* <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton> */}
-                      </Tooltip>
+                        <DeleteButton />
+                      </div>
                     </td>
                   </tr>
                 );
@@ -257,7 +439,7 @@ export default function Bazars() {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mx-4">
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
         <Typography variant="small" color="blue-gray" className="font-normal">
           Page 1 of 10
         </Typography>

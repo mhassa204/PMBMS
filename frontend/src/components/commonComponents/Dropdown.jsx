@@ -7,6 +7,7 @@ const Dropdown = ({
   type,
   required,
   searchable,
+  placeholder,
   name,
   options,
   ...rest
@@ -36,8 +37,9 @@ const Dropdown = ({
         options={options}
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
-        className={`${type} text-start`}
+        className={`${type} text-start h-[40px] `}
         {...rest}
+        placeholder={placeholder}
         isMulti={type === "basic-multi-select" ? true : false}
         isSearchable={searchable ? true : false}
       />

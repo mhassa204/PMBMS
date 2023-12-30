@@ -1,12 +1,11 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const InputField = ({
+const DateInput = ({
   label,
-  type,
-  // maxLength,
-  // minLenght,
   name,
+  minDate,
+  maxDate,
   placeholder,
   required,
   ...rest
@@ -24,23 +23,27 @@ const InputField = ({
         {required && <span className="text-red-500">*</span>}
       </label>
       <input
-        type={type}
+        type="date"
         id={name}
         name={name}
-        // maxLength={type === "number" ? maxLength : ""}
-        // minLength={type === "number" ? minLenght : ""}
         placeholder={placeholder}
-        className={`w-full h-[40px] border border-gray-900  p-2 rounded-md ${
+        className={`w-full border p-2 rounded ${
           errors[name] && "border-red-500"
         }`}
-        {...register(name, { required })}
+        {...register(name, {
+          required,
+          min: minDate,
+          max: maxDate,
+        })}
         {...rest}
       />
       {errors[name] && (
-        <p className="text-red-500 text-start text-sm mt-1">{`${label} is required`}</p>
+        <p className="text-red-500 text-start text-sm mt-1">
+          {`${label} is required`}
+        </p>
       )}
     </div>
   );
 };
 
-export default InputField;
+export default DateInput;
