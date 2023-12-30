@@ -21,7 +21,7 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 
-export default function StallList() {
+export default function Users() {
   const navigate = useNavigate();
   const TABS = [
     {
@@ -39,105 +39,78 @@ export default function StallList() {
   ];
 
   const TABLE_HEAD = [
-    "Stall ID",
-    "Stall Code",
-    "Size",
-    "Bazar Name",
-    "Stall Category",
-    "Stall Type",
+    "Username",
+    "Email",
+    "Mobile",
+    "City Name",
     "Status",
-    "Late Fine",
-    "Monthly Rent",
+    "User Type",
     "Actions",
   ];
   const TABLE_ROWS = [
     {
-      StallID: "1",
-      StallCode: "SC001",
-      Size: "Medium",
-      BazarName: "Central Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
+      Username: "JohnDoe",
+      Email: "john.doe@example.com",
+      Mobile: "123-456-7890",
+      CityName: "City A",
       Status: "Active",
-      LateFine: "$10",
-      MonthlyRent: "$500",
+      UserType: "Admin",
     },
     {
-      StallID: "2",
-      StallCode: "SC002",
-      Size: "Small",
-      BazarName: "Eastern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
+      Username: "AliceSmith",
+      Email: "alice.smith@example.com",
+      Mobile: "987-654-3210",
+      CityName: "City B",
       Status: "Inactive",
-      LateFine: "$5",
-      MonthlyRent: "$300",
+      UserType: "User",
     },
     {
-      StallID: "3",
-      StallCode: "SC003",
-      Size: "Large",
-      BazarName: "Western Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
+      Username: "BobJohnson",
+      Email: "bob.johnson@example.com",
+      Mobile: "111-222-3333",
+      CityName: "City C",
       Status: "Active",
-      LateFine: "$15",
-      MonthlyRent: "$600",
+      UserType: "Admin",
     },
     {
-      StallID: "4",
-      StallCode: "SC004",
-      Size: "Medium",
-      BazarName: "Northern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
+      Username: "EvaWhite",
+      Email: "eva.white@example.com",
+      Mobile: "555-666-7777",
+      CityName: "City D",
       Status: "Inactive",
-      LateFine: "$8",
-      MonthlyRent: "$450",
+      UserType: "User",
     },
     {
-      StallID: "5",
-      StallCode: "SC005",
-      Size: "Small",
-      BazarName: "Southern Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
+      Username: "CharlieBrown",
+      Email: "charlie.brown@example.com",
+      Mobile: "999-888-7777",
+      CityName: "City E",
       Status: "Active",
-      LateFine: "$12",
-      MonthlyRent: "$550",
+      UserType: "Admin",
     },
     {
-      StallID: "6",
-      StallCode: "SC006",
-      Size: "Large",
-      BazarName: "Central-East Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
+      Username: "GraceMiller",
+      Email: "grace.miller@example.com",
+      Mobile: "444-555-6666",
+      CityName: "City F",
       Status: "Inactive",
-      LateFine: "$7",
-      MonthlyRent: "$400",
+      UserType: "User",
     },
     {
-      StallID: "7",
-      StallCode: "SC007",
-      Size: "Medium",
-      BazarName: "South-West Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
+      Username: "DavidJohnson",
+      Email: "david.johnson@example.com",
+      Mobile: "777-888-9999",
+      CityName: "City G",
       Status: "Active",
-      LateFine: "$11",
-      MonthlyRent: "$520",
+      UserType: "Admin",
     },
     {
-      StallID: "8",
-      StallCode: "SC008",
-      Size: "Small",
-      BazarName: "North-West Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
+      Username: "OliviaFoster",
+      Email: "olivia.foster@example.com",
+      Mobile: "123-987-6543",
+      CityName: "City H",
       Status: "Inactive",
-      LateFine: "$6",
-      MonthlyRent: "$380",
+      UserType: "User",
     },
   ];
 
@@ -147,10 +120,10 @@ export default function StallList() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Stall list
+              User list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all stalls
+              See information about all users
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -158,10 +131,10 @@ export default function StallList() {
               className="flex bg-[#0b6323] rounded-none items-center gap-2"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-stall");
+                navigate("/admin/create-user");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new stall
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new user
             </Button>
           </div>
         </div>
@@ -230,17 +203,7 @@ export default function StallList() {
           <tbody>
             {TABLE_ROWS.map(
               (
-                {
-                  StallID,
-                  StallCode,
-                  Size,
-                  BazarName,
-                  StallCategory,
-                  StallType,
-                  Status,
-                  LateFine,
-                  MonthlyRent,
-                },
+                { Username, Email, Mobile, CityName, Status, UserType },
                 index
               ) => {
                 const isLast = index === TABLE_ROWS.length - 1;
@@ -257,7 +220,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {StallID}
+                        {Username}
                       </Typography>
                     </td>
                     {/* Province */}
@@ -267,7 +230,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {StallCode}
+                        {Email}
                       </Typography>
                     </td>
                     {/* Cities in Zone */}
@@ -277,7 +240,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {Size}
+                        {Mobile}
                       </Typography>
                     </td>
                     {/* Zone Manager */}
@@ -287,28 +250,10 @@ export default function StallList() {
                         // color="blue-gray"
                         className="font-normal"
                       >
-                        {BazarName}
+                        {CityName}
                       </Typography>
                     </td>
                     {/* Zone District */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallCategory}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallType}
-                      </Typography>
-                    </td>
                     <td className={classes}>
                       <Typography
                         variant="small"
@@ -324,16 +269,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {LateFine}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {MonthlyRent}
+                        {UserType}
                       </Typography>
                     </td>
                     {/* Actions (Edit and Delete buttons) */}

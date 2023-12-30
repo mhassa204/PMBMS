@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
+import Breadcrumb from "@components/commonComponents/Breadcrumb";
 
 const CreateStall = () => {
   const methods = useForm();
@@ -99,83 +100,91 @@ const CreateStall = () => {
     },
   ];
 
-  return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
-      <h2 className="text-2xl font-semibold mb-4">Create Stall</h2>
+  const breadcrumbItems = [
+    { label: "Stall List", path: "/admin/stall-list" },
+    { label: "Create Stall" },
+  ];
 
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputField
-            label="Stall Name"
-            placeholder="Enter stall name"
-            type="text"
-            name="name"
-            required
-          />
-          <InputField
-            label="Stall Code"
-            placeholder="Enter stall code"
-            type="text"
-            name="code"
-            required
-          />
-          <InputField
-            name="bazar"
-            placeholder="Enter bazar name"
-            label="Bazar Name"
-            type="text"
-            required
-          />
-          <Dropdown
-            label="Stall Category"
-            name="category"
-            options={category}
-            type="basic-single"
-            searchable={false}
-            placeholder="Select a stall category"
-            required
-          />
-          <Dropdown
-            label="Stall Type"
-            name="type"
-            options={stallType}
-            type="basic-multi-select"
-            searchable={false}
-            placeholder="Select a stall type"
-            required
-          />
-          <InputField
-            label="Stall Size"
-            placeholder="Enter stall size"
-            type="text"
-            name="size"
-            required
-          />
-          <Dropdown
-            label="Status"
-            name="status"
-            options={stallStatus}
-            searchable={true}
-            placeholder="Select a status"
-            required
-          />
-          <Dropdown
-            name="fine"
-            placeholder="Select a fine"
-            label="Fine"
-            options={fine}
-            required
-          />
-          <InputField
-            name="rent"
-            placeholder="Enter monthly rent"
-            label="Monthly Rent"
-            type="number"
-            required
-          />
-          <ButtonComponent type={"submit"} name={"Create Stall"} />
-        </form>
-      </FormProvider>
+  return (
+    <div className="p-4">
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="max-w-md mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
+        <h2 className="text-2xl text-start font-semibold mb-4">Create Stall</h2>
+
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <InputField
+              label="Stall Name"
+              placeholder="Enter stall name"
+              type="text"
+              name="name"
+              required
+            />
+            <InputField
+              label="Stall Code"
+              placeholder="Enter stall code"
+              type="text"
+              name="code"
+              required
+            />
+            <InputField
+              name="bazar"
+              placeholder="Enter bazar name"
+              label="Bazar Name"
+              type="text"
+              required
+            />
+            <Dropdown
+              label="Stall Category"
+              name="category"
+              options={category}
+              type="basic-single"
+              searchable={false}
+              placeholder="Select a stall category"
+              required
+            />
+            <Dropdown
+              label="Stall Type"
+              name="type"
+              options={stallType}
+              type="basic-multi-select"
+              searchable={false}
+              placeholder="Select a stall type"
+              required
+            />
+            <InputField
+              label="Stall Size"
+              placeholder="Enter stall size"
+              type="text"
+              name="size"
+              required
+            />
+            <Dropdown
+              label="Status"
+              name="status"
+              options={stallStatus}
+              searchable={true}
+              placeholder="Select a status"
+              required
+            />
+            <Dropdown
+              name="fine"
+              placeholder="Select a fine"
+              label="Fine"
+              options={fine}
+              required
+            />
+            <InputField
+              name="rent"
+              placeholder="Enter monthly rent"
+              label="Monthly Rent"
+              type="number"
+              required
+            />
+            <ButtonComponent type={"submit"} name={"Create Stall"} />
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 };

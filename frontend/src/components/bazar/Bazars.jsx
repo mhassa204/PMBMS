@@ -19,6 +19,7 @@ import {
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
+import "@src/styles/tableStyles.css";
 
 export default function Bazars() {
   const navigate = useNavigate();
