@@ -21,7 +21,7 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 
-export default function StallList() {
+export default function Zones() {
   const navigate = useNavigate();
   const TABS = [
     {
@@ -39,105 +39,69 @@ export default function StallList() {
   ];
 
   const TABLE_HEAD = [
-    "Stall ID",
-    "Stall Code",
-    "Size",
-    "Bazar Name",
-    "Stall Category",
-    "Stall Type",
-    "Status",
-    "Late Fine",
-    "Monthly Rent",
+    "Zone Name",
+    "Province",
+    "Cities in Zone",
+    "Zone Manager",
+    "Zone District",
     "Actions",
   ];
   const TABLE_ROWS = [
     {
-      StallID: "1",
-      StallCode: "SC001",
-      Size: "Medium",
-      BazarName: "Central Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$10",
-      MonthlyRent: "$500",
+      ZoneName: "Central Zone",
+      Province: "Central",
+      CitiesInZone: ["City A", "City B", "City C"],
+      ZoneManager: "Alice Doe",
+      ZoneDistrict: "District X",
     },
     {
-      StallID: "2",
-      StallCode: "SC002",
-      Size: "Small",
-      BazarName: "Eastern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$5",
-      MonthlyRent: "$300",
+      ZoneName: "Eastern Zone",
+      Province: "Eastern",
+      CitiesInZone: ["City D", "City E", "City F"],
+      ZoneManager: "Bob Smith",
+      ZoneDistrict: "District Y",
     },
     {
-      StallID: "3",
-      StallCode: "SC003",
-      Size: "Large",
-      BazarName: "Western Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$15",
-      MonthlyRent: "$600",
+      ZoneName: "Western Zone",
+      Province: "Western",
+      CitiesInZone: ["City G", "City H", "City I"],
+      ZoneManager: "Charlie Brown",
+      ZoneDistrict: "District Z",
     },
     {
-      StallID: "4",
-      StallCode: "SC004",
-      Size: "Medium",
-      BazarName: "Northern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$8",
-      MonthlyRent: "$450",
+      ZoneName: "Northern Zone",
+      Province: "Northern",
+      CitiesInZone: ["City J", "City K", "City L"],
+      ZoneManager: "David Johnson",
+      ZoneDistrict: "District W",
     },
     {
-      StallID: "5",
-      StallCode: "SC005",
-      Size: "Small",
-      BazarName: "Southern Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$12",
-      MonthlyRent: "$550",
+      ZoneName: "Southern Zone",
+      Province: "Southern",
+      CitiesInZone: ["City M", "City N", "City O"],
+      ZoneManager: "Eva White",
+      ZoneDistrict: "District V",
     },
     {
-      StallID: "6",
-      StallCode: "SC006",
-      Size: "Large",
-      BazarName: "Central-East Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$7",
-      MonthlyRent: "$400",
+      ZoneName: "Central-East Zone",
+      Province: "Central-East",
+      CitiesInZone: ["City P", "City Q", "City R"],
+      ZoneManager: "Frank Adams",
+      ZoneDistrict: "District U",
     },
     {
-      StallID: "7",
-      StallCode: "SC007",
-      Size: "Medium",
-      BazarName: "South-West Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$11",
-      MonthlyRent: "$520",
+      ZoneName: "South-West Zone",
+      Province: "South-West",
+      CitiesInZone: ["City S", "City T", "City U"],
+      ZoneManager: "Grace Miller",
+      ZoneDistrict: "District T",
     },
     {
-      StallID: "8",
-      StallCode: "SC008",
-      Size: "Small",
-      BazarName: "North-West Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$6",
-      MonthlyRent: "$380",
+      ZoneName: "North-West Zone",
+      Province: "North-West",
+      CitiesInZone: ["City V", "City W", "City X"],
+      ZoneManager: "Henry Clark",
+      ZoneDistrict: "District S",
     },
   ];
 
@@ -147,10 +111,10 @@ export default function StallList() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Stall list
+              Zone list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all stalls
+              See information about all zones
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -158,10 +122,10 @@ export default function StallList() {
               className="flex bg-[#0b6323] rounded-none items-center gap-2"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-stall");
+                navigate("/admin/create-zone");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new stall
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new zone
             </Button>
           </div>
         </div>
@@ -205,7 +169,7 @@ export default function StallList() {
       </CardHeader>
 
       <CardBody className="px-4 ">
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
+        {/* <table className="mt-4 table-scroll w-full h-full table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
@@ -231,16 +195,202 @@ export default function StallList() {
             {TABLE_ROWS.map(
               (
                 {
-                  StallID,
-                  StallCode,
-                  Size,
-                  BazarName,
-                  StallCategory,
-                  StallType,
+                  bazarName,
+                  bazarAddress,
                   Status,
-                  LateFine,
-                  MonthlyRent,
+                  defaultRentOfPermanentStall,
+                  totalStalls,
+                  Prefix,
+                  bazarImage,
+                  City,
+                  bazarManager,
+                  zoneManager,
+                  temporaryStall,
+                  defaultRentOfTemporaryStall,
                 },
+                index
+              ) => {
+                const isLast = index === TABLE_ROWS.length - 1;
+                const classes = isLast
+                  ? "p-4"
+                  : "p-4 border-b border-blue-gray-50";
+
+                return (
+                  <tr key={index} className="bg-white">
+                    <td className={classes}>
+                      <div className="flex items-center min-w-[200px] gap-3">
+                        <Avatar
+                          src={bazarImage}
+                          alt={bazarName}
+                          size=""
+                          className="h-10 w-10 rounded-full"
+                        />
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {bazarName}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {bazarAddress}
+                          </Typography>
+                        </div>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {bazarManager}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {zoneManager}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Chip
+                          variant="ghost"
+                          size="sm"
+                          value={Status}
+                          color={Status === "Active" ? "green" : "blue-gray"}
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {defaultRentOfPermanentStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {totalStalls}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {Prefix}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {City}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {temporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {defaultRentOfTemporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {zoneManager}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {temporaryStall}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {defaultRentOfTemporaryStall}
+                      </Typography>
+                    </td>
+
+                    <td className={classes}>
+                      <div className="flex gap-2">
+                        <EditButton />
+                        <DeleteButton />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
+          </tbody>
+        </table> */}
+        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head, index) => (
+                <th
+                  key={head}
+                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
+                >
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
+                  >
+                    {head}
+                    {index !== TABLE_HEAD.length - 1 && (
+                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                    )}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {TABLE_ROWS.map(
+              (
+                { ZoneName, Province, CitiesInZone, ZoneManager, ZoneDistrict },
                 index
               ) => {
                 const isLast = index === TABLE_ROWS.length - 1;
@@ -257,7 +407,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {StallID}
+                        {ZoneName}
                       </Typography>
                     </td>
                     {/* Province */}
@@ -267,7 +417,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {StallCode}
+                        {Province}
                       </Typography>
                     </td>
                     {/* Cities in Zone */}
@@ -277,7 +427,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {Size}
+                        {CitiesInZone.join(", ")}
                       </Typography>
                     </td>
                     {/* Zone Manager */}
@@ -287,7 +437,7 @@ export default function StallList() {
                         // color="blue-gray"
                         className="font-normal"
                       >
-                        {BazarName}
+                        {ZoneManager}
                       </Typography>
                     </td>
                     {/* Zone District */}
@@ -297,43 +447,7 @@ export default function StallList() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {StallCategory}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallType}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Status}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {LateFine}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {MonthlyRent}
+                        {ZoneDistrict}
                       </Typography>
                     </td>
                     {/* Actions (Edit and Delete buttons) */}

@@ -5,10 +5,11 @@ import { useFormContext } from "react-hook-form";
 const Dropdown = ({
   label,
   type,
+  required,
   searchable,
+  placeholder,
   name,
   options,
-  placeholder,
   ...rest
 }) => {
   const { register, setValue, trigger, formState } = useFormContext();
@@ -29,7 +30,7 @@ const Dropdown = ({
         className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
         htmlFor={name}
       >
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <Select
         id={name}
@@ -37,7 +38,7 @@ const Dropdown = ({
         placeholder={placeholder}
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
-        className={`${type} text-start`}
+        className={`${type} text-start h-[40px] `}
         {...rest}
         isMulti={type === "basic-multi-select" ? true : false}
         isSearchable={searchable ? true : false}

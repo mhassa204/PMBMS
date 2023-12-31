@@ -15,6 +15,10 @@ const activeOptions = [
   { value: "not-active", label: "Not Active" },
   { value: "active", label: "Active" },
 ];
+const breadcrumbItems = [
+  { label: "Bazar List", path: "/admin/bazar-list" },
+  { label: "Create Bazar" },
+];
 
 const CreateBazaar = () => {
   const methods = useForm();

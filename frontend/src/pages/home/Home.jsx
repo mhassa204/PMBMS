@@ -111,12 +111,12 @@ export default function Home() {
       ),
       text: "Zones",
     },
-    {
-      to: "city-list",
-      active: "city-list",
-      icon: <FaCity className={`w-4 h-4 me-2 ms-1`} />,
-      text: "City",
-    },
+    // {
+    //   to: "city-list",
+    //   active: "city-list",
+    //   icon: <FaCity className={`w-4 h-4 me-2 ms-1`} />,
+    //   text: "City",
+    // },
     {
       to: "user-list",
       active: "user-list",
@@ -165,30 +165,44 @@ export default function Home() {
     {
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Stalls",
+      to: "stall-list",
+      active: "stall-list",
     },
     {
       icon: <MdAssignmentReturned className={`w-4 h-4 me-2 ms-1`} />,
       text: "Allotments",
+      to: "allotments",
+      active: "allotments",
     },
     {
       icon: <FaMoneyBillWave className={`w-4 h-4 me-2 ms-1`} />,
       text: "Fine Policy",
+      to: "fine-policy",
+      active: "fine-policy",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Vouchers",
+      to: "vouchers",
+      active: "vouchers",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Voucher Generation",
+      to: "voucher-generation",
+      active: "voucher-generation",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Admin Voucher",
+      to: "admin-voucher",
+      active: "admin-voucher",
     },
     {
       icon: <FaShieldAlt className={`w-4 h-4 me-2 ms-1`} />,
       text: "Security Adjustments",
+      to: "security-adjustments",
+      active: "security-adjustments",
     },
   ];
 
@@ -382,10 +396,30 @@ export default function Home() {
                 <AccordionBody className="py-1">
                   <List className={`${styles.list}`}>
                     {transactionListItems.map((item, index) => (
-                      <ListItem key={index} className={`${styles.listItem}`}>
-                        <ListItemPrefix>{item.icon}</ListItemPrefix>
-                        {item.text}
-                      </ListItem>
+                      <Link
+                        to={item.to}
+                        className="text-decoration-none "
+                        style={{ color: "#0d1130" }}
+                        onClick={() => {
+                          setActive(item.active);
+                        }}
+                      >
+                        <ListItem
+                          className={`${styles.listItem} ${
+                            active === item.active
+                              ? styles.selectedListItem
+                              : ""
+                          } `}
+                        >
+                          {/* <ListItem key={index} className={`${styles.listItem}`}> */}
+                          <ListItemPrefix>{item.icon}</ListItemPrefix>
+                          {item.text}
+                        </ListItem>
+                      </Link>
+                      // <ListItem key={index} className={`${styles.listItem}`}>
+                      //   <ListItemPrefix>{item.icon}</ListItemPrefix>
+                      //   {item.text}
+                      // </ListItem>
                     ))}
                   </List>
                 </AccordionBody>

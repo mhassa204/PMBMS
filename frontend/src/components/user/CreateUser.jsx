@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -22,6 +22,11 @@ const userTypes = [
 const activeOptions = [
   { value: "not-active", label: "Not Active" },
   { value: "active", label: "Active" },
+];
+
+const breadcrumbItems = [
+  { label: "User List", path: "/admin/user-list" },
+  { label: "Create user" },
 ];
 
 const CreateUser = () => {
