@@ -108,7 +108,7 @@ const CreateStall = () => {
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
-      <div className="max-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
+      <div className="max-w-2xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
         <h2 className="text-2xl text-start font-semibold mb-4">Create Stall</h2>
 
         <FormProvider {...methods}>
