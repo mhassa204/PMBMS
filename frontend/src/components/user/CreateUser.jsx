@@ -39,16 +39,24 @@ const CreateUser = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
           className="grid grid-cols-2 gap-4"
         >
-          <InputField label="User Name" type="text" name="userName" required />
+          <InputField
+            label="Username"
+            type="text"
+            name="userName"
+            placeholder="Enter username"
+            required
+          />
           <PasswordField
             label="Password"
             name="password"
+            placeholder="Enter Password"
             required
             minLength={6}
             maxLength={20}
           />
           <Dropdown
             label="User Type"
+            placeholder="Select User Type"
             name="userType"
             options={cities}
             type="basic-single"
@@ -57,6 +65,7 @@ const CreateUser = () => {
           <Dropdown
             label="City"
             name="city"
+            placeholder="Select City"
             options={cities}
             type="basic-single"
           />
@@ -64,6 +73,7 @@ const CreateUser = () => {
             label="Email"
             type="text"
             name="email"
+            placeholder="Enter Email"
             required="Email is required"
             pattern={{
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
@@ -73,12 +83,14 @@ const CreateUser = () => {
 
           <InputField
             label=" Mobile Number"
+            placeholder="Enter Mobile Number"
             type="text"
             name="mobileNumber"
             required
           />
           <Dropdown
             label="Active"
+            placeholder="Select Status"
             name="active-options"
             options={activeOptions}
             type="basic-single"

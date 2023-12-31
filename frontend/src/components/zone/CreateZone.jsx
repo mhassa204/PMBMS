@@ -235,22 +235,31 @@ const CreateZone = () => {
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputField label="Zone Name" type="text" name="zoneName" required />
+          <InputField
+            label="Zone Name"
+            type="text"
+            name="zoneName"
+            required
+            placeholder="Enter Zone Name"
+          />
           <Dropdown
             label="Province"
             name="province"
+            placeholder="Select Province "
             options={provinces}
             type="basic-single"
           />
           <Dropdown
             label="Cities"
             name="city"
+            placeholder="Select Cities"
             options={provinces}
             type="basic-multi-select"
             searchable={false}
           />
           <Dropdown
             label="Zone Manager"
+            placeholder="Select Zone Manager"
             name="manager"
             options={provinces}
             type="basic-single"
@@ -258,6 +267,7 @@ const CreateZone = () => {
 
           <Dropdown
             label="Active"
+            placeholder="Select Status"
             name="active-options"
             options={activeOptions}
             type="basic-single"

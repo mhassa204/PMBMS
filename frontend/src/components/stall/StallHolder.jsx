@@ -35,17 +35,20 @@ export default function StallHolder() {
           <InputField
             label="Stall Holder Name"
             type="text"
+            placeholder="Enter Stall Holder Name"
             name="stallHolderName"
             required
           />
           <InputField
             label="Father/Husband Name"
+            placeholder="Enter Stall Holder's Father/Husband Name"
             type="text"
             name="fatherName"
             required
           />
           <InputField
             label="Email"
+            placeholder="Enter Email"
             type="text"
             name="email"
             required="Email is required"
@@ -56,17 +59,25 @@ export default function StallHolder() {
           />
 
           <DateField label="DOB" name="dob" required />
-          <InputField label="CNIC" type="text" name="cnic" required />
+          <InputField
+            label="CNIC"
+            type="text"
+            name="cnic"
+            required
+            placeholder="Enter CNIC"
+          />
           <DateField label="CNIC Expiry" name="expiry" required />
 
           <Dropdown
             label="Gender"
             name="gender"
+            placeholder="Select Gender"
             options={genders}
             type="basic-single"
           />
           <InputField
             label="Permanent Address"
+            placeholder="Enter Permanent Address"
             type="text"
             name="permanentAddress"
             required
@@ -74,6 +85,7 @@ export default function StallHolder() {
 
           <InputField
             label="Temporary Address"
+            placeholder="Enter Temporary Address"
             type="text"
             name="temporaryAddress"
             required
@@ -81,6 +93,7 @@ export default function StallHolder() {
 
           <InputField
             label="Primary Contact"
+            placeholder="Enter Primary Contact"
             type="text"
             name="primaryContact"
             required
@@ -88,15 +101,28 @@ export default function StallHolder() {
 
           <InputField
             label="Secondary Contact"
+            placeholder="Enter Secondary Contact"
             type="text"
             name="secondaryContact"
             required
           />
-          <InputField label="Application Ref #" type="text" name="refNo" />
+          <InputField
+            label="Application Ref #"
+            type="text"
+            name="refNo"
+            placeholder="Enter Application Ref #"
+          />
 
-          <InputField label="Remarks" type="text" name="remarks" required />
+          <InputField
+            label="Remarks"
+            type="text"
+            name="remarks"
+            required
+            placeholder="Enter Remarks"
+          />
           <InputField
             label="Referred By"
+            placeholder="Enter Referral"
             type="text"
             name="reference"
             required
@@ -104,6 +130,7 @@ export default function StallHolder() {
 
           <InputField
             label="Profession "
+            placeholder="Enter Profession"
             type="text"
             name="profession"
             required
@@ -123,6 +150,7 @@ export default function StallHolder() {
           <Dropdown
             label="Active"
             name="active-options"
+            placeholder="Select Status"
             options={activeOptions}
             type="basic-single"
           />

@@ -2,7 +2,15 @@ import React from "react";
 import Select from "react-select";
 import { useFormContext } from "react-hook-form";
 
-const Dropdown = ({ label, type, searchable, name, options, ...rest }) => {
+const Dropdown = ({
+  label,
+  type,
+  searchable,
+  name,
+  options,
+  placeholder,
+  ...rest
+}) => {
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
@@ -26,6 +34,7 @@ const Dropdown = ({ label, type, searchable, name, options, ...rest }) => {
       <Select
         id={name}
         options={options}
+        placeholder={placeholder}
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
         className={`${type} text-start`}

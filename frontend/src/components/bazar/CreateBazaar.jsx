@@ -34,11 +34,13 @@ const CreateBazaar = () => {
           <InputField
             label="Bazaar Name"
             type="text"
+            placeholder="Enter Bazaar Name"
             name="bazaarName"
             required
           />
           <InputField
             label="Bazaar Address"
+            placeholder="Enter Bazaar Address"
             type="text"
             name="bazaarAddress"
             required
@@ -46,6 +48,7 @@ const CreateBazaar = () => {
 
           <Dropdown
             label="City"
+            placeholder="Select City"
             name="city"
             options={cities}
             type="basic-single"
@@ -53,6 +56,7 @@ const CreateBazaar = () => {
           <InputField
             label="Permanent Base Rent"
             type="text"
+            placeholder="Enter Permanent Base Rent"
             name="permanentBaseRent"
             required="Permanent Base Rent is required"
             pattern={{
@@ -61,10 +65,17 @@ const CreateBazaar = () => {
             }}
           />
 
-          <InputField label="Prefix " type="text" name="prefix" required />
+          <InputField
+            label="Prefix "
+            type="text"
+            name="prefix"
+            required
+            placeholder="Enter Prefix"
+          />
 
           <InputField
             label="Total Stalls"
+            placeholder="Enter Total Number of Stalls"
             type="text"
             name="totalStalls"
             required="Total Stalls is required"
@@ -75,18 +86,21 @@ const CreateBazaar = () => {
           />
           <Dropdown
             label="Zone Manager"
+            placeholder="Select Zone Manager"
             name="zoneManager"
             options={activeOptions}
             type="basic-single"
           />
           <Dropdown
             label="Bazaar Manager"
+            placeholder="Select Bazaar Manager"
             name="bazaarManager"
             options={activeOptions}
             type="basic-single"
           />
           <Dropdown
             label="Supervisor"
+            placeholder="Select Supervisor"
             name="supervisor"
             options={activeOptions}
             type="basic-single"
@@ -94,6 +108,7 @@ const CreateBazaar = () => {
 
           <Dropdown
             label="Active"
+            placeholder="Select Status"
             name="active-options"
             options={activeOptions}
             type="basic-single"

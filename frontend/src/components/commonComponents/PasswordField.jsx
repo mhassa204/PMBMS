@@ -9,6 +9,7 @@ const PasswordField = ({
   required,
   minLength,
   maxLength,
+  placeholder,
   ...rest
 }) => {
   const { register, formState } = useFormContext();
@@ -34,6 +35,7 @@ const PasswordField = ({
           type={isPasswordVisible ? "text" : "password"}
           id={name}
           name={name}
+          placeholder={placeholder}
           className={`w-full border p-2 rounded ${
             errors[name] && "border-red-500"
           }`}

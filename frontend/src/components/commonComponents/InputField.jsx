@@ -1,7 +1,15 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const InputField = ({ label, type, name, required, pattern, ...rest }) => {
+const InputField = ({
+  label,
+  type,
+  name,
+  required,
+  placeholder,
+  pattern,
+  ...rest
+}) => {
   const { register, formState } = useFormContext();
   const { errors } = formState;
 
@@ -18,6 +26,7 @@ const InputField = ({ label, type, name, required, pattern, ...rest }) => {
         type={type || "text"}
         id={name}
         name={name}
+        placeholder={placeholder}
         className={`w-full border p-2 rounded ${
           errors[name] && "border-red-500"
         }`}
@@ -28,7 +37,7 @@ const InputField = ({ label, type, name, required, pattern, ...rest }) => {
         <p className="text-red-500 text-start text-sm mt-1">
           {errors[name].type === "required"
             ? `${label} is required`
-            : "Email is invalid"}
+            : errors[name].message}
         </p>
       )}
     </div>
