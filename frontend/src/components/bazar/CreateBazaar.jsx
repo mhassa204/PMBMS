@@ -1,6 +1,9 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import Select from "react-select";
+import { useForm, FormProvider } from "react-hook-form";
+import InputField from "@components/commonComponents/InputField";
+import ButtonComponent from "@components/commonComponents/ButtonComponent";
+import Dropdown from "@components/commonComponents/Dropdown";
+import ImageField from "@components/commonComponents/ImageField";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -14,13 +17,7 @@ const activeOptions = [
 ];
 
 const CreateBazaar = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    trigger,
-    formState: { errors },
-  } = useForm();
+  const methods = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -29,256 +26,85 @@ const CreateBazaar = () => {
   return (
     <div className="max-w-5xl mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
       <h2 className="text-2xl font-semibold mb-4">Create Bazaar</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-4"
-      >
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="bazarName"
-          >
-            Bazaar Name
-          </label>
-          <input
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="grid grid-cols-2 gap-4"
+        >
+          <InputField
+            label="Bazaar Name"
             type="text"
-            id="bazarName"
-            className="w-full border p-2 rounded"
-            {...register("bazarName", { required: "Bazaar Name is required" })}
+            name="bazaarName"
+            required
           />
-          {errors.bazarName && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.bazarName.message}
-            </p>
-          )}
-        </div>
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="bazaarAddress"
-          >
-            Bazaar Address
-          </label>
-          <input
+          <InputField
+            label="Bazaar Address"
             type="text"
-            id="bazaarAddress"
-            className="w-full border p-2 rounded"
-            {...register("bazaarAddress", {
-              required: "Bazaar Address is required",
-            })}
+            name="bazaarAddress"
+            required
           />
-          {errors.bazaarAddress && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.bazaarAddress.message}
-            </p>
-          )}
-        </div>
 
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="city"
-          >
-            City
-          </label>
-
-          <Select
-            id="city"
+          <Dropdown
+            label="City"
+            name="city"
             options={cities}
-            {...register("city", { required: "City is required" })}
-            onChange={(selectedOption) => {
-              setValue("city", selectedOption);
-              trigger("city");
-            }}
-            className="text-start"
+            type="basic-single"
           />
-          {errors.city && (
-            <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="baseRent"
-          >
-            Permanent Base Rent
-          </label>
-          <input
+          <InputField
+            label="Permanent Base Rent"
             type="text"
-            id="baseRent"
-            className="w-full border p-2 rounded"
-            {...register("baseRent", {
-              required: "Base Rent is required",
-              pattern: {
-                value: /\d+/,
-                message: "Base rent can only be in numbers",
-              },
-            })}
+            name="permanentBaseRent"
+            required="Permanent Base Rent is required"
+            pattern={{
+              value: /\d+/,
+              message: "Base rent can only be in numbers",
+            }}
           />
-          {errors.baseRent && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.baseRent.message}
-            </p>
-          )}
-        </div>
 
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="prefix"
-          >
-            Prefix
-          </label>
-          <input
+          <InputField label="Prefix " type="text" name="prefix" required />
+
+          <InputField
+            label="Total Stalls"
             type="text"
-            id="prefix"
-            className="w-full border p-2 rounded"
-            {...register("prefix", {
-              required: "Prefix is required",
-            })}
-          />
-          {errors.prefix && (
-            <p className="text-red-500 text-sm mt-1">{errors.prefix.message}</p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="totalStalls"
-          >
-            Total Stalls
-          </label>
-          <input
-            type="text"
-            id="totalStalls"
-            className="w-full border p-2 rounded"
-            {...register("totalStalls", {
-              required: "Total Stalls is required",
-              pattern: {
-                value: /\d+/,
-                message: "Total Stalls can only be in numbers",
-              },
-            })}
-          />
-          {errors.totalStalls && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.totalStalls.message}
-            </p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="zoneManager"
-          >
-            Zone Manager
-          </label>
-
-          <Select
-            id="zoneManager"
-            options={cities}
-            {...register("zoneManager", {
-              required: "Zone Manager is required",
-            })}
-            onChange={(selectedOption) => {
-              setValue("zoneManager", selectedOption);
-              trigger("zoneManager");
+            name="totalStalls"
+            required="Total Stalls is required"
+            pattern={{
+              value: /\d+/,
+              message: "Total Stalls can only be in numbers",
             }}
-            className="text-start"
           />
-          {errors.zoneManager && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.zoneManager.message}
-            </p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="bazaarManager"
-          >
-            Bazaar Manager
-          </label>
-
-          <Select
-            id="bazaarManager"
-            options={cities}
-            {...register("bazaarManager", {
-              required: "Bazaar Manager is required",
-            })}
-            onChange={(selectedOption) => {
-              setValue("bazaarManager", selectedOption);
-              trigger("bazaarManager");
-            }}
-            className="text-start"
-          />
-          {errors.bazaarManager && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.bazaarManager.message}
-            </p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="supervisor"
-          >
-            Supervisor
-          </label>
-
-          <Select
-            id="supervisor"
-            options={cities}
-            {...register("supervisor", { required: "Supervisor is required" })}
-            onChange={(selectedOption) => {
-              setValue("supervisor", selectedOption);
-              trigger("supervisor");
-            }}
-            className="text-start"
-          />
-          {errors.supervisor && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.supervisor.message}
-            </p>
-          )}
-        </div>
-
-        <div className=" col-span-2 lg:col-span-1">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
-            htmlFor="active"
-          >
-            Active
-          </label>
-          <Select
-            id="active"
+          <Dropdown
+            label="Zone Manager"
+            name="zoneManager"
             options={activeOptions}
-            {...register("active", { required: "Active status is required" })}
-            onChange={(selectedOption) => {
-              setValue("active", selectedOption);
-              trigger("active");
-            }}
-            className="text-start"
+            type="basic-single"
           />
-          {errors.active && (
-            <p className="text-red-500 text-sm mt-1">{errors.active.message}</p>
-          )}
-        </div>
+          <Dropdown
+            label="Bazaar Manager"
+            name="bazaarManager"
+            options={activeOptions}
+            type="basic-single"
+          />
+          <Dropdown
+            label="Supervisor"
+            name="supervisor"
+            options={activeOptions}
+            type="basic-single"
+          />
 
-        <div className=" col-span-2 flex justify-center">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+          <Dropdown
+            label="Active"
+            name="active-options"
+            options={activeOptions}
+            type="basic-single"
+          />
+
+          <ImageField label="Bazaar Image" name="bazaarImage" required />
+          <div className="mt-8">
+            <ButtonComponent type={"submit"} name={"Create Bazaar"} />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

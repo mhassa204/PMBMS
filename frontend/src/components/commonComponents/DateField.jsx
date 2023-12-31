@@ -1,9 +1,14 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const InputField = ({ label, type, name, required, pattern, ...rest }) => {
-  const { register, formState } = useFormContext();
+const DateField = ({ label, name, required, ...rest }) => {
+  const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
+
+  const handleChange = (e) => {
+    setValue(name, e.target.value);
+    trigger(name);
+  };
 
   return (
     <div className="mb-4">
@@ -15,24 +20,20 @@ const InputField = ({ label, type, name, required, pattern, ...rest }) => {
         {required && <span className="text-red-500">*</span>}
       </label>
       <input
-        type={type || "text"}
+        type="date"
         id={name}
-        name={name}
-        className={`w-full border p-2 rounded ${
-          errors[name] && "border-red-500"
-        }`}
-        {...register(name, { required, pattern })}
+        {...register(name, { required: `${label} is required` })}
+        onChange={handleChange}
         {...rest}
+        className="border rounded-md px-3 py-2 w-full text-start"
       />
       {errors[name] && (
         <p className="text-red-500 text-start text-sm mt-1">
-          {errors[name].type === "required"
-            ? `${label} is required`
-            : "Email is invalid"}
+          {label} is required
         </p>
       )}
     </div>
   );
 };
 
-export default InputField;
+export default DateField;
