@@ -195,7 +195,7 @@ export default function StallHolder() {
               className="flex bg-[#0b6323] rounded-none items-center gap-2"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-stall");
+                navigate("/admin/create-stallHolder");
               }}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new stall

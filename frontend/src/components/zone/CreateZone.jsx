@@ -189,6 +189,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
+import Breadcrumb from "@components/commonComponents/Breadcrumb";
 
 const CreateZone = () => {
   const methods = useForm();
@@ -229,53 +230,61 @@ const CreateZone = () => {
     { value: "active", label: "Active" },
   ];
 
+  const breadcrumbItems = [
+    { label: "Zone List", path: "/admin/zone-list" },
+    { label: "Create Zone" },
+  ];
+
   return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
-      <h2 className="text-2xl font-semibold mb-4">Create Zone</h2>
+    <div className="p-4">
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="max-w-2xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
+        <h2 className="text-2xl font-semibold mb-4">Create Zone</h2>
 
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputField
-            label="Zone Name"
-            type="text"
-            name="zoneName"
-            required
-            placeholder="Enter Zone Name"
-          />
-          <Dropdown
-            label="Province"
-            name="province"
-            placeholder="Select Province "
-            options={provinces}
-            type="basic-single"
-          />
-          <Dropdown
-            label="Cities"
-            name="city"
-            placeholder="Select Cities"
-            options={provinces}
-            type="basic-multi-select"
-            searchable={false}
-          />
-          <Dropdown
-            label="Zone Manager"
-            placeholder="Select Zone Manager"
-            name="manager"
-            options={provinces}
-            type="basic-single"
-          />
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <InputField
+              label="Zone Name"
+              type="text"
+              name="zoneName"
+              required
+              placeholder="Enter Zone Name"
+            />
+            <Dropdown
+              label="Province"
+              name="province"
+              placeholder="Select Province "
+              options={provinces}
+              type="basic-single"
+            />
+            <Dropdown
+              label="Cities"
+              name="city"
+              placeholder="Select Cities"
+              options={provinces}
+              type="basic-multi-select"
+              searchable={false}
+            />
+            <Dropdown
+              label="Zone Manager"
+              placeholder="Select Zone Manager"
+              name="manager"
+              options={provinces}
+              type="basic-single"
+            />
 
-          <Dropdown
-            label="Active"
-            placeholder="Select Status"
-            name="active-options"
-            options={activeOptions}
-            type="basic-single"
-          />
+            <Dropdown
+              label="Active"
+              placeholder="Select Status"
+              name="active-options"
+              options={activeOptions}
+              type="basic-single"
+            />
 
-          <ButtonComponent type={"submit"} name={"Create Zone"} />
-        </form>
-      </FormProvider>
+            <ButtonComponent type={"submit"} name={"Create Zone"} />
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 };

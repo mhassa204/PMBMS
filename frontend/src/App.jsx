@@ -28,13 +28,15 @@ import VoucherCreation from "@components/voucher/VoucherCreation";
 import Users from "@components/user/Users";
 import StallList from "@components/stall/StallList";
 import CreateStallHolder from "@components/stall/CreateStallHolder";
+import Login from "@pages/authentication/Login";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/landing-page" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
 
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />

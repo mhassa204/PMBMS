@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "../styles/landingPage.css";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -20,7 +22,7 @@ const LandingPage = () => {
     <div>
       <section className="bg-blue-50">
         <nav className="flex items-center justify-between navBar">
-          <p className="font-bold text-lg cursor-pointer">govBazar</p>
+          <p className="font-bold text-lg cursor-pointer">GovBazar</p>
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
@@ -59,7 +61,10 @@ const LandingPage = () => {
             <p className="px-3 navElems">Sign Up</p>
             <button
               className="py-1.5 px-4 text-white mx-3"
-              style={{ backgroundColor: "#16356a" }}
+              style={{ backgroundColor: "#0b6323" }}
+              onClick={() => {
+                navigate("/login");
+              }}
             >
               LOGIN
             </button>
@@ -83,7 +88,7 @@ const LandingPage = () => {
             <div className="flex flex-col md:flex-row gapBtn justify-center md:justify-start">
               <button
                 className="w-full md:w-44 py-2 transitionBtn"
-                style={{ backgroundColor: "#16356a", color: "white" }}
+                style={{ backgroundColor: "#0b6323", color: "white" }}
               >
                 Register
               </button>
@@ -118,7 +123,7 @@ const LandingPage = () => {
         <div className="flex my-5">
           <div
             className="flex items-center justify-center px-8 py-2 rounded-tl-2xl rounded-bl-2xl"
-            style={{ backgroundColor: "#16356a", color: "white" }}
+            style={{ backgroundColor: "#0b6323", color: "white" }}
           >
             <p>Zones</p>
           </div>
@@ -231,13 +236,13 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <footer style={{ backgroundColor: "#16356a" }} className="px-32 pt-6">
+      <footer style={{ backgroundColor: "#2f9149" }} className="px-32 pt-6">
         <div class="mx-auto w-full max-w-screen-xl  lg:py-8">
           <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
               <a href="" class="flex items-center">
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                  govBazar
+                  GovBazar
                 </span>
               </a>
             </div>
@@ -248,12 +253,18 @@ const LandingPage = () => {
                 </h2>
                 <ul class="text-gray-500 dark:text-gray-400 font-medium">
                   <li class="mb-4">
-                    <a href="https://flowbite.com/" class="hover:underline">
+                    <a
+                      href="https://flowbite.com/"
+                      className="hover:underline text-[#1F421E]"
+                    >
                       About Us
                     </a>
                   </li>
                   <li>
-                    <a href="https://tailwindcss.com/" class="hover:underline">
+                    <a
+                      href="https://tailwindcss.com/"
+                      className="hover:underline text-[#1F421E]"
+                    >
                       Contact Us
                     </a>
                   </li>
@@ -267,7 +278,7 @@ const LandingPage = () => {
                   <li class="mb-4">
                     <a
                       href="https://github.com/themesberg/flowbite"
-                      class="hover:underline "
+                      className="hover:underline text-[#1F421E]"
                     >
                       Github
                     </a>
@@ -275,7 +286,7 @@ const LandingPage = () => {
                   <li>
                     <a
                       href="https://discord.gg/4eeurUVvTy"
-                      class="hover:underline"
+                      className="hover:underline text-[#1F421E]"
                     >
                       Discord
                     </a>
@@ -288,12 +299,12 @@ const LandingPage = () => {
                 </h2>
                 <ul class="text-gray-500 dark:text-gray-400 font-medium">
                   <li class="mb-4">
-                    <a href="#" class="hover:underline">
+                    <a href="#" className="hover:underline text-[#1F421E]">
                       Privacy Policy
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="hover:underline">
+                    <a href="#" className="hover:underline text-[#1F421E]">
                       Terms &amp; Conditions
                     </a>
                   </li>
@@ -305,8 +316,11 @@ const LandingPage = () => {
           <div class="sm:flex sm:items-center sm:justify-between ">
             <span class="text-sm text-white sm:text-center ">
               © 2023{" "}
-              <a href="https://flowbite.com/" class="hover:underline">
-                govBazar™
+              <a
+                href="https://flowbite.com/"
+                className="hover:underline text-[#1F421E]"
+              >
+                GovBazar™
               </a>
               . All Rights Reserved.
             </span>

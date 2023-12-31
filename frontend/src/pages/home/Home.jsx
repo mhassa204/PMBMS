@@ -57,9 +57,9 @@ export default function Home() {
 
   const styles = {
     prefixIcon: "h-5 h-5 me-2",
-    listItem: "hover:bg-blue-100 font-semibold hover:text-blue-900 h-[45px]",
+    listItem: "hover:bg-[#C0F9BF] font-semibold hover:text-[#1F421E] h-[45px]",
     list: "p-0 flex flex-column",
-    selectedListItem: "bg-blue-200 hover:text-blue-0 hover:bg-blue-200",
+    selectedListItem: "bg-[#C0F9BF] hover:text-blue-0 hover:bg-[#C0F9BF]",
   };
 
   useEffect(() => {
