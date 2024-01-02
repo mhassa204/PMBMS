@@ -138,7 +138,7 @@ export default function Zones() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex bg-[#0b6323] rounded-none items-center gap-2"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-zone");
