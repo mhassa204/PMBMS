@@ -15,7 +15,42 @@ const cities = [
 const activeOptions = [
   { value: "not-active", label: "Not Active" },
   { value: "active", label: "Active" },
+  { value: "disabled", label: "Disabled" },
 ];
+
+const shopType = [
+  { value: "outlet", label: "Outlet" },
+  { value: "stall", label: "Stall" },
+  { value: "Masjid", label: "Masjid" },
+  { value: "food-court", label: "Food Court" },
+  { value: "playarea", label: "Play Area" },
+];
+
+const zone = [
+  { value: "zone1", label: "Zone 1" },
+  { value: "zone2", label: "Zone 2" },
+  { value: "zone3", label: "Zone 3" },
+  { value: "zone4", label: "Zone 4" },
+
+  { value: "zone5", label: "Zone 5" },
+];
+const bazaarManager = [
+  { value: "bazaarManager1", label: "Bazaar Manager 1" },
+  { value: "bazaarManager2", label: "Bazaar Manager 2" },
+  { value: "bazaarManager3", label: "Bazaar Manager 3" },
+  { value: "bazaarManager4", label: "Bazaar Manager 4" },
+
+  { value: "bazaarManager5", label: "Bazaar Manager 5" },
+];
+const supervisor = [
+  { value: "supervisor1", label: "Supervisor 1" },
+  { value: "supervisor2", label: "Supervisor 2" },
+  { value: "supervisor3", label: "Supervisor 3" },
+  { value: "supervisor4", label: "Supervisor 4" },
+
+  { value: "supervisor5", label: "Supervisor 5" },
+];
+
 const breadcrumbItems = [
   { label: "Bazar List", path: "/admin/bazar-list" },
   { label: "Create Bazar" },
@@ -71,7 +106,7 @@ const CreateBazaar = () => {
               label="Shop Type"
               placeholder="Select shop type"
               name="shopType"
-              options={activeOptions}
+              options={shopType}
               type="basic-single"
             />
             <div className="grid grid-cols-2 gap-x-4">
@@ -101,7 +136,7 @@ const CreateBazaar = () => {
               label="Zone"
               placeholder="Select a zone"
               name="zone"
-              options={activeOptions}
+              options={zone}
               type="basic-single"
             />
             <InputField
@@ -115,14 +150,14 @@ const CreateBazaar = () => {
               label="Bazaar Manager"
               placeholder="Select Bazaar Manager"
               name="bazaarManager"
-              options={activeOptions}
+              options={bazaarManager}
               type="basic-single"
             />
             <Dropdown
               label="Supervisor"
               placeholder="Select Supervisor"
               name="supervisor"
-              options={activeOptions}
+              options={supervisor}
               type="basic-single"
             />
 

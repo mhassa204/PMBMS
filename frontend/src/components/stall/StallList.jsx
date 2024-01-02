@@ -20,6 +20,7 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
 
 export default function StallList() {
   const navigate = useNavigate();
@@ -38,19 +39,29 @@ export default function StallList() {
     },
   ];
 
-  const TABLE_HEAD = [
-    "Stall ID",
-    "Stall Code",
-    "Size",
-    "Bazar Name",
-    "Stall Category",
-    "Stall Type",
-    "Status",
-    "Late Fine",
-    "Monthly Rent",
-    "Actions",
+  const columns = [
+    { Header: "Stall ID", accessor: "StallID" },
+    { Header: "Stall Code", accessor: "StallCode" },
+    { Header: "Size", accessor: "Size" },
+    { Header: "Bazar Name", accessor: "BazarName" },
+    { Header: "Stall Category", accessor: "StallCategory" },
+    { Header: "Stall Type", accessor: "StallType" },
+    { Header: "Status", accessor: "Status" },
+    { Header: "Late Fine", accessor: "LateFine" },
+    { Header: "Monthly Rent", accessor: "MonthlyRent" },
+    {
+      Header: "Actions",
+      accessor: "Actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
   ];
-  const TABLE_ROWS = [
+
+  const data = [
     {
       StallID: "1",
       StallCode: "SC001",
@@ -61,6 +72,7 @@ export default function StallList() {
       Status: "Active",
       LateFine: "$10",
       MonthlyRent: "$500",
+      Actions: "",
     },
     {
       StallID: "2",
@@ -72,6 +84,7 @@ export default function StallList() {
       Status: "Inactive",
       LateFine: "$5",
       MonthlyRent: "$300",
+      Actions: "",
     },
     {
       StallID: "3",
@@ -83,6 +96,7 @@ export default function StallList() {
       Status: "Active",
       LateFine: "$15",
       MonthlyRent: "$600",
+      Actions: "",
     },
     {
       StallID: "4",
@@ -94,6 +108,7 @@ export default function StallList() {
       Status: "Inactive",
       LateFine: "$8",
       MonthlyRent: "$450",
+      Actions: "",
     },
     {
       StallID: "5",
@@ -105,6 +120,7 @@ export default function StallList() {
       Status: "Active",
       LateFine: "$12",
       MonthlyRent: "$550",
+      Actions: "",
     },
     {
       StallID: "6",
@@ -116,6 +132,7 @@ export default function StallList() {
       Status: "Inactive",
       LateFine: "$7",
       MonthlyRent: "$400",
+      Actions: "",
     },
     {
       StallID: "7",
@@ -127,6 +144,7 @@ export default function StallList() {
       Status: "Active",
       LateFine: "$11",
       MonthlyRent: "$520",
+      Actions: "",
     },
     {
       StallID: "8",
@@ -138,6 +156,7 @@ export default function StallList() {
       Status: "Inactive",
       LateFine: "$6",
       MonthlyRent: "$380",
+      Actions: "",
     },
   ];
 
@@ -165,7 +184,7 @@ export default function StallList() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -201,168 +220,12 @@ export default function StallList() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardBody className="px-4 ">
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
-                  >
-                    {head}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              (
-                {
-                  StallID,
-                  StallCode,
-                  Size,
-                  BazarName,
-                  StallCategory,
-                  StallType,
-                  Status,
-                  LateFine,
-                  MonthlyRent,
-                },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={index} className="bg-white">
-                    {/* Zone Name */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallID}
-                      </Typography>
-                    </td>
-                    {/* Province */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallCode}
-                      </Typography>
-                    </td>
-                    {/* Cities in Zone */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Size}
-                      </Typography>
-                    </td>
-                    {/* Zone Manager */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        // color="blue-gray"
-                        className="font-normal"
-                      >
-                        {BazarName}
-                      </Typography>
-                    </td>
-                    {/* Zone District */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallCategory}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallType}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Status}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {LateFine}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {MonthlyRent}
-                      </Typography>
-                    </td>
-                    {/* Actions (Edit and Delete buttons) */}
-                    <td className={classes}>
-                      <div className="flex gap-2">
-                        <EditButton />
-                        <DeleteButton />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+        <Tables columns={columns} data={data} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

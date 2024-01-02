@@ -13,16 +13,19 @@ const cities = [
 ];
 
 const userTypes = [
-  { value: "supervisor", label: "Supervisor" },
-  { value: "bazar-manager", label: "Bazar Manager" },
-  { value: "admin", label: "Admin" },
   { value: "super-admin", label: "Super Admin" },
+
+  { value: "admin", label: "Admin" },
+
   { value: "zone-manager", label: "Zone Manager" },
+  { value: "bazar-manager", label: "Bazar Manager" },
+  { value: "supervisor", label: "Supervisor" },
 ];
 
 const activeOptions = [
   { value: "not-active", label: "Not Active" },
   { value: "active", label: "Active" },
+  { value: "disabled", label: "Disabled" },
 ];
 
 const breadcrumbItems = [
@@ -92,7 +95,7 @@ const CreateUser = () => {
               label="User Type"
               placeholder="Select User Type"
               name="userType"
-              options={cities}
+              options={userTypes}
               type="basic-single"
             />
             <Dropdown

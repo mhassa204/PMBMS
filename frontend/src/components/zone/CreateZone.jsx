@@ -225,9 +225,17 @@ const CreateZone = () => {
     },
   ];
 
+  const zoneManager = [
+    { label: "Zone Manager 1", value: "zone-manager1" },
+    { label: "Zone Manager 2", value: "zone-manager2" },
+    { label: "Zone Manager 3", value: "zone-manager3" },
+    { label: "Zone Manager 4", value: "zone-manager4" },
+  ];
+
   const activeOptions = [
     { value: "not-active", label: "Not Active" },
     { value: "active", label: "Active" },
+    { value: "disabled", label: "Disabled" },
   ];
 
   const breadcrumbItems = [
@@ -269,7 +277,7 @@ const CreateZone = () => {
               label="Zone Manager"
               placeholder="Select Zone Manager"
               name="manager"
-              options={provinces}
+              options={zoneManager}
               type="basic-single"
             />
 

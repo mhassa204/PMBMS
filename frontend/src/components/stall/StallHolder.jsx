@@ -20,6 +20,7 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
 
 export default function StallHolder() {
   const navigate = useNavigate();
@@ -37,25 +38,33 @@ export default function StallHolder() {
       value: "unmonitored",
     },
   ];
-
-  const TABLE_HEAD = [
-    "Prefix",
-    "Stall Holder Name",
-    "Father/Husband Name",
-    "DOB",
-    "CNIC",
-    "CNIC Expiry",
-    "Gender",
-    "Primary Contact",
-    "CNIC Front Image",
-    "CNIC Back Image",
-    "Face Picture",
-    "Biometric Image",
-    "Status",
-    "Actions",
+  const columns = [
+    { Header: "Prefix", accessor: "Prefix" },
+    { Header: "Stall Holder Name", accessor: "StallHolderName" },
+    { Header: "Father/Husband Name", accessor: "FatherHusbandName" },
+    { Header: "DOB", accessor: "DOB" },
+    { Header: "CNIC", accessor: "CNIC" },
+    { Header: "CNIC Expiry", accessor: "CNICExpiry" },
+    { Header: "Gender", accessor: "Gender" },
+    { Header: "Primary Contact", accessor: "PrimaryContact" },
+    { Header: "CNIC Front Image", accessor: "CNICFrontImage" },
+    { Header: "CNIC Back Image", accessor: "CNICBackImage" },
+    { Header: "Face Picture", accessor: "FacePicture" },
+    { Header: "Biometric Image", accessor: "BiometricImage" },
+    { Header: "Status", accessor: "Status" },
+    {
+      Header: "Actions",
+      accessor: "Actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
   ];
 
-  const TABLE_ROWS = [
+  const data = [
     {
       Prefix: "SH001",
       StallHolderName: "John Doe",
@@ -70,6 +79,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Active",
+      Actions: "",
     },
     {
       Prefix: "SH002",
@@ -85,6 +95,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Inactive",
+      Actions: "",
     },
     {
       Prefix: "SH003",
@@ -100,6 +111,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/nopqr.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
+      Actions: "",
     },
     {
       Prefix: "SH004",
@@ -115,6 +127,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/ijklm.jpg",
       Status: "Active",
+      Actions: "",
     },
     {
       Prefix: "SH005",
@@ -130,6 +143,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Inactive",
+      Actions: "",
     },
     {
       Prefix: "SH006",
@@ -145,6 +159,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
+      Actions: "",
     },
     {
       Prefix: "SH007",
@@ -160,6 +175,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Inactive",
+      Actions: "",
     },
     {
       Prefix: "SH008",
@@ -175,6 +191,7 @@ export default function StallHolder() {
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
+      Actions: "",
     },
   ];
 
@@ -203,7 +220,7 @@ export default function StallHolder() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -239,209 +256,12 @@ export default function StallHolder() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardBody className="px-4 ">
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
-                  >
-                    {head}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              (
-                {
-                  Prefix,
-                  StallHolderName,
-                  FatherHusbandName,
-                  DOB,
-                  CNIC,
-                  CNICExpiry,
-                  Gender,
-                  PrimaryContact,
-                  CNICFrontImage,
-                  CNICBackImage,
-                  FacePicture,
-                  BiometricImage,
-                  Status,
-                },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={index} className="bg-white">
-                    {/* Zone Name */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Prefix}
-                      </Typography>
-                    </td>
-                    {/* Province */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {StallHolderName}
-                      </Typography>
-                    </td>
-                    {/* Cities in Zone */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {FatherHusbandName}
-                      </Typography>
-                    </td>
-                    {/* Zone Manager */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        // color="blue-gray"
-                        className="font-normal"
-                      >
-                        {DOB}
-                      </Typography>
-                    </td>
-                    {/* Zone District */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CNIC}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CNICExpiry}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Gender}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {PrimaryContact}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CNICFrontImage}
-                      </Typography>
-                    </td>
-
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CNICBackImage}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {FacePicture}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {BiometricImage}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Status}
-                      </Typography>
-                    </td>
-                    {/* Actions (Edit and Delete buttons) */}
-                    <td className={classes}>
-                      <div className="flex gap-2">
-                        <EditButton />
-                        <DeleteButton />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+        <Tables columns={columns} data={data} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

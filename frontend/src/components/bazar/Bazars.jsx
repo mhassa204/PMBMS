@@ -20,6 +20,7 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
 
 export default function Bazars() {
   const navigate = useNavigate();
@@ -39,20 +40,36 @@ export default function Bazars() {
   ];
 
   const TABLE_HEAD = [
-    "Bazar Name",
-    "Bazar Address",
-    "Status",
-    "Default Rent of Permanant Stall",
-    "Total Stalls",
-    "Prefix",
-    "Bazar Image",
-    "City",
-    "Bazar Manager",
-    "Zone Manager",
-    "Temporary Stall",
-    "Default Rent of Temporary Stall",
-    "Actions",
+    { Header: "Bazar Name", accessor: "bazarName" },
+    { Header: "Bazar Address", accessor: "bazarAddress" },
+    { Header: "Status", accessor: "Status" },
+    {
+      Header: "Default Rent of Permanent Stall",
+      accessor: "defaultRentOfPermanentStall",
+    },
+    { Header: "Total Stalls", accessor: "totalStalls" },
+    { Header: "Prefix", accessor: "Prefix" },
+    { Header: "Bazar Image", accessor: "bazarImage" },
+    { Header: "City", accessor: "City" },
+    { Header: "Bazar Manager", accessor: "bazarManager" },
+    { Header: "Zone Manager", accessor: "zoneManager" },
+    { Header: "Temporary Stall", accessor: "temporaryStall" },
+    {
+      Header: "Default Rent of Temporary Stall",
+      accessor: "defaultRentOfTemporaryStall",
+    },
+    {
+      Header: "Actions",
+      accessor: "Actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
   ];
+
   const TABLE_ROWS = [
     {
       bazarName: "John Michael",
@@ -68,6 +85,7 @@ export default function Bazars() {
       zoneManager: "Bob Smith",
       temporaryStall: "Yes",
       defaultRentOfTemporaryStall: "$300",
+      Actions: "",
     },
     {
       bazarName: "Alexa Liras",
@@ -83,6 +101,7 @@ export default function Bazars() {
       zoneManager: "David Johnson",
       temporaryStall: "No",
       defaultRentOfTemporaryStall: "$250",
+      Actions: "",
     },
     {
       bazarName: "Laurent Perrier",
@@ -98,6 +117,7 @@ export default function Bazars() {
       zoneManager: "Frank Adams",
       temporaryStall: "Yes",
       defaultRentOfTemporaryStall: "$350",
+      Actions: "",
     },
     {
       bazarName: "Michael Levi",
@@ -113,6 +133,7 @@ export default function Bazars() {
       zoneManager: "Henry Clark",
       temporaryStall: "No",
       defaultRentOfTemporaryStall: "$275",
+      Actions: "",
     },
     {
       bazarName: "Richard Gran",
@@ -128,6 +149,7 @@ export default function Bazars() {
       zoneManager: "Jack Turner",
       temporaryStall: "Yes",
       defaultRentOfTemporaryStall: "$325",
+      Actions: "",
     },
     {
       bazarName: "Alice Doe",
@@ -143,6 +165,7 @@ export default function Bazars() {
       zoneManager: "Laura Evans",
       temporaryStall: "No",
       defaultRentOfTemporaryStall: "$280",
+      Actions: "",
     },
     {
       bazarName: "Charlie Brown",
@@ -158,6 +181,7 @@ export default function Bazars() {
       zoneManager: "Nick Carter",
       temporaryStall: "Yes",
       defaultRentOfTemporaryStall: "$300",
+      Actions: "",
     },
     {
       bazarName: "David Johnson",
@@ -173,6 +197,7 @@ export default function Bazars() {
       zoneManager: "Paul Taylor",
       temporaryStall: "No",
       defaultRentOfTemporaryStall: "$260",
+      Actions: "",
     },
   ];
 
@@ -203,7 +228,7 @@ export default function Bazars() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -239,220 +264,12 @@ export default function Bazars() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardBody className="px-4 ">
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
-                  >
-                    {head}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              (
-                {
-                  bazarName,
-                  bazarAddress,
-                  Status,
-                  defaultRentOfPermanentStall,
-                  totalStalls,
-                  Prefix,
-                  bazarImage,
-                  City,
-                  bazarManager,
-                  zoneManager,
-                  temporaryStall,
-                  defaultRentOfTemporaryStall,
-                },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={index} className="bg-white">
-                    <td className={classes}>
-                      <div className="flex items-center min-w-[200px] gap-3">
-                        <Avatar
-                          src={bazarImage}
-                          alt={bazarName}
-                          size=""
-                          className="h-10 w-10 rounded-full"
-                        />
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {bazarName}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {bazarAddress}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {bazarManager}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {zoneManager}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={Status}
-                          color={Status === "Active" ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {defaultRentOfPermanentStall}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {totalStalls}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Prefix}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {City}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {temporaryStall}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {defaultRentOfTemporaryStall}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {zoneManager}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {temporaryStall}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {defaultRentOfTemporaryStall}
-                      </Typography>
-                    </td>
-
-                    <td className={classes}>
-                      <div className="flex gap-2">
-                        <EditButton />
-                        <DeleteButton />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+        <Tables columns={TABLE_HEAD} data={TABLE_ROWS} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

@@ -22,6 +22,7 @@ export default function CreateStallHolder() {
   const activeOptions = [
     { value: "not-active", label: "Not Active" },
     { value: "active", label: "Active" },
+    { value: "disabled", label: "Disabled" },
   ];
 
   const breadcrumbItems = [
