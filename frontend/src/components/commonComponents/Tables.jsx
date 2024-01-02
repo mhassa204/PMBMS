@@ -71,7 +71,10 @@ const Tables = ({ columns, data }) => {
                   className="bg-white border-b border-blue-gray-50"
                 >
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="p-3 text-sm">
+                    <td
+                      {...cell.getCellProps()}
+                      className="py-3 px-1 text-sm w-max"
+                    >
                       {cell.render("Cell")}
                     </td>
                   ))}
