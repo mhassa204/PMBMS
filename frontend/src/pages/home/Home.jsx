@@ -103,6 +103,12 @@ export default function Home() {
 
   const basicSetupListItems = [
     {
+      to: "user-list",
+      active: "user-list",
+      icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
+      text: "Users",
+    },
+    {
       to: "zone-list",
       active: "zone-list",
 
@@ -111,41 +117,17 @@ export default function Home() {
       ),
       text: "Zones",
     },
-    // {
-    //   to: "city-list",
-    //   active: "city-list",
-    //   icon: <FaCity className={`w-4 h-4 me-2 ms-1`} />,
-    //   text: "City",
-    // },
     {
-      to: "user-list",
-      active: "user-list",
-      icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
-      text: "Users",
+      to: "stall-types",
+      active: "stall-types",
+      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Shop Types",
     },
     {
       to: "stall-categories",
       active: "stall-categories",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
-      text: "Stall Category",
-    },
-    {
-      to: "cancellation-reasons",
-      active: "cancellation-reasons",
-      icon: <MdFreeCancellation className={`w-4 h-4 me-2 ms-1`} />,
-      text: "Cancellation Reasons",
-    },
-    {
-      to: "income-category",
-      active: "income-category",
-      icon: <CurrencyDollarIcon className={`w-4 h-4 me-2 ms-1`} />,
-      text: "Income Category",
-    },
-    {
-      to: "stall-types",
-      active: "stall-types",
-      icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
-      text: "Stall Types",
+      text: "Shop Category",
     },
     {
       to: "bazar-list",
@@ -153,11 +135,25 @@ export default function Home() {
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Bazar",
     },
+
+    {
+      to: "income-category",
+      active: "income-category",
+      icon: <CurrencyDollarIcon className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Income Category",
+    },
+
     {
       to: "stall-holders",
       active: "stall-holders",
       icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
       text: "Stall Holder",
+    },
+    {
+      to: "cancellation-reasons",
+      active: "cancellation-reasons",
+      icon: <MdFreeCancellation className={`w-4 h-4 me-2 ms-1`} />,
+      text: "Cancellation Reasons",
     },
   ];
 

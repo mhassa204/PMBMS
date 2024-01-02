@@ -49,6 +49,17 @@ const CreateUser = () => {
             className="grid grid-cols-2 gap-x-4"
           >
             <InputField
+              label="Email"
+              type="text"
+              name="email"
+              placeholder="Enter Email"
+              required="Email is required"
+              pattern={{
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Invalid email address",
+              }}
+            />
+            <InputField
               label="Username"
               type="text"
               name="userName"
@@ -64,14 +75,6 @@ const CreateUser = () => {
               maxLength={20}
             />
             <Dropdown
-              label="User Type"
-              placeholder="Select User Type"
-              name="userType"
-              options={cities}
-              type="basic-single"
-            />
-
-            <Dropdown
               label="City"
               name="city"
               placeholder="Select City"
@@ -79,23 +82,18 @@ const CreateUser = () => {
               type="basic-single"
             />
             <InputField
-              label="Email"
-              type="text"
-              name="email"
-              placeholder="Enter Email"
-              required="Email is required"
-              pattern={{
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Invalid email address",
-              }}
-            />
-
-            <InputField
               label=" Mobile Number"
               placeholder="Enter Mobile Number"
               type="text"
               name="mobileNumber"
               required
+            />
+            <Dropdown
+              label="User Type"
+              placeholder="Select User Type"
+              name="userType"
+              options={cities}
+              type="basic-single"
             />
             <Dropdown
               label="Active"
@@ -105,7 +103,7 @@ const CreateUser = () => {
               type="basic-single"
             />
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create Bazaar"} />
+              <ButtonComponent type={"submit"} name={"Create User"} />
             </div>
           </form>
         </FormProvider>

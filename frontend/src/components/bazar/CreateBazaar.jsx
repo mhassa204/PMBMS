@@ -31,7 +31,7 @@ const CreateBazaar = () => {
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
-      <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
+      <div className="max-w-3xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
         <h2 className="text-2xl font-semibold mb-4">Create Bazaar</h2>
         <FormProvider {...methods}>
           <form
@@ -52,7 +52,6 @@ const CreateBazaar = () => {
               name="bazaarAddress"
               required
             />
-
             <Dropdown
               label="City"
               placeholder="Select City"
@@ -61,17 +60,36 @@ const CreateBazaar = () => {
               type="basic-single"
             />
             <InputField
-              label="Permanent Base Rent"
-              type="text"
-              placeholder="Enter Permanent Base Rent"
-              name="permanentBaseRent"
-              required="Permanent Base Rent is required"
-              pattern={{
-                value: /\d+/,
-                message: "Base rent can only be in numbers",
-              }}
+              label="Approved Shops"
+              type="number"
+              placeholder="Enter number of approved shops"
+              name="approvedShops"
+              required="Number of approved shops is required"
+              min={0}
             />
-
+            <Dropdown
+              label="Shop Type"
+              placeholder="Select shop type"
+              name="shopType"
+              options={activeOptions}
+              type="basic-single"
+            />
+            <div className="grid grid-cols-2 gap-x-4">
+              <InputField
+                label="Total Shops"
+                placeholder="Enter total number of shops"
+                type="number"
+                name="totalShops"
+                required="Total shops is required"
+              />
+              <InputField
+                label="Base Rent"
+                placeholder="Enter base rent"
+                type="number"
+                name="baseRent"
+                required="Base rent is required"
+              />
+            </div>
             <InputField
               label="Prefix "
               type="text"
@@ -79,24 +97,19 @@ const CreateBazaar = () => {
               required
               placeholder="Enter Prefix"
             />
-
-            <InputField
-              label="Total Stalls"
-              placeholder="Enter Total Number of Stalls"
-              type="text"
-              name="totalStalls"
-              required="Total Stalls is required"
-              pattern={{
-                value: /\d+/,
-                message: "Total Stalls can only be in numbers",
-              }}
-            />
             <Dropdown
-              label="Zone Manager"
-              placeholder="Select Zone Manager"
-              name="zoneManager"
+              label="Zone"
+              placeholder="Select a zone"
+              name="zone"
               options={activeOptions}
               type="basic-single"
+            />
+            <InputField
+              label="Zone Manager"
+              placeholder="Zone manager"
+              name="zoneManager"
+              type="text"
+              disabled={true}
             />
             <Dropdown
               label="Bazaar Manager"
@@ -120,7 +133,6 @@ const CreateBazaar = () => {
               options={activeOptions}
               type="basic-single"
             />
-
             <ImageField label="Bazaar Image" name="bazaarImage" required />
             <div className="mt-5">
               <ButtonComponent type={"submit"} name={"Create Bazaar"} />

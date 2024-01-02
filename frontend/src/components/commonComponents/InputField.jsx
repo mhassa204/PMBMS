@@ -8,7 +8,9 @@ const InputField = ({
   required,
   placeholder,
   pattern,
-
+  min,
+  max,
+  disabled,
   ...rest
 }) => {
   const { register, formState } = useFormContext();
@@ -28,6 +30,9 @@ const InputField = ({
         id={name}
         name={name}
         placeholder={placeholder}
+        min={min}
+        max={max}
+        disabled={disabled}
         className={`w-full h-[40px] border border-gray-900  p-2 rounded-md ${
           errors[name] && "border-red-500"
         }`}

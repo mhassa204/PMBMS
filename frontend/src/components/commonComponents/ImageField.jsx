@@ -34,7 +34,7 @@ const ImageField = ({ label, name, required, ...rest }) => {
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
         {...rest}
-        className="border rounded-md px-3 py-2 w-full text-start"
+        className="py-1 w-full text-start"
       />
       {imagePreview && (
         <img
