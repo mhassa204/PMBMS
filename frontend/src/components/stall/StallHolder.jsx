@@ -21,6 +21,8 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
+import front from "@images/front.jpg";
+import back from "@images/back.jpg";
 
 export default function StallHolder() {
   const navigate = useNavigate();
@@ -74,8 +76,8 @@ export default function StallHolder() {
       CNICExpiry: "2025-05-15",
       Gender: "Male",
       PrimaryContact: "+1 123 456 7890",
-      CNICFrontImage: "https://i.imgur.com/12345.jpg",
-      CNICBackImage: "https://i.imgur.com/67890.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Active",
@@ -90,8 +92,8 @@ export default function StallHolder() {
       CNICExpiry: "2024-08-20",
       Gender: "Female",
       PrimaryContact: "+1 987 654 3210",
-      CNICFrontImage: "https://i.imgur.com/fghij.jpg",
-      CNICBackImage: "https://i.imgur.com/klmno.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Inactive",
@@ -106,8 +108,8 @@ export default function StallHolder() {
       CNICExpiry: "2023-12-10",
       Gender: "Male",
       PrimaryContact: "+1 567 890 1234",
-      CNICFrontImage: "https://i.imgur.com/uvwxy.jpg",
-      CNICBackImage: "https://i.imgur.com/ijklm.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/nopqr.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
@@ -122,8 +124,8 @@ export default function StallHolder() {
       CNICExpiry: "2026-03-25",
       Gender: "Female",
       PrimaryContact: "+1 345 678 9012",
-      CNICFrontImage: "https://i.imgur.com/12345.jpg",
-      CNICBackImage: "https://i.imgur.com/67890.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/ijklm.jpg",
       Status: "Active",
@@ -138,8 +140,8 @@ export default function StallHolder() {
       CNICExpiry: "2022-07-08",
       Gender: "Female",
       PrimaryContact: "+1 876 543 2109",
-      CNICFrontImage: "https://i.imgur.com/fghij.jpg",
-      CNICBackImage: "https://i.imgur.com/klmno.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Inactive",
@@ -154,8 +156,8 @@ export default function StallHolder() {
       CNICExpiry: "2027-11-18",
       Gender: "Male",
       PrimaryContact: "+1 234 567 8901",
-      CNICFrontImage: "https://i.imgur.com/nopqr.jpg",
-      CNICBackImage: "https://i.imgur.com/ijklm.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
@@ -170,8 +172,8 @@ export default function StallHolder() {
       CNICExpiry: "2023-02-14",
       Gender: "Female",
       PrimaryContact: "+1 456 789 0123",
-      CNICFrontImage: "https://i.imgur.com/12345.jpg",
-      CNICBackImage: "https://i.imgur.com/67890.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/abcde.jpg",
       BiometricImage: "https://i.imgur.com/uvwxy.jpg",
       Status: "Inactive",
@@ -186,8 +188,8 @@ export default function StallHolder() {
       CNICExpiry: "2028-09-30",
       Gender: "Female",
       PrimaryContact: "+1 678 901 2345",
-      CNICFrontImage: "https://i.imgur.com/fghij.jpg",
-      CNICBackImage: "https://i.imgur.com/klmno.jpg",
+      CNICFrontImage: front,
+      CNICBackImage: back,
       FacePicture: "https://i.imgur.com/pqrst.jpg",
       BiometricImage: "https://i.imgur.com/xyzab.jpg",
       Status: "Active",
@@ -198,18 +200,40 @@ export default function StallHolder() {
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
-            <Typography className="text-start" variant="h5" color="blue-gray">
-              Stall holder list
-            </Typography>
+            <div className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                dataSlot="icon"
+                className="w-6 h-6 me-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                />
+              </svg>
+              <Typography
+                className="text-start m-0 text-2xl"
+                variant="h5"
+                color="blue-gray"
+              >
+                Stall holder list
+              </Typography>
+            </div>
+
             <Typography color="gray" className="mt-1 font-normal">
               See information about all stall holders
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-stallHolder");

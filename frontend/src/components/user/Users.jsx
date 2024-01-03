@@ -135,7 +135,7 @@ export default function Users() {
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-3 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <div className="flex items-center">
               <svg
@@ -145,7 +145,7 @@ export default function Users() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 dataSlot="icon"
-                className="w-5 h-5 me-1"
+                className="w-6 h-6 me-1"
               >
                 <path
                   strokeLinecap="round"
@@ -154,7 +154,7 @@ export default function Users() {
                 />
               </svg>
               <Typography
-                className="text-start m-0"
+                className="text-start m-0 text-2xl"
                 variant="h5"
                 color="blue-gray"
               >
@@ -167,7 +167,7 @@ export default function Users() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-user");

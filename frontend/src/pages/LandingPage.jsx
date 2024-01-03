@@ -54,13 +54,13 @@ const LandingPage = () => {
             )}
           </div>
           <div className="hidden md:flex items-center">
-            <p className="px-3 navElems">Home</p>
-            <p className="px-3 navElems">Bazaars</p>
-            <p className="px-3 navElems">About Us</p>
-            <p className="px-3 navElems">Contact Us</p>
-            <p className="px-3 navElems">Sign Up</p>
+            <p className="px-3 rounded navElems">Home</p>
+            <p className="px-3 rounded navElems">Bazaars</p>
+            <p className="px-3 rounded navElems">About Us</p>
+            <p className="px-3 rounded navElems">Contact Us</p>
+            <p className="px-3 rounded navElems">Sign Up</p>
             <button
-              className="py-1.5 px-4 text-white mx-3"
+              className="py-1.5 px-4 text-white mx-3 mb-1 rounded"
               style={{ backgroundColor: "#0b6323" }}
               onClick={() => {
                 navigate("/login");

@@ -2,6 +2,7 @@ import React from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Typography } from "@material-tailwind/react";
+import "@src/styles/tableStyles.css";
 
 const Tables = ({ columns, data }) => {
   const {
@@ -28,7 +29,7 @@ const Tables = ({ columns, data }) => {
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="table-scroll">
         <table
           {...getTableProps()}
           className="mt-4 w-full border-collapse table-auto text-left rounded-md overflow-hidden"
@@ -40,11 +41,26 @@ const Tables = ({ columns, data }) => {
                   <th
                     key={column.id}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="cursor-pointer border border-blue-gray-100 p-3 transition-colors hover:bg-blue-gray-50"
+                    className="cursor-pointer border border-blue-gray-100 p-3 px-2 transition-colors hover:bg-blue-gray-50"
                   >
-                    <div className="flex items-center justify-between gap-2 font-semibold leading-none opacity- text-sm">
+                    <div className="flex items-center justify-between gap-2 font-semibold leading-none text-nowrap opacity- text-sm">
                       {column.render("Header")}
-                      {column.isSorted ? (
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                        />
+                      </svg>
+                      {/* {column.isSorted ? (
                         column.isSortedDesc ? (
                           <ChevronDownIcon
                             strokeWidth={2}
@@ -55,7 +71,7 @@ const Tables = ({ columns, data }) => {
                         )
                       ) : (
                         ""
-                      )}
+                      )} */}
                     </div>
                   </th>
                 ))}
@@ -73,9 +89,21 @@ const Tables = ({ columns, data }) => {
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
-                      className="py-3 px-1 text-sm w-max"
+                      className=" px-2 text-nowrap text-sm w-max"
                     >
-                      {cell.render("Cell")}
+                      {cell.column.id === "bazarImage" ||
+                      cell.column.id === "CNICFrontImage" ||
+                      cell.column.id === "CNICBackImage" ||
+                      cell.column.id === "FacePicture" ||
+                      cell.column.id === "BiometricImage" ? (
+                        <img
+                          src={cell.value}
+                          alt="Bazar"
+                          className="h-10 w-full"
+                        />
+                      ) : (
+                        <p className="py-3"> {cell.render("Cell")}</p>
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -97,7 +125,7 @@ const Tables = ({ columns, data }) => {
             onClick={() => previousPage()}
             disabled={!canPreviousPage}
             className={`px-3 py-1 text-white rounded-md ${
-              !canPreviousPage ? "bg-gray-300" : "bg-[#2f9149]"
+              !canPreviousPage ? "bg-gray-700" : "bg-[#2f9149]"
             }`}
           >
             Previous
@@ -106,7 +134,7 @@ const Tables = ({ columns, data }) => {
             onClick={() => nextPage()}
             disabled={!canNextPage}
             className={`px-3 py-1 text-white rounded-md ${
-              !canNextPage ? "bg-gray-300" : "bg-[#2f9149]"
+              !canNextPage ? "bg-gray-700" : "bg-[#2f9149]"
             }`}
           >
             Next

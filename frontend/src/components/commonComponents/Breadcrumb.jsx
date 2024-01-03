@@ -15,7 +15,10 @@ const Breadcrumb = ({ items }) => {
             {index === items.length - 1 ? (
               item.label
             ) : (
-              <Link className="text-xl font-bold" to={item.path}>
+              <Link
+                className="text-xl text-green-700 hover:text-green-500  font-bold"
+                to={item.path}
+              >
                 {item.label}
               </Link>
             )}
