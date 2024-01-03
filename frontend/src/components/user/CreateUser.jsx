@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
+import City from "../../City.json";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -81,7 +82,8 @@ const CreateUser = () => {
               label="City"
               name="city"
               placeholder="Select City"
-              options={cities}
+              options={City}
+              searchable={true}
               type="basic-single"
             />
             <InputField

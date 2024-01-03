@@ -8,6 +8,7 @@ const Dropdown = ({
   required,
   searchable,
   placeholder,
+  handleChange,
   name,
   options,
   ...rest
@@ -15,7 +16,7 @@ const Dropdown = ({
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
-  const handleChange = (selectedOptions) => {
+  const handleChange1 = (selectedOptions) => {
     const selectedValues = Array.isArray(selectedOptions)
       ? selectedOptions.map((option) => option.value)
       : selectedOptions.value;
@@ -37,7 +38,11 @@ const Dropdown = ({
         options={options}
         placeholder={placeholder}
         {...register(name, { required: `${label} is required` })}
-        onChange={handleChange}
+        onChange={(selectedOptions) => {
+          handleChange1(selectedOptions);
+          handleChange &&
+            handleChange({ name: name, value: selectedOptions.value });
+        }}
         className={`${type} text-start h-[40px] `}
         {...rest}
         isMulti={type === "basic-multi-select" ? true : false}

@@ -5,6 +5,7 @@ import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
+import City from "../../City.json";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -89,9 +90,10 @@ const CreateBazaar = () => {
             />
             <Dropdown
               label="City"
-              placeholder="Select City"
               name="city"
-              options={cities}
+              placeholder="Select City"
+              options={City}
+              searchable={true}
               type="basic-single"
             />
             <InputField

@@ -10,6 +10,7 @@ const InputField = ({
   pattern,
   min,
   max,
+  handleChange,
   disabled,
   ...rest
 }) => {
@@ -30,8 +31,11 @@ const InputField = ({
         id={name}
         name={name}
         placeholder={placeholder}
-        min={min}
-        max={max}
+        min={min && min}
+        max={max && max}
+        // onChange={(e) => {
+        //   handleChange && handleChange(e);
+        // }}
         disabled={disabled}
         className={`w-full h-[40px] border border-gray-900  p-2 rounded-md ${
           errors[name] && "border-red-500"
