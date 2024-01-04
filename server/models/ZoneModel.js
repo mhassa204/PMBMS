@@ -1,26 +1,31 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const zoneSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+  name: {
+    type: String,
+    required: true,
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  district: {
+    type: String,
+    required: true,
+  },
+  city: [
+    {
+      type: String,
+      required: true,
     },
-    active: {
-        type: Boolean,
-        default: false
-    },
-    city:
-        {
-        type: [ mongoose.Schema.Types.ObjectId],
-        ref: 'City'
-        },
-    zoneManager: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
+  ],
+  zoneManager: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+    required: true,
+  },
 });
 
-const Zone = mongoose.model('Zone', zoneSchema);
+const Zone = mongoose.model("zones", zoneSchema);
 
 module.exports = Zone;

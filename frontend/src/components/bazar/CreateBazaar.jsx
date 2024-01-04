@@ -5,7 +5,7 @@ import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
-import City from "../../City.json";
+import { useLocation } from "react-router-dom";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -59,6 +59,8 @@ const breadcrumbItems = [
 
 const CreateBazaar = () => {
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location.state;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -66,9 +68,11 @@ const CreateBazaar = () => {
 
   return (
     <div className="p-4">
-      {/* <Breadcrumb items={breadcrumbItems} /> */}
-      <div className="max-w-4xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create Bazaar</h2>
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="max-w-3xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update Bazaar" : "Create Bazaar"}
+        </h2>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -90,10 +94,9 @@ const CreateBazaar = () => {
             />
             <Dropdown
               label="City"
-              name="city"
               placeholder="Select City"
-              options={City}
-              searchable={true}
+              name="city"
+              options={cities}
               type="basic-single"
             />
             <InputField
@@ -111,8 +114,7 @@ const CreateBazaar = () => {
               options={shopType}
               type="basic-single"
             />
-            {/* <div className="grid grid-cols-3 gap-x-4"> */}
-            <div className="flex gap-x-2">
+            <div className="grid grid-cols-2 gap-x-4">
               <InputField
                 label="Total Shops"
                 placeholder="Enter total number of shops"
@@ -127,27 +129,6 @@ const CreateBazaar = () => {
                 name="baseRent"
                 required="Base rent is required"
               />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                className="border rounded w-[40px] h-[39px] mt-[28px] flex items-center justify-center hover:bg-gray-200 "
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
-              </button>
             </div>
             <InputField
               label="Prefix "

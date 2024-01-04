@@ -1,60 +1,78 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const BazarSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+  name: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  shopsInfo: {
+    approvedShops: {
+      type: Number,
+      default: 0,
     },
-    address: {
-        type: String,
-        required: true
+    shops: [
+      {
+        totalShops: {
+          type: Number,
+          default: 0,
+        },
+        shopType: {
+          type: String,
+          required: true,
+        },
+        baseRent: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+  },
+  zone: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "zones",
+  },
+  //we can use this to store the shops in the bazar
+  //we only need StoreType to create a shop in bazar form
+  approvedShops: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "shops",
     },
-    city: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'City'
-    },
-    zone: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Zone'
-    },
-
-    active: {
-        type: Boolean,
-        default: false
-    },
-    //we can use this to store the shops in the bazar
-    //we only need StoreType to create a shop in bazar form
-    approvedShops: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shop'
-    }],
-    baseRentPermanent: {
-        type: Number,
-        required: true
-    },
-    prefix: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String
-    },
-    zoneManager: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    bazarManager: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    supervisor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+  ],
+  prefix: {
+    type: String,
+    required: true,
+  },
+  zoneManager: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  bazarManager: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  supervisor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  image: {
+    type: String,
+  },
 });
 
-const BazarModel = mongoose.model('Bazar', BazarSchema);
+const BazarModel = mongoose.model("bazars", BazarSchema);
 
 module.exports = BazarModel;

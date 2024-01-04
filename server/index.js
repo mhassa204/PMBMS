@@ -20,7 +20,6 @@ app.use(errorHandler);
 app.use("/users", require("./routes/userRoutes"));
 app.use("/zones", require("./routes/zoneRoutes"));
 app.use("/bazars", require("./routes/bazarRoutes"));
-app.use("/cities", require("./routes/cityRoutes"));
 app.use("/shops", require("./routes/shopRouters"));
 app.use("/shop-holders", require("./routes/shopHolderRoutes"));
 app.use("/shop-allotments", require("./routes/shopAllotmentRoutes"));
