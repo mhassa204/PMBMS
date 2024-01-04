@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { validateEmail, validatePassword } from "../../utils/Validations";
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,16 +41,12 @@ export default function Login() {
     }
     if (validateEmail(email) && validatePassword(password)) {
       await axios
-        .post("http://localhost:3000/users/login", {
+        .post("http://localhost:3000/users", {
           email,
           password,
         })
         .then((res) => {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-          localStorage.setItem("auth", JSON.stringify(res.data.auth));
-          navigate("/admin/dashboard");
-
+          navigate("/login");
           console.log("user registered successfully", res);
         })
         .catch((err) => {
@@ -158,10 +154,9 @@ export default function Login() {
               ) : null}
             </div>
           </div>
-
           <div>
             <button type="submit" className={`${authenticationStyles.button}`}>
-              Login
+              Sign up
             </button>
           </div>
         </form>
@@ -169,10 +164,10 @@ export default function Login() {
         <p className="mt-6 text-center text-sm text-gray-500">
           Already a member?{" "}
           <Link
-            to={"/signup"}
+            to={"/login"}
             className="font-semibold text-indigo-600 hover:text-indigo-500"
           >
-            Signup
+            Sign in
           </Link>
         </p>
       </div>

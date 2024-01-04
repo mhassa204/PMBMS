@@ -6,6 +6,8 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -14,17 +16,17 @@ const cities = [
 ];
 
 const userTypes = [
-  { value: "super-admin", label: "Super Admin" },
+  { value: "SuperAdmin", label: "Super Admin" },
 
-  { value: "admin", label: "Admin" },
+  { value: "Admin", label: "Admin" },
 
-  { value: "zone-manager", label: "Zone Manager" },
-  { value: "bazar-manager", label: "Bazar Manager" },
-  { value: "supervisor", label: "Supervisor" },
+  { value: "ZoneManager", label: "Zone Manager" },
+  { value: "BazarManager", label: "Bazar Manager" },
+  { value: "Supervisor", label: "Supervisor" },
 ];
 
 const activeOptions = [
-  { value: "not-active", label: "Not Active" },
+  { value: "inactive", label: "Not Active" },
   { value: "active", label: "Active" },
   { value: "disabled", label: "Disabled" },
 ];
@@ -35,9 +37,19 @@ const breadcrumbItems = [
 ];
 
 const CreateUser = () => {
+  const navigate = useNavigate();
   const methods = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    await axios
+      .post("http://localhost:3000/users", data)
+      .then((res) => {
+        navigate("/login");
+        console.log("user registered successfully", res);
+      })
+      .catch((err) => {
+        console.log("Could not registered user", err);
+      });
     console.log(data);
   };
 
@@ -103,7 +115,7 @@ const CreateUser = () => {
             <Dropdown
               label="Active"
               placeholder="Select Status"
-              name="active-options"
+              name="status"
               options={activeOptions}
               type="basic-single"
             />

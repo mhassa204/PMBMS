@@ -30,6 +30,7 @@ import StallList from "@components/stall/StallList";
 import CreateStallHolder from "@components/stall/CreateStallHolder";
 import Login from "@pages/authentication/Login";
 import FinePolicyForm from "@components/fine/FinePolicyForm";
+import Signup from "@pages/authentication/Signup";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
           {/* Temporary routes for form */}
           <Route path="/create-zone" element={<CreateZone />} />
