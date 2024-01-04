@@ -79,7 +79,7 @@ export default function FinePolicyForm() {
 
   return (
     <div className="max-w-md mx-auto my-10 p-6 bg-white border-2 rounded-md textBlue">
-      <h2 className="text-2xl font-semibold mb-4">Create Stall</h2>
+      <h2 className="text-2xl font-semibold mb-4">Fine Policy</h2>
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -110,8 +110,6 @@ export default function FinePolicyForm() {
             name="fine-10th"
             type="number"
             required={true}
-            // minLength={1}
-            // maxLength={100}
             placeholder="Enter fine % after 10th date"
           />
           <InputField
@@ -119,8 +117,6 @@ export default function FinePolicyForm() {
             name="fine-20th"
             type="number"
             required={true}
-            // minLength={1}
-            // maxLength={100}
             placeholder="Enter fine % after 20th date"
           />
           <InputField
@@ -128,8 +124,6 @@ export default function FinePolicyForm() {
             name="fine-25th"
             type="number"
             required={true}
-            // minLength={1}
-            // maxLength={100}
             placeholder="Enter fine % after 25th date"
           />
           <Dropdown

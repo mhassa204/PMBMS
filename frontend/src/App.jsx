@@ -29,6 +29,7 @@ import Users from "@components/user/Users";
 import StallList from "@components/stall/StallList";
 import CreateStallHolder from "@components/stall/CreateStallHolder";
 import Login from "@pages/authentication/Login";
+import FinePolicyForm from "@components/fine/FinePolicyForm";
 
 function App() {
   return (
@@ -38,6 +39,18 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
 
+          {/* Temporary routes for form */}
+          <Route path="/create-zone" element={<CreateZone />} />
+          <Route path="/create-user" element={<CreateUser />} />
+          <Route path="/create-bazar" element={<CreateBazaar />} />
+          <Route path="/generate-voucher" element={<VoucherGeneration />} />
+          <Route path="/create-stall" element={<CreateStall />} />
+          <Route path="/create-stallHolder" element={<CreateStallHolder />} />
+          <Route path="/create-policy" element={<CreatePolicyForm />} />
+          <Route path="/create-voucher" element={<VoucherCreation />} />
+          <Route path="/fine-policy" element={<FinePolicyForm />} />
+
+          {/* Actual routes  */}
           <Route path="/admin" element={<Home />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />

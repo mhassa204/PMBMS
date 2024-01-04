@@ -54,13 +54,13 @@ const LandingPage = () => {
             )}
           </div>
           <div className="hidden md:flex items-center">
-            <p className="px-3 navElems">Home</p>
-            <p className="px-3 navElems">Bazaars</p>
-            <p className="px-3 navElems">About Us</p>
-            <p className="px-3 navElems">Contact Us</p>
-            <p className="px-3 navElems">Sign Up</p>
+            <p className="px-3 rounded navElems">Home</p>
+            <p className="px-3 rounded navElems">Bazaars</p>
+            <p className="px-3 rounded navElems">About Us</p>
+            <p className="px-3 rounded navElems">Contact Us</p>
+            <p className="px-3 rounded navElems">Sign Up</p>
             <button
-              className="py-1.5 px-4 text-white mx-3"
+              className="py-1.5 px-4 text-white mx-3 mb-1 rounded"
               style={{ backgroundColor: "#0b6323" }}
               onClick={() => {
                 navigate("/login");
@@ -87,13 +87,13 @@ const LandingPage = () => {
             </p>
             <div className="flex flex-col md:flex-row gapBtn justify-center md:justify-start">
               <button
-                className="w-full md:w-44 py-2 transitionBtn"
+                className="w-full md:w-44 py-2 bg-green-600 text-white rounded focus:outline-none hover:bg-green-700 transitionBtn"
                 style={{ backgroundColor: "#0b6323", color: "white" }}
               >
                 Register
               </button>
               <button
-                className="w-full md:w-44 py-2 transitionBtn"
+                className="w-full md:w-44 py-2 transitionBtn bg-white text-blue-700 border border-blue-700 rounded focus:outline-none hover:bg-blue-50"
                 style={{
                   backgroundColor: "white",
                   color: "#16356a",

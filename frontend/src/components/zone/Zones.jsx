@@ -20,6 +20,8 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
+import { MdLocationCity } from "react-icons/md";
 
 export default function Zones() {
   const navigate = useNavigate();
@@ -39,13 +41,23 @@ export default function Zones() {
   ];
 
   const TABLE_HEAD = [
-    "Zone Name",
-    "Province",
-    "Cities in Zone",
-    "Zone Manager",
-    "Zone District",
-    "Actions",
+    { Header: "Zone Name", accessor: "ZoneName" },
+    { Header: "Province", accessor: "Province" },
+    { Header: "Cities in Zone", accessor: "CitiesInZone" },
+    { Header: "Zone Manager", accessor: "ZoneManager" },
+    { Header: "Zone District", accessor: "ZoneDistrict" },
+    {
+      Header: "Actions",
+      accessor: "Actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
   ];
+
   const TABLE_ROWS = [
     {
       ZoneName: "Central Zone",
@@ -53,6 +65,7 @@ export default function Zones() {
       CitiesInZone: ["City A", "City B", "City C"],
       ZoneManager: "Alice Doe",
       ZoneDistrict: "District X",
+      Actions: "",
     },
     {
       ZoneName: "Eastern Zone",
@@ -60,6 +73,7 @@ export default function Zones() {
       CitiesInZone: ["City D", "City E", "City F"],
       ZoneManager: "Bob Smith",
       ZoneDistrict: "District Y",
+      Actions: "",
     },
     {
       ZoneName: "Western Zone",
@@ -67,6 +81,7 @@ export default function Zones() {
       CitiesInZone: ["City G", "City H", "City I"],
       ZoneManager: "Charlie Brown",
       ZoneDistrict: "District Z",
+      Actions: "",
     },
     {
       ZoneName: "Northern Zone",
@@ -74,6 +89,7 @@ export default function Zones() {
       CitiesInZone: ["City J", "City K", "City L"],
       ZoneManager: "David Johnson",
       ZoneDistrict: "District W",
+      Actions: "",
     },
     {
       ZoneName: "Southern Zone",
@@ -81,6 +97,7 @@ export default function Zones() {
       CitiesInZone: ["City M", "City N", "City O"],
       ZoneManager: "Eva White",
       ZoneDistrict: "District V",
+      Actions: "",
     },
     {
       ZoneName: "Central-East Zone",
@@ -88,6 +105,7 @@ export default function Zones() {
       CitiesInZone: ["City P", "City Q", "City R"],
       ZoneManager: "Frank Adams",
       ZoneDistrict: "District U",
+      Actions: "",
     },
     {
       ZoneName: "South-West Zone",
@@ -95,6 +113,7 @@ export default function Zones() {
       CitiesInZone: ["City S", "City T", "City U"],
       ZoneManager: "Grace Miller",
       ZoneDistrict: "District T",
+      Actions: "",
     },
     {
       ZoneName: "North-West Zone",
@@ -102,24 +121,32 @@ export default function Zones() {
       CitiesInZone: ["City V", "City W", "City X"],
       ZoneManager: "Henry Clark",
       ZoneDistrict: "District S",
+      Actions: "",
     },
   ];
 
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
-            <Typography className="text-start" variant="h5" color="blue-gray">
-              Zone list
-            </Typography>
+            <div className="flex items-center">
+              <MdLocationCity className="h-6 w-6" />
+              <Typography
+                className="text-start m-0 ms-1 text-2xl"
+                variant="h5"
+                color=" blue-gray"
+              >
+                Zone list
+              </Typography>
+            </div>
             <Typography color="gray" className="mt-1 font-normal">
               See information about all zones
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex bg-[#0b6323] rounded-none items-center gap-2"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-zone");
@@ -129,7 +156,7 @@ export default function Zones() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -165,7 +192,7 @@ export default function Zones() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardBody className="px-4 ">
@@ -365,118 +392,8 @@ export default function Zones() {
             )}
           </tbody>
         </table> */}
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
-                  >
-                    {head}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              (
-                { ZoneName, Province, CitiesInZone, ZoneManager, ZoneDistrict },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={index} className="bg-white">
-                    {/* Zone Name */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {ZoneName}
-                      </Typography>
-                    </td>
-                    {/* Province */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Province}
-                      </Typography>
-                    </td>
-                    {/* Cities in Zone */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CitiesInZone.join(", ")}
-                      </Typography>
-                    </td>
-                    {/* Zone Manager */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        // color="blue-gray"
-                        className="font-normal"
-                      >
-                        {ZoneManager}
-                      </Typography>
-                    </td>
-                    {/* Zone District */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {ZoneDistrict}
-                      </Typography>
-                    </td>
-                    {/* Actions (Edit and Delete buttons) */}
-                    <td className={classes}>
-                      <div className="flex gap-2">
-                        <EditButton />
-                        <DeleteButton />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+        <Tables columns={TABLE_HEAD} data={TABLE_ROWS} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

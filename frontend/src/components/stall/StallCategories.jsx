@@ -1,4 +1,3 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -16,10 +15,13 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import EditButton from "@components/commonComponents/EditButton";
-import DeleteButton from "@components/commonComponents/DeleteButton";
+
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import EditButton from "@components/commonComponents/EditButton";
+import DeleteButton from "@components/commonComponents/DeleteButton";
 
 export default function StallCategories() {
   const navigate = useNavigate();
@@ -38,37 +40,29 @@ export default function StallCategories() {
     },
   ];
 
-  const TABLE_HEAD = ["Stall Category", "Editable", "Actions"];
+  const columns = [
+    { Header: "Stall Category", accessor: "StallCategory" },
+    { Header: "Editable", accessor: "Editable" },
+    {
+      Header: "Actions",
+      accessor: "actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
+  ];
 
-  const TABLE_ROWS = [
-    {
-      StallCategory: "Vegetables",
-      Editable: "Yes",
-    },
-    {
-      StallCategory: "Fruits",
-      Editable: "No",
-    },
-    {
-      StallCategory: "Chicken",
-      Editable: "Yes",
-    },
-    {
-      StallCategory: "Mutton",
-      Editable: "No",
-    },
-    {
-      StallCategory: "Beaf",
-      Editable: "Yes",
-    },
-    {
-      StallCategory: "Grocery",
-      Editable: "Yes",
-    },
-    {
-      StallCategory: "Bookshop",
-      Editable: "No",
-    },
+  const data = [
+    { StallCategory: "Vegetables", Editable: "Yes", actions: "" },
+    { StallCategory: "Fruits", Editable: "No", actions: "" },
+    { StallCategory: "Chicken", Editable: "Yes", actions: "" },
+    { StallCategory: "Mutton", Editable: "No", actions: "" },
+    { StallCategory: "Beaf", Editable: "Yes", actions: "" },
+    { StallCategory: "Grocery", Editable: "Yes", actions: "" },
+    { StallCategory: "Bookshop", Editable: "No", actions: "" },
   ];
 
   return (
@@ -85,7 +79,7 @@ export default function StallCategories() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex bg-[#0b6323] rounded-none items-center gap-2"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-stall");
@@ -96,7 +90,7 @@ export default function StallCategories() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -132,86 +126,12 @@ export default function StallCategories() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardBody className="px-4">
-        <table className="mt-4 table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-[#2f9149] p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 text-white font-semibold leading-none opacity-"
-                  >
-                    {head}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(({ StallCategory, Editable }, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b border-blue-gray-50";
-
-              return (
-                <tr key={index} className="bg-white">
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {StallCategory}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {Editable}
-                    </Typography>
-                  </td>
-
-                  {/* Actions (Edit and Delete buttons) */}
-                  <td className={classes}>
-                    <div className="flex gap-2">
-                      <EditButton />
-                      <DeleteButton />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <Tables columns={columns} data={data} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

@@ -1,5 +1,4 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -20,6 +19,7 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
+import Tables from "@components/commonComponents/Tables";
 
 export default function Users() {
   const navigate = useNavigate();
@@ -38,16 +38,26 @@ export default function Users() {
     },
   ];
 
-  const TABLE_HEAD = [
-    "Username",
-    "Email",
-    "Mobile",
-    "City Name",
-    "Status",
-    "User Type",
-    "Actions",
+  const columns = [
+    { Header: "Username", accessor: "Username" },
+    { Header: "Email", accessor: "Email" },
+    { Header: "Mobile", accessor: "Mobile" },
+    { Header: "City Name", accessor: "CityName" },
+    { Header: "Status", accessor: "Status" },
+    { Header: "User Type", accessor: "UserType" },
+    {
+      Header: "Actions",
+      accessor: "Actions",
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
+        </div>
+      ),
+    },
   ];
-  const TABLE_ROWS = [
+
+  const data = [
     {
       Username: "JohnDoe",
       Email: "john.doe@example.com",
@@ -55,6 +65,7 @@ export default function Users() {
       CityName: "City A",
       Status: "Active",
       UserType: "Admin",
+      Actions: "",
     },
     {
       Username: "AliceSmith",
@@ -63,6 +74,7 @@ export default function Users() {
       CityName: "City B",
       Status: "Inactive",
       UserType: "User",
+      Actions: "",
     },
     {
       Username: "BobJohnson",
@@ -71,6 +83,7 @@ export default function Users() {
       CityName: "City C",
       Status: "Active",
       UserType: "Admin",
+      Actions: "",
     },
     {
       Username: "EvaWhite",
@@ -79,6 +92,7 @@ export default function Users() {
       CityName: "City D",
       Status: "Inactive",
       UserType: "User",
+      Actions: "",
     },
     {
       Username: "CharlieBrown",
@@ -87,6 +101,7 @@ export default function Users() {
       CityName: "City E",
       Status: "Active",
       UserType: "Admin",
+      Actions: "",
     },
     {
       Username: "GraceMiller",
@@ -95,6 +110,7 @@ export default function Users() {
       CityName: "City F",
       Status: "Inactive",
       UserType: "User",
+      Actions: "",
     },
     {
       Username: "DavidJohnson",
@@ -103,6 +119,7 @@ export default function Users() {
       CityName: "City G",
       Status: "Active",
       UserType: "Admin",
+      Actions: "",
     },
     {
       Username: "OliviaFoster",
@@ -111,13 +128,14 @@ export default function Users() {
       CityName: "City H",
       Status: "Inactive",
       UserType: "User",
+      Actions: "",
     },
   ];
 
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-3 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <div className="flex items-center">
               <svg
@@ -127,7 +145,7 @@ export default function Users() {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 dataSlot="icon"
-                className="w-5 h-5 me-1"
+                className="w-6 h-6 me-1"
               >
                 <path
                   strokeLinecap="round"
@@ -136,7 +154,7 @@ export default function Users() {
                 />
               </svg>
               <Typography
-                className="text-start m-0"
+                className="text-start m-0 text-2xl"
                 variant="h5"
                 color="blue-gray"
               >
@@ -149,13 +167,14 @@ export default function Users() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              className="flex bg-[#0b6323] rounded-none items-center gap-2"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
                 navigate("/admin/create-user");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new user
+              <UserPlusIcon className="h-5 w-5" />
+              Add new user
             </Button>
           </div>
         </div>
@@ -199,127 +218,8 @@ export default function Users() {
       </CardHeader>
 
       <CardBody className="px-4">
-        <table className="mt- table-scroll w-full h-full table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 text-nowrap bg-[#2f9149] p-4 py-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2  text-white font-semibold leading-none  opacity-"
-                  >
-                    {head}
-                    {/* {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon className="h-4 w-4" />
-                    )} */}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              (
-                { Username, Email, Mobile, CityName, Status, UserType },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4 py-3"
-                  : "p-4 py-3 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={index} className="bg-white text-nowrap">
-                    {/* Zone Name */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal "
-                      >
-                        {Username}
-                      </Typography>
-                    </td>
-                    {/* Province */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Email}
-                      </Typography>
-                    </td>
-                    {/* Cities in Zone */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Mobile}
-                      </Typography>
-                    </td>
-                    {/* Zone Manager */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        // color="blue-gray"
-                        className="font-normal"
-                      >
-                        {CityName}
-                      </Typography>
-                    </td>
-                    {/* Zone District */}
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {Status}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {UserType}
-                      </Typography>
-                    </td>
-                    {/* Actions (Edit and Delete buttons) */}
-                    <td className={classes}>
-                      <div className="flex gap-2">
-                        <EditButton />
-                        <DeleteButton />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+        <Tables columns={columns} data={data} />
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 py-4 mb-4 mx-">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }
