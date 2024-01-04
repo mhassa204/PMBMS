@@ -70,12 +70,23 @@ const Tables = ({ columns, data }) => {
                   key={row.id}
                   className="bg-white border-b border-blue-gray-50"
                 >
-                  {row.cells.map((cell) => (
+                  {row.cells.map((cell, index) => (
                     <td
                       {...cell.getCellProps()}
                       className="py-3 px-1 text-sm w-max"
+                      key={index}
                     >
-                      {cell.render("Cell")}
+                      {[
+                        "bazarImage",
+                        "CNICFrontImage",
+                        "CNICBackImage",
+                        "FacePicture",
+                        "BiometricImage",
+                      ].includes(cell.column.id) ? (
+                        <img src={cell.value} alt="image" className="h-8 w-8" />
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   ))}
                 </tr>

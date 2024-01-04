@@ -5,6 +5,7 @@ import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
+import { useLocation } from "react-router-dom";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -58,6 +59,8 @@ const breadcrumbItems = [
 
 const CreateBazaar = () => {
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location.state;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -67,7 +70,9 @@ const CreateBazaar = () => {
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
       <div className="max-w-3xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create Bazaar</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update Bazaar" : "Create Bazaar"}
+        </h2>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
