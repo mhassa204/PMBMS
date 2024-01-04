@@ -20,7 +20,7 @@ const ImageField = ({ label, name, required, ...rest }) => {
     clearErrors(name);
   };
   return (
-    <div className="mb-4 bg-info">
+    <div className="mb-4 flex items-start flex-column ">
       <label
         className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
         htmlFor={name}
@@ -34,7 +34,7 @@ const ImageField = ({ label, name, required, ...rest }) => {
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
         {...rest}
-        className="py-1 w-full text-start"
+        className="py-1 hover:cursor-pointer"
       />
       {imagePreview && (
         <img
