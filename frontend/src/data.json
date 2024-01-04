@@ -1,0 +1,749 @@
+[
+  {
+    "province": "Punjab",
+    "districts": [
+      {
+        "district": "Attock",
+        "cities": [
+          "Attock",
+          "Fateh Jang",
+          "Hasan Abdal",
+          "Hassan Abdal",
+          "Nartopa",
+          "Pinjawana"
+        ]
+      },
+      {
+        "district": "Bahawalnagar",
+        "cities": [
+          "Bahawalnagar",
+          "Chishtian",
+          "Haroonabad",
+          "Marot",
+          "Minchinabad"
+        ]
+      },
+      {
+        "district": "Bahawalpur",
+        "cities": [
+          "Ahmedpur East",
+          "Bahawalpur",
+          "Hasilpur",
+          "Khairpur Tamiwali",
+          "Khanqah Sharif",
+          "Qaimpur",
+          "Yazman"
+        ]
+      },
+      {
+        "district": "Bhakkar",
+        "cities": ["Bhakkar"]
+      },
+      {
+        "district": "Chakwal",
+        "cities": ["Chakwal"]
+      },
+      {
+        "district": "Chiniot",
+        "cities": ["Balianwala", "Chiniot", "Lalian", "Rabwah"]
+      },
+      {
+        "district": "Dera Ghazi Khan",
+        "cities": ["Dera Ghazi Khan", "Taunsa Sharif"]
+      },
+      {
+        "district": "Faisalabad",
+        "cities": [
+          "Aminpur",
+          "Dijkot",
+          "Faisalabad",
+          "Jaranwala",
+          "Samundri",
+          "Tandlianwala"
+        ]
+      },
+      {
+        "district": "Gujranwala",
+        "cities": ["Alipur Chatha", "Gujranwala", "Sadhoke", "Wazirabad"]
+      },
+      {
+        "district": "Gujrat",
+        "cities": [
+          "Dinga",
+          "Gochh",
+          "Gujrat",
+          "Jalalpur Jattan",
+          "Kharian",
+          "Lala Musa",
+          "Lalamusa"
+        ]
+      },
+      {
+        "district": "Hafizabad",
+        "cities": ["Hafizabad", "Jalalpur Bhattian", "Pindi Bhattian"]
+      },
+      {
+        "district": "Jhang",
+        "cities": ["Ahmedpur Sial", "Athara Hazari", "Jhang", "Shorkot"]
+      },
+      {
+        "district": "Jhelum",
+        "cities": ["Jhelum", "Pind Dadan Khan"]
+      },
+      {
+        "district": "Kahuta",
+        "cities": ["Kahuta"]
+      },
+      {
+        "district": "Khanewal",
+        "cities": ["Abdul Hakeem", "Khanewal", "Mian Channu", "Mian Channun"]
+      },
+      {
+        "district": "Lahore",
+        "cities": ["Changa Manga", "Lahore"]
+      },
+      {
+        "district": "Layyah",
+        "cities": ["Chowk Azam", "Karor Lal Esan", "Layyah"]
+      },
+      {
+        "district": "Lodhran",
+        "cities": ["Lodhran"]
+      },
+      {
+        "district": "Mandi Bahauddin",
+        "cities": ["Malakwal", "Malikwal", "Mandi Bahauddin", "Qadirabad"]
+      },
+      {
+        "district": "Mianwali",
+        "cities": ["Mianwali"]
+      },
+      {
+        "district": "Multan",
+        "cities": ["Kumarwala", "Multan", "Shujabad"]
+      },
+      {
+        "district": "Muzaffargarh",
+        "cities": ["Kot Addu", "Muzaffargarh"]
+      },
+      {
+        "district": "Narowal",
+        "cities": ["Baddomalhi", "Narowal", "Shakargarh", "Zafarwal"]
+      },
+      {
+        "district": "Nankana Sahib",
+        "cities": ["Bucheki", "Nankana Sahib", "Sangla Hill"]
+      },
+      {
+        "district": "Okara",
+        "cities": [
+          "Dipalpur",
+          "Haveli Lakha",
+          "Hujra Shah Muqim",
+          "Okara",
+          "Renala Khurd"
+        ]
+      },
+      {
+        "district": "Pakpattan",
+        "cities": ["Arifwala", "Pakpattan"]
+      },
+      {
+        "district": "Rahim Yar Khan",
+        "cities": [
+          "Khanpur",
+          "Liaqauatpur",
+          "Rahim Yar Khan",
+          "Saddiqabad",
+          "Sadiqabad",
+          "Zahir Pir"
+        ]
+      },
+      {
+        "district": "Rajanpur",
+        "cities": ["Jampur", "Mithankot", "Rajanpur", "Rojhan"]
+      },
+      {
+        "district": "Rawalpindi",
+        "cities": [
+          "Gujar Khan",
+          "Kallar Syedan",
+          "Rawalpindi",
+          "Taxila",
+          "Wah Cantonment"
+        ]
+      },
+      {
+        "district": "Sahiwal",
+        "cities": ["Chichawatni", "Sahiwal"]
+      },
+      {
+        "district": "Sargodha",
+        "cities": ["Bhalwal", "Bhera", "Phularwan", "Sargodha", "Shahpur"]
+      },
+      {
+        "district": "Sheikhupura",
+        "cities": [
+          "Mananwala",
+          "Muridke",
+          "Narang Mandi",
+          "Safdarabad",
+          "Sheikhupura"
+        ]
+      },
+      {
+        "district": "Sialkot",
+        "cities": ["Daska", "Mianwali Bangla", "Pasrur", "Sialkot"]
+      },
+      {
+        "district": "Tobe Tek Singh",
+        "cities": ["Tobe Tek Singh"]
+      },
+      {
+        "district": "Vehari",
+        "cities": ["Burewala", "Mailsi", "Vehari"]
+      }
+    ]
+  },
+  {
+    "province": "Sindh",
+    "districts": [
+      {
+        "district": "Badin",
+        "cities": ["Badin"]
+      },
+      {
+        "district": "Dadu",
+        "cities": ["Dadu"]
+      },
+      {
+        "district": "Ghotki",
+        "cities": ["Ghotki"]
+      },
+      {
+        "district": "Hyderabad",
+        "cities": ["Hyderabad"]
+      },
+      {
+        "district": "Jacobabad",
+        "cities": ["Jacobabad"]
+      },
+      {
+        "district": "Jamshoro",
+        "cities": ["Jamshoro", "Sehwan Sharif"]
+      },
+      {
+        "district": "Karachi Central",
+        "cities": ["Karachi Central"]
+      },
+      {
+        "district": "Karachi East",
+        "cities": ["Karachi East"]
+      },
+      {
+        "district": "Karachi South",
+        "cities": ["Karachi South"]
+      },
+      {
+        "district": "Karachi West",
+        "cities": ["Karachi West"]
+      },
+      {
+        "district": "Kashmore",
+        "cities": ["Kandhkot"]
+      },
+      {
+        "district": "Keamari",
+        "cities": ["Keamari"]
+      },
+      {
+        "district": "Khairpur",
+        "cities": ["Khairpur"]
+      },
+      {
+        "district": "Korangi",
+        "cities": ["Korangi"]
+      },
+      {
+        "district": "Larkana",
+        "cities": ["Larkana"]
+      },
+      {
+        "district": "Malir",
+        "cities": ["Malir"]
+      },
+      {
+        "district": "Matiari",
+        "cities": ["Matiari"]
+      },
+      {
+        "district": "Mirpur Khas",
+        "cities": ["Mirpur Khas"]
+      },
+      {
+        "district": "Naushahro Feroze",
+        "cities": ["Naushahro Feroze"]
+      },
+      {
+        "district": "Qambar Shahdadkot",
+        "cities": ["Qambar Shahdadkot"]
+      },
+      {
+        "district": "Sanghar",
+        "cities": ["Sanghar"]
+      },
+      {
+        "district": "Shaheed Benazirabad",
+        "cities": ["Shaheed Benazirabad", "Nawabshah"]
+      },
+      {
+        "district": "Shikarpur",
+        "cities": ["Shikarpur"]
+      },
+      {
+        "district": "Sujawal",
+        "cities": ["Sujawal"]
+      },
+      {
+        "district": "Sukkur",
+        "cities": ["Sukkur"]
+      },
+      {
+        "district": "Tando Allahyar",
+        "cities": ["Tando Allahyar"]
+      },
+      {
+        "district": "Tando Muhammad Khan",
+        "cities": ["Tando Muhammad Khan"]
+      },
+      {
+        "district": "Tharparkar",
+        "cities": ["Tharparkar"]
+      },
+      {
+        "district": "Thatta",
+        "cities": ["Thatta"]
+      },
+      {
+        "district": "Umerkot",
+        "cities": ["Umerkot"]
+      },
+      {
+        "district": "Nawabshah",
+        "cities": ["Nawabshah"]
+      }
+    ]
+  },
+  {
+    "province": "Balochistan",
+    "districts": [
+      {
+        "district": "Awaran",
+        "cities": ["Awaran"]
+      },
+      {
+        "district": "Barkhan",
+        "cities": ["Barkhan"]
+      },
+      {
+        "district": "Kachhi",
+        "cities": ["Kachhi"]
+      },
+      {
+        "district": "Chagai",
+        "cities": ["Chagai"]
+      },
+      {
+        "district": "Chaman",
+        "cities": ["Chaman"]
+      },
+      {
+        "district": "Dera Bugti",
+        "cities": ["Dera Bugti"]
+      },
+      {
+        "district": "Duki",
+        "cities": ["Duki"]
+      },
+      {
+        "district": "Gwadar",
+        "cities": ["Gwadar"]
+      },
+      {
+        "district": "Harnai",
+        "cities": ["Harnai"]
+      },
+      {
+        "district": "Hub",
+        "cities": ["Hub"]
+      },
+      {
+        "district": "Jafarabad",
+        "cities": ["Jafarabad"]
+      },
+      {
+        "district": "Jhal Magsi",
+        "cities": ["Jhal Magsi"]
+      },
+      {
+        "district": "Kalat",
+        "cities": ["Kalat"]
+      },
+      {
+        "district": "Kech",
+        "cities": ["Turbat"]
+      },
+      {
+        "district": "Kharan",
+        "cities": ["Kharan"]
+      },
+      {
+        "district": "Kohlu",
+        "cities": ["Kohlu"]
+      },
+      {
+        "district": "Khuzdar",
+        "cities": ["Khuzdar"]
+      },
+      {
+        "district": "Lasbela",
+        "cities": ["Uthal"]
+      },
+      {
+        "district": "Loralai",
+        "cities": ["Loralai"]
+      },
+      {
+        "district": "Mastung",
+        "cities": ["Mastung"]
+      },
+      {
+        "district": "Musakhel",
+        "cities": ["Musakhel"]
+      },
+      {
+        "district": "Nasirabad",
+        "cities": ["Nasirabad", "Dera Murad Jamali"]
+      },
+      {
+        "district": "Nushki",
+        "cities": ["Nushki"]
+      },
+      {
+        "district": "Qila Abdullah",
+        "cities": ["Qila Abdullah"]
+      },
+      {
+        "district": "Qila Saifullah",
+        "cities": ["Qila Saifullah"]
+      },
+      {
+        "district": "Panjgur",
+        "cities": ["Panjgur"]
+      },
+      {
+        "district": "Pishin",
+        "cities": ["Pishin"]
+      },
+      {
+        "district": "Quetta",
+        "cities": ["Quetta"]
+      },
+      {
+        "district": "Sherani",
+        "cities": ["Sherani"]
+      },
+      {
+        "district": "Sibi",
+        "cities": ["Sibi"]
+      },
+      {
+        "district": "Sohbatpur",
+        "cities": ["Sohbatpur"]
+      },
+      {
+        "district": "Surab",
+        "cities": ["Surab"]
+      },
+      {
+        "district": "Washuk",
+        "cities": ["Washuk"]
+      },
+      {
+        "district": "Zhob",
+        "cities": ["Zhob"]
+      },
+      {
+        "district": "Ziarat",
+        "cities": ["Ziarat"]
+      },
+      {
+        "district": "Usta Muhammad",
+        "cities": ["Usta Muhammad"]
+      }
+    ]
+  },
+  {
+    "province": "Khyber Pakhtunkhawa",
+    "districts": [
+      {
+        "district": "Abbottabad",
+        "cities": ["Abbottabad"]
+      },
+      {
+        "district": "Allai",
+        "cities": ["Allai"]
+      },
+      {
+        "district": "Bajaur",
+        "cities": ["Bajaur"]
+      },
+      {
+        "district": "Bannu",
+        "cities": ["Bannu"]
+      },
+      {
+        "district": "Battagram",
+        "cities": ["Battagram"]
+      },
+      {
+        "district": "Buner",
+        "cities": ["Dadu"]
+      },
+      {
+        "district": "Central Dir",
+        "cities": ["Central Dir"]
+      },
+      {
+        "district": "Charsadda",
+        "cities": ["Charsadda"]
+      },
+      {
+        "district": "Dera Ismail Khan",
+        "cities": ["Dera Ismail Khan", "Kulachi"]
+      },
+      {
+        "district": "Hangu",
+        "cities": ["Hangu"]
+      },
+      {
+        "district": "Haripur",
+        "cities": ["Haripur"]
+      },
+      {
+        "district": "Karak",
+        "cities": ["Karak"]
+      },
+      {
+        "district": "Khyber",
+        "cities": ["Khyber"]
+      },
+      {
+        "district": "Kohat",
+        "cities": ["Kohat"]
+      },
+      {
+        "district": "Kolai-Palas",
+        "cities": ["Kolai-Palas"]
+      },
+      {
+        "district": "Kurram",
+        "cities": ["Kurram"]
+      },
+      {
+        "district": "Lakki Marwat",
+        "cities": ["Lakki Marwat"]
+      },
+      {
+        "district": "Lower Chitral",
+        "cities": ["Lower Chitral"]
+      },
+      {
+        "district": "Lower Dir",
+        "cities": ["Lower Dir", "Timergara"]
+      },
+      {
+        "district": "Lower Kohistan",
+        "cities": ["Lower Kohistan"]
+      },
+      {
+        "district": "Lower South Waziristan",
+        "cities": ["Lower South Waziristan"]
+      },
+      {
+        "district": "Malakand",
+        "cities": ["Malakand"]
+      },
+      {
+        "district": "Mansehra",
+        "cities": ["Mansehra"]
+      },
+      {
+        "district": "Mardan",
+        "cities": ["Mardan"]
+      },
+      {
+        "district": "Mohmand",
+        "cities": ["Mohmand"]
+      },
+      {
+        "district": "North Waziristan",
+        "cities": ["North Waziristan"]
+      },
+      {
+        "district": "Nowshera",
+        "cities": ["Nowshera", "Risalpur"]
+      },
+      {
+        "district": "Orakzai",
+        "cities": ["Orakzai"]
+      },
+      {
+        "district": "Peshawar",
+        "cities": ["Peshawar"]
+      },
+      {
+        "district": "Shangla",
+        "cities": ["Shangla", "Alpuri"]
+      },
+      {
+        "district": "Swabi",
+        "cities": ["Swabi"]
+      },
+      {
+        "district": "Swat",
+        "cities": ["Swat", "Mingora", "Saidu Sharif"]
+      },
+      {
+        "district": "Tank",
+        "cities": ["Tank"]
+      },
+      {
+        "district": "Torghar",
+        "cities": ["Torghar"]
+      },
+      {
+        "district": "Upper Chitral",
+        "cities": ["Upper Chitral"]
+      },
+      {
+        "district": "Upper Dir",
+        "cities": ["Upper Dir"]
+      },
+      {
+        "district": "Upper Kohistan",
+        "cities": ["Upper Kohistan", "Dasu"]
+      },
+      {
+        "district": "Upper South Waziristan",
+        "cities": ["Upper South Waziristan"]
+      }
+    ]
+  },
+  {
+    "province": "Azad Kashmir",
+    "districts": [
+      {
+        "district": "Muzaffarabad",
+        "cities": ["Muzaffarabad"]
+      },
+      {
+        "district": "Hattian Bala",
+        "cities": ["Hattian Bala"]
+      },
+      {
+        "district": "Neelam Valley",
+        "cities": ["Neelam Valley"]
+      },
+      {
+        "district": "Mirpur",
+        "cities": ["Mirpur"]
+      },
+      {
+        "district": "Bhimber",
+        "cities": ["Bhimber"]
+      },
+      {
+        "district": "Kotli",
+        "cities": ["Kotli"]
+      },
+      {
+        "district": "Poonch",
+        "cities": ["Poonch", "Rawalakot"]
+      },
+      {
+        "district": "Bagh",
+        "cities": ["Bagh"]
+      },
+      {
+        "district": "Haveli",
+        "cities": ["Haveli"]
+      },
+      {
+        "district": "Sudhanoti",
+        "cities": ["Sudhanoti"]
+      }
+    ]
+  },
+  {
+    "province": "Gilgit Baltistan",
+    "districts": [
+      {
+        "district": "Ghanche",
+        "cities": ["Ghanche"]
+      },
+      {
+        "district": "Skardu",
+        "cities": ["Skardu"]
+      },
+      {
+        "district": "Shigar",
+        "cities": ["Shigar"]
+      },
+      {
+        "district": "Kharmang",
+        "cities": ["Kharmang"]
+      },
+      {
+        "district": "Roundu",
+        "cities": ["Roundu"]
+      },
+      {
+        "district": "Ghizer",
+        "cities": ["Ghizer"]
+      },
+      {
+        "district": "Gupis Yasin",
+        "cities": ["Gupis Yasin"]
+      },
+      {
+        "district": "Gilgit",
+        "cities": ["Gilgit"]
+      },
+      {
+        "district": "Hunza",
+        "cities": ["Hunza", "Aliabad"]
+      },
+      {
+        "district": "Nagar",
+        "cities": ["Nagar"]
+      },
+      {
+        "district": "Astore",
+        "cities": ["Astore"]
+      },
+      {
+        "district": "Diamer",
+        "cities": ["Diamer"]
+      },
+      {
+        "district": "Darel",
+        "cities": ["Darel"]
+      },
+      {
+        "district": "Tangir",
+        "cities": ["Tangir"]
+      }
+    ]
+  }
+]

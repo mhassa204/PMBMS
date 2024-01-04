@@ -13,8 +13,8 @@
     /* text-decoration: underline; */
     background-color: #0b6323;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    padding: 4px 0px;
-    transform: translateY(-3px);
+    padding: 6px 0px;
+    transform: translateY(-2px);
     cursor: pointer;
 }
 

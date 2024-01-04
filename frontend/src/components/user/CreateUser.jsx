@@ -6,9 +6,7 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 const cities = [
   { value: "new-york", label: "New York" },
   { value: "los-angeles", label: "Los Angeles" },

@@ -107,22 +107,22 @@ const CreateStall = () => {
 
   return (
     <div className="p-4">
-      <Breadcrumb items={breadcrumbItems} />
+      {/* <Breadcrumb items={breadcrumbItems} /> */}
       <div className="max-w-2xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl text-start font-semibold mb-4">Create Stall</h2>
+        <h2 className="text-2xl text-start font-semibold mb-4">Create Shop</h2>
 
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
-              label="Stall Name"
-              placeholder="Enter stall name"
+              label="Shop Name"
+              placeholder="Enter shop name"
               type="text"
               name="name"
               required
             />
             <InputField
-              label="Stall Code"
-              placeholder="Enter stall code"
+              label="Shop Code"
+              placeholder="Enter shop code"
               type="text"
               name="code"
               required
@@ -135,26 +135,26 @@ const CreateStall = () => {
               required
             />
             <Dropdown
-              label="Stall Category"
+              label="Shop Category"
               name="category"
               options={category}
               type="basic-single"
               searchable={false}
-              placeholder="Select a stall category"
+              placeholder="Select a shop category"
               required
             />
             <Dropdown
-              label="Stall Type"
+              label="Shop Type"
               name="type"
               options={stallType}
               type="basic-multi-select"
               searchable={false}
-              placeholder="Select a stall type"
+              placeholder="Select a shop type"
               required
             />
             <InputField
-              label="Stall Size"
-              placeholder="Enter stall size"
+              label="Shop Size"
+              placeholder="Enter shop size"
               type="text"
               name="size"
               required
@@ -181,7 +181,7 @@ const CreateStall = () => {
               type="number"
               required
             />
-            <ButtonComponent type={"submit"} name={"Create Stall"} />
+            <ButtonComponent type={"submit"} name={"Create Shop"} />
           </form>
         </FormProvider>
       </div>

@@ -21,7 +21,8 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
-import { useState } from "react";
+import profilePic from "@images/me.png";
+import bazar from "@images/bazar.jpg";
 
 export default function Bazars() {
   const navigate = useNavigate();
@@ -48,21 +49,12 @@ export default function Bazars() {
     { Header: "Bazar Name", accessor: "bazarName" },
     { Header: "Bazar Address", accessor: "bazarAddress" },
     { Header: "Status", accessor: "Status" },
-    {
-      Header: "Default Rent of Permanent Stall",
-      accessor: "defaultRentOfPermanentStall",
-    },
     { Header: "Total Stalls", accessor: "totalStalls" },
     { Header: "Prefix", accessor: "Prefix" },
     { Header: "Bazar Image", accessor: "bazarImage" },
     { Header: "City", accessor: "City" },
     { Header: "Bazar Manager", accessor: "bazarManager" },
     { Header: "Zone Manager", accessor: "zoneManager" },
-    { Header: "Temporary Stall", accessor: "temporaryStall" },
-    {
-      Header: "Default Rent of Temporary Stall",
-      accessor: "defaultRentOfTemporaryStall",
-    },
     {
       Header: "Actions",
       accessor: "Actions",
@@ -81,131 +73,107 @@ export default function Bazars() {
 
   const TABLE_ROWS = [
     {
-      bazarName: "John Michael",
-      bazarAddress: "123 Main Street",
+      bazarName: "Ahmed Bazar",
+      bazarAddress: "123 Main Street, Lahore",
       Status: "Active",
-      defaultRentOfPermanentStall: "$500",
       totalStalls: 10,
-      Prefix: "BZ",
+      Prefix: "ABZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      City: "New York",
-      bazarManager: "Alice Doe",
-      zoneManager: "Bob Smith",
-      temporaryStall: "Yes",
-      defaultRentOfTemporaryStall: "$300",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Lahore",
+      bazarManager: "Ali Ahmed",
+      zoneManager: "Zohaib Khan",
       Actions: "",
     },
     {
-      bazarName: "Alexa Liras",
-      bazarAddress: "456 Elm Street",
+      bazarName: "Faisalabad Market",
+      bazarAddress: "456 Elm Street, Faisalabad",
       Status: "Inactive",
-      defaultRentOfPermanentStall: "$450",
       totalStalls: 8,
-      Prefix: "BA",
+      Prefix: "FBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      City: "Los Angeles",
-      bazarManager: "Charlie Brown",
-      zoneManager: "David Johnson",
-      temporaryStall: "No",
-      defaultRentOfTemporaryStall: "$250",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Faisalabad",
+      bazarManager: "Farah Naz",
+      zoneManager: "Zain Ul Abidin",
       Actions: "",
     },
     {
-      bazarName: "Laurent Perrier",
-      bazarAddress: "789 Oak Street",
+      bazarName: "Karim Market",
+      bazarAddress: "789 Oak Street, Karachi",
       Status: "Pending",
-      defaultRentOfPermanentStall: "$600",
       totalStalls: 12,
-      Prefix: "LP",
+      Prefix: "KBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      City: "Chicago",
-      bazarManager: "Eva White",
-      zoneManager: "Frank Adams",
-      temporaryStall: "Yes",
-      defaultRentOfTemporaryStall: "$350",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Karachi",
+      bazarManager: "Khadija Javed",
+      zoneManager: "Bilal Ahmed",
       Actions: "",
     },
     {
-      bazarName: "Michael Levi",
-      bazarAddress: "101 Pine Street",
+      bazarName: "Rahim Market",
+      bazarAddress: "101 Pine Street, Rawalpindi",
       Status: "Active",
-      defaultRentOfPermanentStall: "$550",
       totalStalls: 11,
-      Prefix: "ML",
+      Prefix: "RBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      City: "Houston",
-      bazarManager: "Grace Miller",
-      zoneManager: "Henry Clark",
-      temporaryStall: "No",
-      defaultRentOfTemporaryStall: "$275",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Rawalpindi",
+      bazarManager: "Rukhsar Shah",
+      zoneManager: "Tariq Mehmood",
       Actions: "",
     },
     {
-      bazarName: "Richard Gran",
-      bazarAddress: "202 Cedar Street",
+      bazarName: "Saima Market",
+      bazarAddress: "202 Cedar Street, Islamabad",
       Status: "Inactive",
-      defaultRentOfPermanentStall: "$480",
       totalStalls: 9,
-      Prefix: "RG",
+      Prefix: "SBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      City: "San Francisco",
-      bazarManager: "Ivy Turner",
-      zoneManager: "Jack Turner",
-      temporaryStall: "Yes",
-      defaultRentOfTemporaryStall: "$325",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Islamabad",
+      bazarManager: "Saba Malik",
+      zoneManager: "Umar Khan",
       Actions: "",
     },
     {
-      bazarName: "Alice Doe",
-      bazarAddress: "303 Maple Street",
+      bazarName: "Gulshan Bazar",
+      bazarAddress: "303 Maple Street, Peshawar",
       Status: "Active",
-      defaultRentOfPermanentStall: "$520",
       totalStalls: 13,
-      Prefix: "AD",
+      Prefix: "GBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      City: "Miami",
-      bazarManager: "Kevin Baker",
-      zoneManager: "Laura Evans",
-      temporaryStall: "No",
-      defaultRentOfTemporaryStall: "$280",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Peshawar",
+      bazarManager: "Ghulam Abbas",
+      zoneManager: "Tahira Batool",
       Actions: "",
     },
     {
-      bazarName: "Charlie Brown",
-      bazarAddress: "404 Birch Street",
+      bazarName: "Iqbal Market",
+      bazarAddress: "404 Birch Street, Quetta",
       Status: "Blocked",
-      defaultRentOfPermanentStall: "$490",
       totalStalls: 10,
-      Prefix: "CB",
+      Prefix: "IBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      City: "Seattle",
-      bazarManager: "Mia Garcia",
-      zoneManager: "Nick Carter",
-      temporaryStall: "Yes",
-      defaultRentOfTemporaryStall: "$300",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Quetta",
+      bazarManager: "Imran Khan",
+      zoneManager: "Nadia Akhtar",
       Actions: "",
     },
     {
-      bazarName: "David Johnson",
-      bazarAddress: "505 Elm Street",
+      bazarName: "Zia Bazar",
+      bazarAddress: "505 Elm Street, Multan",
       Status: "Expired",
-      defaultRentOfPermanentStall: "$470",
       totalStalls: 8,
-      Prefix: "DJ",
+      Prefix: "ZBZ",
       bazarImage:
-        "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      City: "Denver",
-      bazarManager: "Olivia Foster",
-      zoneManager: "Paul Taylor",
-      temporaryStall: "No",
-      defaultRentOfTemporaryStall: "$260",
+        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
+      City: "Multan",
+      bazarManager: "Zainab Ali",
+      zoneManager: "Usman Ghani",
       Actions: "",
     },
   ];
@@ -213,11 +181,14 @@ export default function Bazars() {
   return (
     <Card className="w-full mt-4 bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
-            <Typography className="text-start" variant="h5" color="blue-gray">
-              Bazars list
-            </Typography>
+            <div className="flex items-center">
+              {/* <img src={bazar} alt="bazar" className="w-8 h-8 rounded-full" /> */}
+              <Typography className="text-start" variant="h5" color="blue-gray">
+                Bazars list
+              </Typography>
+            </div>
             <Typography color="gray" className="mt-1 font-normal">
               See information about all bazars
             </Typography>
@@ -227,7 +198,7 @@ export default function Bazars() {
               view all
             </Button> */}
             <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none "
               size="sm"
               onClick={() => {
                 navigate("/admin/create-bazar");
@@ -237,7 +208,7 @@ export default function Bazars() {
             </Button>
           </div>
         </div>
-        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex  flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -247,8 +218,8 @@ export default function Bazars() {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full mb-[-20px] md:w-72">
-            <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+          <div className="w-full md:w-72">
+            <div className="relative flex w-full flex-wrap items-stretch">
               <input
                 type="search"
                 className="relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"

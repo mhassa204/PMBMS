@@ -1,202 +1,75 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "./zone.css";
-
-// const CreateZone = ({ onCreate }) => {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     active: false,
-//     cities: [""],
-//     zoneManager: "",
-//   });
-
-//   const [cityList, setCityList] = useState([]);
-//   const [selectedCities, setSelectedCities] = useState([]);
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:8000/cities")
-//       .then((response) => setCityList(response.data))
-//       .catch((error) => console.error("Error:", error));
-//   }, []);
-
-//   const handleChange = (e, index) => {
-//     const { name, value, type, checked } = e.target;
-
-//     if (name === "cities") {
-//       const newCities = [...formData.cities];
-//       newCities[index] = value;
-
-//       const updatedSelectedCities = [...selectedCities];
-//       updatedSelectedCities[index] = value;
-
-//       setFormData({ ...formData, cities: newCities });
-//       setSelectedCities(updatedSelectedCities);
-//     } else {
-//       setFormData({
-//         ...formData,
-//         [name]: type === "checkbox" ? checked : value,
-//       });
-//     }
-//   };
-
-//   const handleAddCity = () => {
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       cities: [...prevData.cities, ""],
-//     }));
-//   };
-
-//   const handleRemoveCity = (index) => {
-//     setFormData((prevData) => {
-//       const newCities = [...prevData.cities];
-//       const updatedSelectedCities = [...selectedCities];
-
-//       newCities.splice(index, 1);
-//       updatedSelectedCities.splice(index, 1);
-
-//       return { ...prevData, cities: newCities };
-//     });
-
-//     setSelectedCities((prevSelectedCities) => {
-//       const updatedSelectedCities = [...prevSelectedCities];
-//       updatedSelectedCities.splice(index, 1);
-//       return updatedSelectedCities;
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:8000/zones",
-//         formData
-//       );
-//       console.log("Zone created successfully!");
-
-//       onCreate(response.data);
-
-//       setFormData({
-//         name: "",
-//         active: false,
-//         cities: [""],
-//         zoneManager: "",
-//       });
-
-//       // Reset the selected cities
-//       setSelectedCities([]);
-//     } catch (error) {
-//       console.error("Error creating zone:", error);
-//     }
-//   };
-
-//   const getAvailableCities = () => {
-//     return cityList.filter((city) => !selectedCities.includes(city.name));
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="form">
-//       <label className="form-label">
-//         Name:
-//         <input
-//           type="text"
-//           name="name"
-//           value={formData.name}
-//           onChange={(e) => handleChange(e)}
-//           required
-//           className="form-input"
-//         />
-//       </label>
-
-//       <label className="form-label">
-//         Active:
-//         <input
-//           type="checkbox"
-//           name="active"
-//           checked={formData.active}
-//           onChange={(e) => handleChange(e)}
-//           className="form-checkbox"
-//         />
-//       </label>
-
-//       {formData.cities.map((city, index) => (
-//         <div key={index} className="city-container">
-//           <label className="form-label">
-//             City {index + 1}:
-//             <select
-//               name="cities"
-//               value={city}
-//               onChange={(e) => handleChange(e, index)}
-//               required
-//               className="form-input"
-//             >
-//               <option value="" disabled>
-//                 Select a city
-//               </option>
-//               {getAvailableCities().map((cityOption) => (
-//                 <option key={cityOption.id} value={cityOption.name}>
-//                   {cityOption.name}
-//                 </option>
-//               ))}
-//               {city &&
-//                 !getAvailableCities().some(
-//                   (cityOption) => cityOption.name === city
-//                 ) && (
-//                   <option key={city} value={city}>
-//                     {city}
-//                   </option>
-//                 )}
-//             </select>
-//           </label>
-//           <button
-//             type="button"
-//             onClick={() => handleRemoveCity(index)}
-//             className="remove-button"
-//           >
-//             Remove
-//           </button>
-//         </div>
-//       ))}
-
-//       <button type="button" onClick={handleAddCity} className="add-button">
-//         Add City
-//       </button>
-
-//       <label className="form-label">
-//         Zone Manager:
-//         <input
-//           type="text"
-//           name="zoneManager"
-//           value={formData.zoneManager}
-//           onChange={(e) => handleChange(e)}
-//           required
-//           className="form-input"
-//         />
-//       </label>
-
-//       <button type="submit" className="submit-button">
-//         Create Zone
-//       </button>
-//     </form>
-//   );
-// };
-
-// export default CreateZone;
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
+import ProvinceData from "../../data.json";
 
 const CreateZone = () => {
   const methods = useForm();
+  const [data, setData] = useState({});
+  const [districts, setDistricts] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedCities, setSelectedCities] = useState([]);
+
+  const handleProvinceChange = (selectedValue) => {
+    setSelectedProvince(selectedValue);
+    setCities([]);
+    setSelectedCities([]);
+    setSelectedDistrict(null);
+    const provinceData = ProvinceData.filter((p) => {
+      return p.province === selectedValue.value;
+    })[0].districts;
+    const dis = provinceData.map((d) => {
+      return { label: d.district, value: d.district };
+    });
+    setDistricts(dis);
+  };
+
+  const handleDistrictChange = (selectedValue) => {
+    setSelectedDistrict(selectedValue);
+    setSelectedCities([]);
+    setCities([]);
+    // const cities = ProvinceData.filter((p) => {
+    //   return p.province === selectedProvince;
+    // })[0].districts.filter((d) => {
+    //   return {
+    //     label: d.district === selectedValue.value,
+    //     value: d.district === selectedValue.value,
+    //   };
+    // })[0].cities;
+    const provinceData = ProvinceData.filter((p) => {
+      return p.province === selectedProvince.value;
+    })[0].districts;
+    console.log(provinceData, selectedValue);
+    const dis = provinceData.find((d) => {
+      return d.district === selectedValue.value;
+    });
+    const cities = dis.cities.map((c) => {
+      return { label: c, value: c };
+    });
+    console.log("cities are: ", dis);
+
+    setCities(cities);
+    // setSelectedCities(cities);
+  };
 
   const onSubmit = (data) => {
     console.log(data);
+    setData(data);
   };
+
+  // console.log(
+  //   "data is: ",
+  //   selectedProvince,
+  //   districts,
+  //   selectedDistrict,
+  //   cities
+  // );
 
   const provinces = [
     {
@@ -208,22 +81,30 @@ const CreateZone = () => {
       value: "Sindh",
     },
     {
-      label: "Khyber Pakhtunkhwa",
-      value: "KPK",
+      label: "Khyber Pakhtunkhawa",
+      value: "Khyber Pakhtunkhawa",
     },
     {
       label: "Balochistan",
       value: "Balochistan",
     },
     {
-      label: "Gilgit-Baltistan",
-      value: "GB",
+      label: "Gilgit Baltistan",
+      value: "Gilgit Baltistan",
     },
     {
-      label: "Azad Jammu and Kashmir",
-      value: "AJK",
+      label: "Azad Kashmir",
+      value: "Azad Kashmir",
     },
   ];
+
+  const handleChange = (e) => {
+    setData((d) => {
+      return { ...d, [e.name]: e.value };
+    });
+  };
+
+  useEffect(() => {}, [data]);
 
   const zoneManager = [
     { label: "Zone Manager 1", value: "zone-manager1" },
@@ -261,17 +142,27 @@ const CreateZone = () => {
             <Dropdown
               label="Province"
               name="province"
-              placeholder="Select Province "
+              placeholder="Select Province"
               options={provinces}
               type="basic-single"
+              handleChange={handleProvinceChange}
+            />
+            <Dropdown
+              label="Districts"
+              name="district"
+              placeholder="Select district"
+              options={districts}
+              type="basic-single"
+              handleChange={handleDistrictChange}
             />
             <Dropdown
               label="Cities"
               name="city"
               placeholder="Select Cities"
-              options={provinces}
+              options={cities}
               type="basic-multi-select"
               searchable={false}
+              handleChange={handleChange}
             />
             <Dropdown
               label="Zone Manager"
@@ -279,6 +170,7 @@ const CreateZone = () => {
               name="manager"
               options={zoneManager}
               type="basic-single"
+              handleChange={handleChange}
             />
 
             <Dropdown
@@ -287,6 +179,7 @@ const CreateZone = () => {
               name="active-options"
               options={activeOptions}
               type="basic-single"
+              handleChange={handleChange}
             />
 
             <ButtonComponent type={"submit"} name={"Create Zone"} />
