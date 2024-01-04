@@ -20,7 +20,7 @@ const ImageField = ({ label, name, required, ...rest }) => {
     clearErrors(name);
   };
   return (
-    <div className="mb-4">
+    <div className="mb-4 bg-info">
       <label
         className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue"
         htmlFor={name}
