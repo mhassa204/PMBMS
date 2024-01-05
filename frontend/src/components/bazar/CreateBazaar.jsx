@@ -5,7 +5,8 @@ import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { postAPI } from "@hooks/postAPI";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -59,11 +60,19 @@ const breadcrumbItems = [
 
 const CreateBazaar = () => {
   const methods = useForm();
+  const navigate = useNavigate();
   const location = useLocation();
   const isEditMode = location.state;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // const posting = await postAPI("users", data)
+    //   .then((res) => {
+    //     navigate("/admin/user-list");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // console.log(data);
   };
 
   return (
@@ -114,7 +123,7 @@ const CreateBazaar = () => {
               options={shopType}
               type="basic-single"
             />
-            <div className="grid grid-cols-2 gap-x-4">
+            <div className="flex gap-x-2">
               <InputField
                 label="Total Shops"
                 placeholder="Enter total number of shops"
@@ -129,6 +138,25 @@ const CreateBazaar = () => {
                 name="baseRent"
                 required="Base rent is required"
               />
+              <div className="flex items-center">
+                <button className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    dataSlot="icon"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
             <InputField
               label="Prefix "

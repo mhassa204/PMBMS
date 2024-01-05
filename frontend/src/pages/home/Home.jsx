@@ -230,7 +230,6 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                dataSlot="icon"
                 className="w-8 h-8 me-2.5"
               >
                 <path
@@ -339,6 +338,7 @@ export default function Home() {
                   <List className={`${styles.list}`}>
                     {basicSetupListItems.map((item, index) => (
                       <Link
+                        key={item.text}
                         to={item.to}
                         className="text-decoration-none "
                         style={{ color: "#0d1130" }}
@@ -393,6 +393,7 @@ export default function Home() {
                   <List className={`${styles.list}`}>
                     {transactionListItems.map((item, index) => (
                       <Link
+                        key={item.text}
                         to={item.to}
                         className="text-decoration-none "
                         style={{ color: "#0d1130" }}

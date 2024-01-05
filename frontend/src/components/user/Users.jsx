@@ -20,8 +20,13 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
+import { useEffect, useState } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function Users() {
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const TABS = [
     {
@@ -38,13 +43,35 @@ export default function Users() {
     },
   ];
 
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getPaginatedData("users", currentPage, 10);
+      console.log("data: ", data);
+      if (data.success) {
+        const u = data.data.users.map((user) => ({
+          username: user.username,
+          email: user.email,
+          mobile: user.mobile,
+          city: user.city,
+          status: user.status,
+          userType: user.userType,
+        }));
+        setUsers(u);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log("Error in getting data. ", data.error);
+      }
+    };
+    getData();
+  }, []);
+
   const columns = [
-    { Header: "Username", accessor: "Username" },
-    { Header: "Email", accessor: "Email" },
-    { Header: "Mobile", accessor: "Mobile" },
-    { Header: "City Name", accessor: "CityName" },
-    { Header: "Status", accessor: "Status" },
-    { Header: "User Type", accessor: "UserType" },
+    { Header: "Username", accessor: "username" },
+    { Header: "Email", accessor: "email" },
+    { Header: "Mobile", accessor: "mobile" },
+    { Header: "City Name", accessor: "city" },
+    { Header: "Status", accessor: "status" },
+    { Header: "User Type", accessor: "userType" },
     {
       Header: "Actions",
       accessor: "Actions",
@@ -218,7 +245,7 @@ export default function Users() {
       </CardHeader>
 
       <CardBody className="px-4">
-        <Tables columns={columns} data={data} />
+        <Tables columns={columns} data={users} />
       </CardBody>
     </Card>
   );

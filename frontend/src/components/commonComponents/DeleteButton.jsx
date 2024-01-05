@@ -8,7 +8,6 @@ export default function DeleteButton({ handleChange }) {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        dataSlot="icon"
         className="w-5 h-5"
       >
         <path

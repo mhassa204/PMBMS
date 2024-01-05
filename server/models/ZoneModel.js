@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
 const zoneSchema = new mongoose.Schema({
-  name: {
+  zoneName: {
     type: String,
     required: true,
   },
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  district: {
+  province: {
     type: String,
     required: true,
   },
-  city: [
+  zoneDistrict: {
+    type: String,
+    required: true,
+  },
+  citiesInZone: [
     {
       type: String,
       required: true,
@@ -23,6 +23,10 @@ const zoneSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true,
+  },
+  active: {
+    type: Boolean,
+    default: false,
   },
 });
 
