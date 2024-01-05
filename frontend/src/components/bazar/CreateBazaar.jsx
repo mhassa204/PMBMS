@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
+import ShopTypeDropdown from "@components/commonComponents/ShopTypeDropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import { useLocation } from "react-router-dom";
+import Select from "react-select";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -20,11 +22,11 @@ const activeOptions = [
 ];
 
 const shopType = [
-  { value: "outlet", label: "Outlet" },
-  { value: "stall", label: "Stall" },
-  { value: "Masjid", label: "Masjid" },
-  { value: "food-court", label: "Food Court" },
-  { value: "playarea", label: "Play Area" },
+  { value: "Outlets", label: "Outlets" },
+  { value: "Stalls", label: "Stalls" },
+  { value: "Masjids", label: "Masjids" },
+  { value: "Foodcourt", label: "Food Courts" },
+  { value: "Joyland", label: "Joy Land" },
 ];
 
 const zone = [
@@ -62,6 +64,68 @@ const CreateBazaar = () => {
   const location = useLocation();
   const isEditMode = location.state;
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [shopData, setShopData] = useState([
+    {
+      shopType: "Shops",
+      totalShops: 0,
+      baseRent: 0,
+    },
+  ]);
+
+  const handleShopTypeChange = (selectedOptions, index) => {
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].shopType = selectedOptions
+        ? selectedOptions.value
+        : "";
+      return updatedShopData;
+    });
+  };
+
+  const handleTotal = (value, index) => {
+    const totalShops = value ? parseInt(value, 10) : 0;
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].totalShops = totalShops;
+      return updatedShopData;
+    });
+  };
+
+  const handleBaseRent = (value, index) => {
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].baseRent = parseInt(value, 10);
+      return updatedShopData;
+    });
+  };
+
+  const handlePlusClick = () => {
+    setShopData((prevShopData) => [
+      ...prevShopData,
+      {
+        shopType: "Shops",
+        totalShops: 0,
+        baseRent: 0,
+      },
+    ]);
+  };
+
+  const calculateRemainingShops = () => {
+    const approvedShopsValue = methods.watch("approvedShops");
+    const approvedShops = approvedShopsValue
+      ? parseInt(approvedShopsValue, 10)
+      : 0;
+    return shopData.reduce(
+      (remaining, shop) => remaining - shop.totalShops,
+      approvedShops
+    );
+  };
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -99,37 +163,111 @@ const CreateBazaar = () => {
               options={cities}
               type="basic-single"
             />
-            <InputField
-              label="Approved Shops"
-              type="number"
-              placeholder="Enter number of approved shops"
-              name="approvedShops"
-              required="Number of approved shops is required"
-              min={0}
-            />
-            <Dropdown
-              label="Shop Type"
-              placeholder="Select shop type"
-              name="shopType"
-              options={shopType}
-              type="basic-single"
-            />
-            <div className="grid grid-cols-2 gap-x-4">
+            <div className="flex gap-x-2">
               <InputField
-                label="Total Shops"
-                placeholder="Enter total number of shops"
+                label="Approved Shops"
                 type="number"
-                name="totalShops"
-                required="Total shops is required"
+                placeholder="Enter number of approved shops"
+                name="approvedShops"
+                required
+                min={0}
+                onChange={(e) =>
+                  methods.setValue("approvedShops", e.target.value)
+                }
               />
-              <InputField
-                label="Base Rent"
-                placeholder="Enter base rent"
-                type="number"
-                name="baseRent"
-                required="Base rent is required"
-              />
+              <p className="mt-4 text-left text-sm text-red-500">
+                Remaining Shops: {calculateRemainingShops()}
+              </p>
             </div>
+
+            {shopData.map((shop, index) => (
+              <React.Fragment key={index}>
+                {/* <Dropdown
+                  label={Shop Type}
+                  placeholder={Select shop type}
+                  name={shopType${index}}
+                  options={shopType}
+                  type="basic-single"
+                  onChange={(selectedOptions) =>
+                    handleShopTypeChange(selectedOptions, index)
+                  }
+                /> */}
+                <ShopTypeDropdown
+                  label={"Shop Type"}
+                  placeholder={"Select shop type"}
+                  name={`shopType${index}`}
+                  options={shopType}
+                  handleChange={(selectedOptions) =>
+                    handleShopTypeChange(selectedOptions, index)
+                  }
+                  value={{ label: shop.shopType, value: shop.shopType }}
+                />
+                {/* <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue">
+                    Shop Type <span className="text-red-500">*</span>
+                  </label>
+                  <Select
+                    id="shopType"
+                    name={Shop Type ${index}}
+                    options={shopType}
+                    placeholder="Select Shop Type"
+                    {...register("shopType", {
+                      required: "Shop Type is required",
+                    })}
+                    onChange={(selectedOptions) =>
+                      handleShopTypeChange(selectedOptions, index)
+                    }
+                    className="text-left"
+                  />
+                  {errors.shopType && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.shopType.message}
+                    </p>
+                  )}
+                </div> */}
+
+                <div className="flex gap-x-2">
+                  <InputField
+                    label={`Total ${shop.shopType}`}
+                    placeholder={"Enter total number of shops"}
+                    type="number"
+                    name={`totalShops${index}`}
+                    required={"Total shops is required"}
+                    onChange={(e) => handleTotal(e.target.value, index)}
+                  />
+                  <InputField
+                    label={"Base Rent"}
+                    placeholder={"Enter base rent"}
+                    type="number"
+                    name={`baseRent${index}`}
+                    required={"Base rent is required"}
+                    onChange={(e) => handleBaseRent(e.target.value, index)}
+                  />
+                  <div className="flex items-center">
+                    <div
+                      className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 "
+                      onClick={handlePlusClick}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        dataSlot="icon"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
             <InputField
               label="Prefix "
               type="text"
@@ -173,9 +311,12 @@ const CreateBazaar = () => {
               options={activeOptions}
               type="basic-single"
             />
-            <ImageField label="Bazaar Image" name="bazaarImage" required />
+            {/* <ImageField label="Bazaar Image" name="bazaarImage" required /> */}
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create Bazaar"} />
+              <ButtonComponent
+                type={"submit"}
+                name={isEditMode ? "Update Bazaar" : "Create Bazaar"}
+              />
             </div>
           </form>
         </FormProvider>
@@ -183,5 +324,3 @@ const CreateBazaar = () => {
     </div>
   );
 };
-
-export default CreateBazaar;

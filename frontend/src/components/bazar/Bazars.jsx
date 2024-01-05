@@ -27,7 +27,7 @@ import bazar from "@images/bazar.jpg";
 export default function Bazars() {
   const navigate = useNavigate();
 
-  const handleClick = (index) => {
+  const handleClick = () => {
     navigate("/admin/create-bazar", { state: true });
   };
   const TABS = [
@@ -62,7 +62,7 @@ export default function Bazars() {
         <div className="flex gap-2">
           <EditButton
             onClick={() => {
-              handleClick(index);
+              handleClick();
             }}
           />
           <DeleteButton />
