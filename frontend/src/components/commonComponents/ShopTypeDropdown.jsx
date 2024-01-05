@@ -6,7 +6,7 @@ const ShopTypeDropdown = ({
   label,
   required,
   placeholder,
-  index,
+
   name,
   options,
 }) => {
@@ -22,7 +22,6 @@ const ShopTypeDropdown = ({
       </label>
       <Controller
         name={name}
-        index={index}
         control={control}
         rules={{ required: required && ` ${label} is required` }}
         render={({ field }) => (
@@ -35,7 +34,7 @@ const ShopTypeDropdown = ({
           />
         )}
       />
-      {errors[index][name] && (
+      {errors[name] && (
         <p className="text-red-500 text-start text-sm mt-1">
           {errors[name].message}
         </p>

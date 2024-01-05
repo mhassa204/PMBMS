@@ -6,7 +6,7 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
 import ShopTypeDropdown from "@components/commonComponents/ShopTypeDropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 
 const cities = [
@@ -325,3 +325,5 @@ const CreateBazaar = () => {
     </div>
   );
 };
+
+export default CreateBazaar;
