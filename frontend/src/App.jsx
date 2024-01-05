@@ -10,7 +10,7 @@ import Settings from "@pages/settings/settings";
 import LandingPage from "@pages/LandingPage";
 import CreateUser from "@components/user/CreateUser";
 import CreateBazaar from "@components/bazar/CreateBazaar";
-import EditUserForm from "@components/user/EditUserform";
+// import EditUserForm from "@components/user/EditUserform";
 import ViewUser from "@components/user/ViewUser";
 import StallTypes from "@components/stall/StallTypes";
 import StallCategories from "@components/stall/StallCategories";
@@ -30,7 +30,7 @@ import StallList from "@components/stall/StallList";
 import CreateStallHolder from "@components/stall/CreateStallHolder";
 import Login from "@pages/authentication/Login";
 import FinePolicyForm from "@components/fine/FinePolicyForm";
-import Signup from "@pages/authentication/Signup";
+// import Signup from "@pages/authentication/Signup";
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/signup" element={<Signup />} /> */}
 
           {/* Temporary routes for form */}
           <Route path="/create-zone" element={<CreateZone />} />
@@ -66,7 +66,7 @@ function App() {
 
             <Route path="user-list" element={<Users />} />
             <Route path="create-user" element={<CreateUser />} />
-            <Route path="edit-user" element={<EditUserForm />} />
+            {/* <Route path="edit-user" element={<EditUserForm />} /> */}
             <Route path="view-user" element={<ViewUser />} />
 
             <Route path="stall-categories" element={<StallCategories />} />

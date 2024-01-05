@@ -1,63 +1,62 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Define Shop Category Schema
 const shopCategorySchema = new mongoose.Schema({
-    edible: {
-        type: Boolean,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    }
+  editable: {
+    type: Boolean,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
 // Define Shop Type Schema
 const shopTypeSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    }
-})
+  name: {
+    type: String,
+    required: true,
+  },
+});
 // Define Income Category Schema
 
 // Define Shop Schema
 const shopSchema = new mongoose.Schema({
-    shopID: {
-        type: String,
-        required: true
-    },
-    shopCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ShopCategory',
-    },
-    shopType: {
-        type: String,
-        required: true
-    },
-    vacant : {
-        type: Boolean,
-        default: true
-    },
-    bazar: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Bazar',
-        required: true
-    },
-    size: {
-        type: String,
-        required: true
-    },
+  shopID: {
+    type: String,
+    required: true,
+  },
+  shopCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "shopcategories",
+  },
+  shopType: {
+    type: String,
+    required: true,
+  },
+  vacant: {
+    type: Boolean,
+    default: true,
+  },
+  bazar: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "bazars",
+    required: true,
+  },
+  size: {
+    type: String,
+    required: true,
+  },
 });
 
 // Define models
-const ShopCategory = mongoose.model('ShopCategory', shopCategorySchema);
-const ShopType = mongoose.model('ShopType', shopTypeSchema);
-const Shop = mongoose.model('Shop', shopSchema);
+const ShopCategory = mongoose.model("shopcategories", shopCategorySchema);
+const ShopType = mongoose.model("shoptypes", shopTypeSchema);
+const Shop = mongoose.model("shops", shopSchema);
 
 module.exports = {
-    ShopCategory,
-    ShopType,
-    Shop
+  ShopCategory,
+  ShopType,
+  Shop,
 };
-ShopCategory

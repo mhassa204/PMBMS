@@ -18,8 +18,14 @@ exports.login = async (req, res) => {
     return res
       .status(401)
       .send({ auth: false, token: null, message: "Password is not valid" });
-  let token = jwt.sign({ id: user._id }, process.env.JWT_TOKEN);
-
+  const token = jwt.sign(
+    { id: user._id, userRole: user.userType },
+    process.env.JWT_TOKEN,
+    {
+      expiresIn: "1h",
+      // expiresIn: 10000, //86400=24h,
+    }
+  );
   if (user && token && passwordIsValid) {
     res.status(200).json({ token: token, user: user, auth: true });
   } else {
@@ -36,7 +42,9 @@ exports.getUsers = [
     const limit = parseInt(itemsPerPage);
     try {
       const users = await User.find().skip(skip).limit(limit);
-      res.json(users);
+      const totalCount = await User.countDocuments();
+      const totalPages = Math.ceil(totalCount / itemsPerPage);
+      res.json({ users: users, totalPages: totalPages });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -60,30 +68,80 @@ exports.getUserById = [
 ];
 
 // Add a new user
-exports.addUser = [
-  // verifyToken,
-  async (req, res) => {
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(req.body.password, salt);
+// exports.addUser = [
+//   // verifyToken,
+//   async (req, res) => {
+//     const u = req.body;
+//     console.log("user is: ", u);
 
-    try {
-      const user = new User({ ...req.body, password: hashedPassword });
-      console.log("user is: ", user);
-      // const user = new User({
-      //   userName: req.body.username,
-      //   email: req.body.email,
-      //   password: hashedPassword,
-      //   city: req.body.city,
-      //   mobileNumber: req.body.mobile,
-      //   userType: req.body.userType,
-      //   status: req.body.status,
-      // });
-      // const newUser = await user.save();
-      res
-        .status(201)
-        .json({ user: user, message: "user registered successfully" });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
+//     const salt = await bcryptjs.genSalt(10);
+//     const hashedPassword = await bcryptjs.hash(req.body.password, salt);
+//     console.log("Creating a user.");
+
+//     try {
+//       const user = new User({
+//         userName: req.body.userName,
+//         email: req.body.email,
+//         password: hashedPassword,
+//         city: req.body.city,
+//         mobileNumber: req.body.mobileNumber,
+//         userType: req.body.userType,
+//         status: req.body.status,
+//       });
+//       const newUser = await user.save();
+//       console.log("Created user: ", newUser);
+
+//       res
+//         .status(201)
+//         .json({ user: newUser, message: "user registered successfully" });
+//     } catch (error) {
+//       res.status(400).json({ message: error.message });
+//     }
+//   },
+// ];
+
+exports.addUser = [
+  // verifyToken, // Uncomment this line if you have a verifyToken middleware
+
+  async (req, res) => {
+    // Store req.body in a variable for better readability
+    const u = req.body;
+    //check if user already exist
+    let userExist = await User.findOne({ email: u.email });
+    if (userExist) {
+      console.log("user exists already");
+      res.status(400).json({ message: "Email already exist!" });
+    } else {
+      try {
+        // Generate a salt and hash the password
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(u.password, salt);
+
+        // Create a new user using the User model
+        const user = new User({
+          userName: u.userName,
+          email: u.email,
+          password: hashedPassword,
+          city: u.city,
+          mobileNumber: u.mobileNumber,
+          userType: u.userType,
+          status: u.status,
+        });
+
+        // Save the new user to the database
+        const newUser = await user.save();
+        // console.log("Created user:", newUser);
+
+        // Respond with the newly created user and a success message
+        res.status(201).json({
+          user: newUser,
+          message: "User registered successfully",
+        });
+      } catch (error) {
+        // Handle any errors and respond with an error message
+        console.error("Error:", error.message);
+        res.status(400).json({ message: error.message });
+      }
     }
   },
 ];

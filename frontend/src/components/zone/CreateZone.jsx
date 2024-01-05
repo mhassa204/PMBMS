@@ -13,7 +13,7 @@ const CreateZone = () => {
   const [cities, setCities] = useState([]);
 
   const [selectedProvince, setSelectedProvince] = useState(null);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
 
   const handleProvinceChange = (selectedValue) => {
@@ -34,14 +34,6 @@ const CreateZone = () => {
     setSelectedDistrict(selectedValue);
     setSelectedCities([]);
     setCities([]);
-    // const cities = ProvinceData.filter((p) => {
-    //   return p.province === selectedProvince;
-    // })[0].districts.filter((d) => {
-    //   return {
-    //     label: d.district === selectedValue.value,
-    //     value: d.district === selectedValue.value,
-    //   };
-    // })[0].cities;
     const provinceData = ProvinceData.filter((p) => {
       return p.province === selectedProvince.value;
     })[0].districts;
@@ -52,50 +44,34 @@ const CreateZone = () => {
     const cities = dis.cities.map((c) => {
       return { label: c, value: c };
     });
-    console.log("cities are: ", dis);
-
     setCities(cities);
-    // setSelectedCities(cities);
   };
-
-  const onSubmit = (data) => {
-    console.log(data);
-    setData(data);
-  };
-
-  // console.log(
-  //   "data is: ",
-  //   selectedProvince,
-  //   districts,
-  //   selectedDistrict,
-  //   cities
-  // );
 
   const provinces = [
     {
       label: "Punjab",
       value: "Punjab",
     },
-    {
-      label: "Sindh",
-      value: "Sindh",
-    },
-    {
-      label: "Khyber Pakhtunkhawa",
-      value: "Khyber Pakhtunkhawa",
-    },
-    {
-      label: "Balochistan",
-      value: "Balochistan",
-    },
-    {
-      label: "Gilgit Baltistan",
-      value: "Gilgit Baltistan",
-    },
-    {
-      label: "Azad Kashmir",
-      value: "Azad Kashmir",
-    },
+    // {
+    //   label: "Sindh",
+    //   value: "Sindh",
+    // },
+    // {
+    //   label: "Khyber Pakhtunkhawa",
+    //   value: "Khyber Pakhtunkhawa",
+    // },
+    // {
+    //   label: "Balochistan",
+    //   value: "Balochistan",
+    // },
+    // {
+    //   label: "Gilgit Baltistan",
+    //   value: "Gilgit Baltistan",
+    // },
+    // {
+    //   label: "Azad Kashmir",
+    //   value: "Azad Kashmir",
+    // },
   ];
 
   const handleChange = (e) => {
@@ -104,7 +80,7 @@ const CreateZone = () => {
     });
   };
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {}, []);
 
   const zoneManager = [
     { label: "Zone Manager 1", value: "zone-manager1" },
@@ -123,6 +99,11 @@ const CreateZone = () => {
     { label: "Zone List", path: "/admin/zone-list" },
     { label: "Create Zone" },
   ];
+
+  const onSubmit = (data) => {
+    console.log(data);
+    setData(data);
+  };
 
   return (
     <div className="p-4">
@@ -172,7 +153,6 @@ const CreateZone = () => {
               type="basic-single"
               handleChange={handleChange}
             />
-
             <Dropdown
               label="Active"
               placeholder="Select Status"

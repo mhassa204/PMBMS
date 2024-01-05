@@ -61,6 +61,7 @@ const breadcrumbItems = [
 
 const CreateBazaar = () => {
   const methods = useForm();
+  const navigate = useNavigate();
   const location = useLocation();
   const isEditMode = location.state;
 

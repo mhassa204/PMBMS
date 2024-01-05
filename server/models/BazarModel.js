@@ -13,27 +13,37 @@ const BazarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shopsInfo: {
-    approvedShops: {
-      type: Number,
-      default: 0,
-    },
-    shops: [
-      {
-        totalShops: {
-          type: Number,
-          default: 0,
-        },
-        shopType: {
-          type: String,
-          required: true,
-        },
-        baseRent: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+  // shopsInfo: {
+  //   approvedShops: {
+  //     type: Number,
+  //     default: 0,
+  //   },
+  //   shops: [
+  //     {
+  //       totalShops: {
+  //         type: Number,
+  //         default: 0,
+  //       },
+  //       shopType: {
+  //         type: String,
+  //         required: true,
+  //       },
+  //       baseRent: {
+  //         type: Number,
+  //         required: true,
+  //       },
+  //     },
+  //   ],
+  // },
+  dateOfEstablishment: {
+    type: Date,
+    default: Date.now(),
+  },
+  height: {
+    type: Number,
+  },
+  width: {
+    type: Number,
   },
   zone: {
     type: mongoose.Schema.Types.ObjectId,
@@ -64,6 +74,12 @@ const BazarSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
   },
+  // shops: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "shops",
+  //   },
+  // ],
   active: {
     type: Boolean,
     default: false,
@@ -74,5 +90,4 @@ const BazarSchema = new mongoose.Schema({
 });
 
 const BazarModel = mongoose.model("bazars", BazarSchema);
-
 module.exports = BazarModel;

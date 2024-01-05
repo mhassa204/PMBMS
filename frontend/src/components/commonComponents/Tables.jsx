@@ -60,18 +60,6 @@ const Tables = ({ columns, data }) => {
                           d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
                         />
                       </svg>
-                      {/* {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <ChevronDownIcon
-                            strokeWidth={2}
-                            className="h-4 w-4"
-                          />
-                        ) : (
-                          <ChevronUpIcon strokeWidth={2} className="h-4 w-4" />
-                        )
-                      ) : (
-                        ""
-                      )} */}
                     </div>
                   </th>
                 ))}
@@ -101,6 +89,9 @@ const Tables = ({ columns, data }) => {
                           alt="Bazar"
                           className="h-10 w-full"
                         />
+                      ) : cell.column.id === "citiesInZone" &&
+                        Array.isArray(cell.value) ? (
+                        <p className="py-3">{cell.value.join(", ")}</p>
                       ) : (
                         <p className="py-3"> {cell.render("Cell")}</p>
                       )}

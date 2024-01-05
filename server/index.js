@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const connect = require("./config/dbConnection");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const FileRoutes = require("./routes/fileRoutes");
 const errorHandler = require("./middleware/errorHandler");
@@ -15,6 +16,8 @@ connect();
 
 app.use(express.json());
 app.use(errorHandler);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Define your routes here
 app.use("/users", require("./routes/userRoutes"));
