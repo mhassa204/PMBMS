@@ -44,7 +44,7 @@ const CreateUser = () => {
     await axios
       .post("http://localhost:3000/users", data)
       .then((res) => {
-        navigate("/login");
+        navigate("/admin/user-list");
         console.log("user registered successfully", res);
       })
       .catch((err) => {

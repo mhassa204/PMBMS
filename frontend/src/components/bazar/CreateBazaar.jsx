@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import ImageField from "@components/commonComponents/ImageField";
+import ShopTypeDropdown from "@components/commonComponents/ShopTypeDropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
 import DateInput from "@components/commonComponents/DateInput";
 import DateField from "@components/commonComponents/DateField";
+import Select from "react-select";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -23,11 +25,11 @@ const activeOptions = [
 ];
 
 const shopType = [
-  { value: "outlet", label: "Outlet" },
-  { value: "stall", label: "Stall" },
-  { value: "Masjid", label: "Masjid" },
-  { value: "food-court", label: "Food Court" },
-  { value: "playarea", label: "Play Area" },
+  { value: "Outlets", label: "Outlets" },
+  { value: "Stalls", label: "Stalls" },
+  { value: "Masjids", label: "Masjids" },
+  { value: "Foodcourt", label: "Food Courts" },
+  { value: "Joyland", label: "Joy Land" },
 ];
 
 const zone = [
@@ -72,15 +74,70 @@ const CreateBazaar = () => {
   const isEditMode = location.state;
   const [remainingShops, setRemainingShops] = useState();
 
-  const onSubmit = async (data) => {
-    // const posting = await postAPI("users", data)
-    //   .then((res) => {
-    //     navigate("/admin/user-list");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // console.log(data);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [shopData, setShopData] = useState([
+    {
+      shopType: "Shops",
+      totalShops: 0,
+      baseRent: 0,
+    },
+  ]);
+
+  const handleShopTypeChange = (selectedOptions, index) => {
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].shopType = selectedOptions
+        ? selectedOptions.value
+        : "";
+      return updatedShopData;
+    });
+  };
+
+  const handleTotal = (value, index) => {
+    const totalShops = value ? parseInt(value, 10) : 0;
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].totalShops = totalShops;
+      return updatedShopData;
+    });
+  };
+
+  const handleBaseRent = (value, index) => {
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData[index].baseRent = parseInt(value, 10);
+      return updatedShopData;
+    });
+  };
+
+  const handlePlusClick = () => {
+    setShopData((prevShopData) => [
+      ...prevShopData,
+      {
+        shopType: "Shops",
+        totalShops: 0,
+        baseRent: 0,
+      },
+    ]);
+  };
+
+  const calculateRemainingShops = () => {
+    const approvedShopsValue = methods.watch("approvedShops");
+    const approvedShops = approvedShopsValue
+      ? parseInt(approvedShopsValue, 10)
+      : 0;
+    return shopData.reduce(
+      (remaining, shop) => remaining - shop.totalShops,
+      approvedShops
+    );
+  };
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
@@ -91,10 +148,7 @@ const CreateBazaar = () => {
           {isEditMode ? "Update Bazaar" : "Create Bazaar"}
         </h2>
         <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            // className="grid grid-cols-2 gap-x-4"
-          >
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
             <h4 className="text-md text-start font-semibold mb-3">
               1. Basic Bazar Information
             </h4>
@@ -168,6 +222,9 @@ const CreateBazaar = () => {
                 name="approvedShops"
                 required="Number of approved shops is required"
                 min={0}
+                onChange={(e) =>
+                  methods.setValue("approvedShops", e.target.value)
+                }
               />
               <div>
                 <label className="block text-red-900 text-sm font-bold mb-2 text-start">
@@ -176,76 +233,102 @@ const CreateBazaar = () => {
                 <input
                   type="number"
                   disabled
-                  value={remainingShops || 0}
+                  value={calculateRemainingShops()}
                   readOnly
                   className="w-full h-[40px] border border-gray-900  p-2 rounded-md"
                 />
               </div>
-              <Dropdown
-                label="Shop Type"
-                placeholder="Select shop type"
-                name="shopType"
-                options={shopType}
-                type="basic-single"
-                required={true}
-              />
-              <div className="flex gap-x-2">
-                <InputField
-                  label="Total Shops"
-                  placeholder="Enter total number of shops"
-                  type="number"
-                  name="totalShops"
-                  required="Total shops is required"
-                />
-                <InputField
-                  label="Base Rent"
-                  placeholder="Enter base rent"
-                  type="number"
-                  name="baseRent"
-                  required="Base rent is required"
-                />
-                <div className="flex items-center">
-                  <button className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 ">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      dataSlot="icon"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+
+              {shopData.map((shop, index) => (
+                <React.Fragment key={index}>
+                  {/* <Dropdown
+                  label={Shop Type}
+                  placeholder={Select shop type}
+                  name={shopType${index}}
+                  options={shopType}
+                  type="basic-single"
+                  onChange={(selectedOptions) =>
+                    handleShopTypeChange(selectedOptions, index)
+                  }
+                /> */}
+                  <ShopTypeDropdown
+                    label={"Shop Type"}
+                    placeholder={"Select shop type"}
+                    name={`shopType${index}`}
+                    options={shopType}
+                    handleChange={(selectedOptions) =>
+                      handleShopTypeChange(selectedOptions, index)
+                    }
+                    value={{ label: shop.shopType, value: shop.shopType }}
+                  />
+                  {/* <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue">
+                    Shop Type <span className="text-red-500">*</span>
+                  </label>
+                  <Select
+                    id="shopType"
+                    name={Shop Type ${index}}
+                    options={shopType}
+                    placeholder="Select Shop Type"
+                    {...register("shopType", {
+                      required: "Shop Type is required",
+                    })}
+                    onChange={(selectedOptions) =>
+                      handleShopTypeChange(selectedOptions, index)
+                    }
+                    className="text-left"
+                  />
+                  {errors.shopType && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.shopType.message}
+                    </p>
+                  )}
+                </div> */}
+
+                  <div className="flex gap-x-2">
+                    <InputField
+                      label={`Total ${shop.shopType}`}
+                      placeholder={"Enter total number of shops"}
+                      type="number"
+                      name={`totalShops${index}`}
+                      required={"Total shops is required"}
+                      onChange={(e) => handleTotal(e.target.value, index)}
+                    />
+                    <InputField
+                      label={"Base Rent"}
+                      placeholder={"Enter base rent"}
+                      type="number"
+                      name={`baseRent${index}`}
+                      required={"Base rent is required"}
+                      onChange={(e) => handleBaseRent(e.target.value, index)}
+                    />
+                    <div className="flex items-center">
+                      <div
+                        className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 "
+                        onClick={handlePlusClick}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          dataSlot="icon"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
 
-            {/* <div className="flex gap-x-2">
-              <div className="w-[50%]">
-                <Dropdown
-                  label="Area Unit"
-                  placeholder="Select a unit"
-                  name="areaType"
-                  options={areaType}
-                  type="basic-single"
-                />
-              </div>
-              <div className="w-[50%]">
-                <InputField
-                  label="Total Area"
-                  placeholder="Enter total area"
-                  type="number"
-                  name="area"
-                  required="Total area is required"
-                />
-              </div>
-            </div> */}
             <h4 className="text-md text-start font-semibold mb-3">
               3. Management Information
             </h4>
@@ -282,10 +365,13 @@ const CreateBazaar = () => {
                 required={true}
               />
             </div>
-
             <ImageField label="Bazaar Image" name="bazaarImage" required />
+
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create Bazaar"} />
+              <ButtonComponent
+                type={"submit"}
+                name={isEditMode ? "Update Bazaar" : "Create Bazaar"}
+              />
             </div>
           </form>
         </FormProvider>
