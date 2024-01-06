@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -7,6 +7,8 @@ import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
+import DateInput from "@components/commonComponents/DateInput";
+import DateField from "@components/commonComponents/DateField";
 
 const cities = [
   { value: "new-york", label: "New York" },
@@ -53,6 +55,11 @@ const supervisor = [
   { value: "supervisor5", label: "Supervisor 5" },
 ];
 
+const areaType = [
+  { value: "Marla", label: "Marla" },
+  { value: "Canal", label: "Canal" },
+];
+
 const breadcrumbItems = [
   { label: "Bazar List", path: "/admin/bazar-list" },
   { label: "Create Bazar" },
@@ -63,6 +70,7 @@ const CreateBazaar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isEditMode = location.state;
+  const [remainingShops, setRemainingShops] = useState();
 
   const onSubmit = async (data) => {
     // const posting = await postAPI("users", data)
@@ -77,7 +85,7 @@ const CreateBazaar = () => {
 
   return (
     <div className="p-4">
-      <Breadcrumb items={breadcrumbItems} />
+      {/* <Breadcrumb items={breadcrumbItems} /> */}
       <div className="max-w-3xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
         <h2 className="text-2xl font-semibold mb-4">
           {isEditMode ? "Update Bazaar" : "Create Bazaar"}
@@ -85,122 +93,196 @@ const CreateBazaar = () => {
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
-            className="grid grid-cols-2 gap-x-4"
+            // className="grid grid-cols-2 gap-x-4"
           >
-            <InputField
-              label="Bazaar Name"
-              type="text"
-              placeholder="Enter Bazaar Name"
-              name="bazaarName"
-              required
-            />
-            <InputField
-              label="Bazaar Address"
-              placeholder="Enter Bazaar Address"
-              type="text"
-              name="bazaarAddress"
-              required
-            />
-            <Dropdown
-              label="City"
-              placeholder="Select City"
-              name="city"
-              options={cities}
-              type="basic-single"
-            />
-            <InputField
-              label="Approved Shops"
-              type="number"
-              placeholder="Enter number of approved shops"
-              name="approvedShops"
-              required="Number of approved shops is required"
-              min={0}
-            />
-            <Dropdown
-              label="Shop Type"
-              placeholder="Select shop type"
-              name="shopType"
-              options={shopType}
-              type="basic-single"
-            />
-            <div className="flex gap-x-2">
+            <h4 className="text-md text-start font-semibold mb-3">
+              1. Basic Bazar Information
+            </h4>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
               <InputField
-                label="Total Shops"
-                placeholder="Enter total number of shops"
-                type="number"
-                name="totalShops"
-                required="Total shops is required"
+                label="Bazaar Name"
+                type="text"
+                placeholder="Enter Bazaar Name"
+                name="bazaarName"
+                required
               />
               <InputField
-                label="Base Rent"
-                placeholder="Enter base rent"
-                type="number"
-                name="baseRent"
-                required="Base rent is required"
+                label="Bazaar Address"
+                placeholder="Enter Bazaar Address"
+                type="text"
+                name="bazaarAddress"
+                required
               />
-              <div className="flex items-center">
-                <button className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    dataSlot="icon"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                </button>
+              <Dropdown
+                label="City"
+                placeholder="Select City"
+                name="city"
+                options={cities}
+                type="basic-single"
+                required
+              />
+              <InputField
+                label="Prefix "
+                type="text"
+                name="prefix"
+                required
+                placeholder="Enter Prefix"
+              />
+              <Dropdown
+                label="Area Unit"
+                placeholder="Select a unit"
+                name="areaType"
+                options={areaType}
+                type="basic-single"
+                required={true}
+              />
+              <InputField
+                label="Total Area"
+                placeholder="Enter total area"
+                type="number"
+                name="area"
+                required="Total area is required"
+              />
+              <DateField
+                label="Date of Establishment"
+                name="dateEstablished"
+                required
+              />
+              <Dropdown
+                label="Active"
+                placeholder="Select Status"
+                name="active-options"
+                options={activeOptions}
+                type="basic-single"
+                required={true}
+              />
+            </div>
+            <h4 className="text-md text-start font-semibold mb-3">
+              2. Shops Information
+            </h4>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+              <InputField
+                label="Approved Shops"
+                type="number"
+                placeholder="Enter number of approved shops"
+                name="approvedShops"
+                required="Number of approved shops is required"
+                min={0}
+              />
+              <div>
+                <label className="block text-red-900 text-sm font-bold mb-2 text-start">
+                  Remaining shops
+                </label>
+                <input
+                  type="number"
+                  disabled
+                  value={remainingShops || 0}
+                  readOnly
+                  className="w-full h-[40px] border border-gray-900  p-2 rounded-md"
+                />
+              </div>
+              <Dropdown
+                label="Shop Type"
+                placeholder="Select shop type"
+                name="shopType"
+                options={shopType}
+                type="basic-single"
+                required={true}
+              />
+              <div className="flex gap-x-2">
+                <InputField
+                  label="Total Shops"
+                  placeholder="Enter total number of shops"
+                  type="number"
+                  name="totalShops"
+                  required="Total shops is required"
+                />
+                <InputField
+                  label="Base Rent"
+                  placeholder="Enter base rent"
+                  type="number"
+                  name="baseRent"
+                  required="Base rent is required"
+                />
+                <div className="flex items-center">
+                  <button className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      dataSlot="icon"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-            <InputField
-              label="Prefix "
-              type="text"
-              name="prefix"
-              required
-              placeholder="Enter Prefix"
-            />
-            <Dropdown
-              label="Zone"
-              placeholder="Select a zone"
-              name="zone"
-              options={zone}
-              type="basic-single"
-            />
-            <InputField
-              label="Zone Manager"
-              placeholder="Zone manager"
-              name="zoneManager"
-              type="text"
-              disabled={true}
-            />
-            <Dropdown
-              label="Bazaar Manager"
-              placeholder="Select Bazaar Manager"
-              name="bazaarManager"
-              options={bazaarManager}
-              type="basic-single"
-            />
-            <Dropdown
-              label="Supervisor"
-              placeholder="Select Supervisor"
-              name="supervisor"
-              options={supervisor}
-              type="basic-single"
-            />
 
-            <Dropdown
-              label="Active"
-              placeholder="Select Status"
-              name="active-options"
-              options={activeOptions}
-              type="basic-single"
-            />
+            {/* <div className="flex gap-x-2">
+              <div className="w-[50%]">
+                <Dropdown
+                  label="Area Unit"
+                  placeholder="Select a unit"
+                  name="areaType"
+                  options={areaType}
+                  type="basic-single"
+                />
+              </div>
+              <div className="w-[50%]">
+                <InputField
+                  label="Total Area"
+                  placeholder="Enter total area"
+                  type="number"
+                  name="area"
+                  required="Total area is required"
+                />
+              </div>
+            </div> */}
+            <h4 className="text-md text-start font-semibold mb-3">
+              3. Management Information
+            </h4>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+              <Dropdown
+                label="Zone"
+                placeholder="Select a zone"
+                name="zone"
+                options={zone}
+                required={true}
+                type="basic-single"
+              />
+              <InputField
+                label="Zone Manager"
+                placeholder="Zone manager"
+                name="zoneManager"
+                type="text"
+                disabled={true}
+              />
+              <Dropdown
+                label="Bazaar Manager"
+                placeholder="Select Bazaar Manager"
+                name="bazaarManager"
+                options={bazaarManager}
+                type="basic-single"
+                required={true}
+              />
+              <Dropdown
+                label="Supervisor"
+                placeholder="Select Supervisor"
+                name="supervisor"
+                options={supervisor}
+                type="basic-single"
+                required={true}
+              />
+            </div>
+
             <ImageField label="Bazaar Image" name="bazaarImage" required />
             <div className="mt-5">
               <ButtonComponent type={"submit"} name={"Create Bazaar"} />

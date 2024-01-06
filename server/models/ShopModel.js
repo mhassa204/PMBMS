@@ -32,8 +32,8 @@ const shopSchema = new mongoose.Schema({
     ref: "shopcategories",
   },
   shopType: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "shoptypes",
   },
   vacant: {
     type: Boolean,
@@ -46,6 +46,10 @@ const shopSchema = new mongoose.Schema({
   },
   size: {
     type: String,
+    required: true,
+  },
+  monthlyRent: {
+    type: Number,
     required: true,
   },
 });

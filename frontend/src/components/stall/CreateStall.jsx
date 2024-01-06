@@ -14,48 +14,12 @@ const CreateStall = () => {
 
   const stallStatus = [
     {
-      label: "Active",
-      value: "Active",
+      label: "Occupied",
+      value: "Occupied",
     },
     {
-      label: "Inactive",
-      value: "Inactive",
-    },
-    {
-      label: "Pending",
-      value: "Pending",
-    },
-    {
-      label: "Suspended",
-      value: "Suspended",
-    },
-    {
-      label: "Deleted",
-      value: "Deleted",
-    },
-    {
-      label: "Rejected",
-      value: "Rejected",
-    },
-    {
-      label: "Blocked",
-      value: "Blocked",
-    },
-    {
-      label: "Approved",
-      value: "Approved",
-    },
-    {
-      label: "Expired",
-      value: "Expired",
-    },
-    {
-      label: "Cancelled",
-      value: "Cancelled",
-    },
-    {
-      label: "Completed",
-      value: "Completed",
+      label: "Vacant",
+      value: "Vacant",
     },
   ];
 
@@ -154,7 +118,7 @@ const CreateStall = () => {
             />
             <InputField
               label="Shop Size"
-              placeholder="Enter shop size"
+              placeholder="Enter shop size e.g. 10 * 10"
               type="text"
               name="size"
               required
@@ -165,13 +129,6 @@ const CreateStall = () => {
               options={stallStatus}
               searchable={true}
               placeholder="Select a status"
-              required
-            />
-            <Dropdown
-              name="fine"
-              placeholder="Select a fine"
-              label="Fine"
-              options={fine}
               required
             />
             <InputField

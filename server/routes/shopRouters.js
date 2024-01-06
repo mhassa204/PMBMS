@@ -15,4 +15,11 @@ router.get("/shop-categories", shopController.getShopCategories); //get all shop
 router.put("/shop-categories/:id", shopController.updateShopCategory); //update shop category
 router.delete("/shop-categories/:id", shopController.deleteShopCategory); //delete a shop category
 
+//Shop type routes
+router.post("/shop-types", shopController.createShopType); // create shop type
+router.get("/shop-types/:id", shopController.getShopTypeById); //get shop type by id
+router.get("/shop-types", shopController.getShopTypes); //get all shop type
+router.put("/shop-types/:id", shopController.updateShopTypeById); //update shop type
+router.delete("/shop-types/:id", shopController.deleteShopTypeById); //delete a shop type
+
 module.exports = router;

@@ -1,22 +1,11 @@
 [
   {
-    "editable": true,
-    "name": "Electronics"
+    "name": "Outlet"
   },
   {
-    "editable": false,
-    "name": "Clothing"
+    "name": "Stall"
   },
   {
-    "editable": true,
-    "name": "Home and Furniture"
-  },
-  {
-    "editable": false,
-    "name": "Books and Stationery"
-  },
-  {
-    "editable": true,
-    "name": "Sports and Outdoors"
+    "name": "Grocery"
   }
 ]
