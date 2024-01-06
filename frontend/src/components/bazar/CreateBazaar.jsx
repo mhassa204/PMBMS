@@ -142,7 +142,7 @@ const CreateBazaar = () => {
 
   return (
     <div className="p-4">
-      {/* <Breadcrumb items={breadcrumbItems} /> */}
+      <Breadcrumb items={breadcrumbItems} />
       <div className="max-w-3xl  mx-auto my-10 p-6 bg-white border rounded-md textBlue">
         <h2 className="text-2xl font-semibold mb-4">
           {isEditMode ? "Update Bazaar" : "Create Bazaar"}
