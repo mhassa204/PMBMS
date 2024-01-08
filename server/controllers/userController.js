@@ -22,7 +22,7 @@ exports.login = async (req, res) => {
     { id: user._id, userRole: user.userType },
     process.env.JWT_TOKEN,
     {
-      expiresIn: "1h",
+      expiresIn: "7d",
       // expiresIn: 10000, //86400=24h,
     }
   );

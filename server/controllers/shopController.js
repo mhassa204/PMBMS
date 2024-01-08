@@ -5,6 +5,7 @@ const {
   ShopCategory,
   IncomeCategory,
 } = require("../models/ShopModel");
+const BazarModel = require("../models/BazarModel");
 const verifyToken = require("../middleware/accessAuth");
 const { isSuperAdmin } = require("../middleware/roles");
 
@@ -94,7 +95,19 @@ exports.deleteShopByID = [
       if (!shop) {
         return res.status(404).json({ error: "Shop not found" });
       }
-      res.status(200).json({ message: "Shop deleted successfully" });
+      if (shop) {
+        const bazar = await BazarModel.findById(req.params.bazarId);
+        const updatedBazar = bazar.approvedShops.filter((shop) => {
+          return String(shop._id) !== String(req.params.id);
+        });
+        await bazar.save();
+        // await BazarModel.updateOne(
+        //   { _id: req.params.bazarId },
+        //   { approvedShops: updatedBazar }
+        // );
+
+        res.status(200).json({ message: "Shop deleted successfully" });
+      }
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }

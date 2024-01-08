@@ -5,8 +5,8 @@ const shopController = require("../controllers/shopController");
 router.get("/shops", shopController.getAllShops); // Get all shops
 router.get("/shop/:id", shopController.getShopByID); // Get shop by ID
 router.post("/shop", shopController.createShop); // Create shop
-router.patch("/shop/:id", shopController.editShopByID); // Edit shop by ID
-router.delete("/shop/:id", shopController.deleteShopByID); // Delete shop by ID
+router.put("/shop/:id", shopController.editShopByID); // Edit shop by ID
+router.delete("/shop/:id/:bazarId", shopController.deleteShopByID); // Delete shop by ID
 
 //Shop category routes
 router.post("/shop-categories", shopController.createShopCategory); // create shop category
