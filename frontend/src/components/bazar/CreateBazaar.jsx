@@ -239,7 +239,8 @@ const CreateBazaar = () => {
                   className="w-full h-[40px] border border-gray-900  p-2 rounded-md"
                 />
               </div>
-
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
               {shopData.map((shop, index) => (
                 <React.Fragment key={index}>
                   {/* <Dropdown
@@ -260,31 +261,7 @@ const CreateBazaar = () => {
                     handleChange={(selectedOptions) =>
                       handleShopTypeChange(selectedOptions, index)
                     }
-                    value={{ label: shop.shopType, value: shop.shopType }}
                   />
-                  {/* <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 text-start textBlue">
-                    Shop Type <span className="text-red-500">*</span>
-                  </label>
-                  <Select
-                    id="shopType"
-                    name={Shop Type ${index}}
-                    options={shopType}
-                    placeholder="Select Shop Type"
-                    {...register("shopType", {
-                      required: "Shop Type is required",
-                    })}
-                    onChange={(selectedOptions) =>
-                      handleShopTypeChange(selectedOptions, index)
-                    }
-                    className="text-left"
-                  />
-                  {errors.shopType && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.shopType.message}
-                    </p>
-                  )}
-                </div> */}
 
                   <div className="flex gap-x-2">
                     <InputField
@@ -303,31 +280,32 @@ const CreateBazaar = () => {
                       required={"Base rent is required"}
                       onChange={(e) => handleBaseRent(e.target.value, index)}
                     />
-                    <div className="flex items-center">
-                      <div
-                        className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 "
-                        onClick={handlePlusClick}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          dataSlot="icon"
-                          className="w-5 h-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 4.5v15m7.5-7.5h-15"
-                          />
-                        </svg>
-                      </div>
-                    </div>
                   </div>
                 </React.Fragment>
               ))}
+
+              <div className="flex items-center">
+                <div
+                  className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200 "
+                  onClick={handlePlusClick}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    dataSlot="icon"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             <h4 className="text-md text-start font-semibold mb-3">

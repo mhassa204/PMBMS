@@ -1,13 +1,23 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const DateField = ({ label, name, required, ...rest }) => {
+const DateField = ({ label, name, required, onKeyDown, ...rest }) => {
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
   const handleChange = (e) => {
     setValue(name, e.target.value);
     trigger(name);
+  };
+
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -24,6 +34,7 @@ const DateField = ({ label, name, required, ...rest }) => {
         id={name}
         {...register(name, { required: `${label} is required` })}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         {...rest}
         className="border rounded-md px-3 py-2 w-full text-start"
       />
