@@ -63,7 +63,7 @@ const areaType = [
 ];
 
 const breadcrumbItems = [
-  { label: "Bazar List", path: "/admin/bazar-list" },
+  { label: "Bazar List", path: "/admin/basic/bazar-list" },
   { label: "Create Bazar" },
 ];
 
@@ -136,6 +136,7 @@ const CreateBazaar = () => {
       approvedShops
     );
   };
+
   const onSubmit = (data) => {
     console.log(data);
   };

@@ -28,7 +28,7 @@ export default function Bazars() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/admin/create-bazar", { state: true });
+    navigate("/admin/basic/create-bazar", { state: true });
   };
   const TABS = [
     {
