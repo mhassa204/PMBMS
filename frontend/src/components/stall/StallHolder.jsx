@@ -1,20 +1,10 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -198,7 +188,7 @@ export default function StallHolder() {
   ];
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
@@ -283,7 +273,7 @@ export default function StallHolder() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4 ">
+      <CardBody>
         <Tables columns={columns} data={data} />
       </CardBody>
     </Card>

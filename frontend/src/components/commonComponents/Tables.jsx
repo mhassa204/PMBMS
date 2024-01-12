@@ -1,5 +1,4 @@
 import React from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Typography } from "@material-tailwind/react";
 import "@src/styles/tableStyles.css";
@@ -29,11 +28,11 @@ const Tables = ({ columns, data }) => {
 
   console.log("data: ", data);
   return (
-    <>
+    <div>
       <div className="table-scroll">
         <table
           {...getTableProps()}
-          className="mt-4 w-full border-collapse table-auto text-left rounded-md overflow-hidden"
+          className="w-full border-collapse table-auto text-left rounded-md overflow-hidden"
         >
           <thead className="bg-[#2f9149] text-white">
             {headerGroups.map((headerGroup) => (
@@ -73,7 +72,7 @@ const Tables = ({ columns, data }) => {
               return (
                 <tr
                   key={row.id}
-                  className="bg-white border-b border-blue-gray-50"
+                  className="border-b border-blue-gray-50 hover:bg-gray-100"
                 >
                   {row.cells.map((cell) => (
                     <td
@@ -88,7 +87,7 @@ const Tables = ({ columns, data }) => {
                         <img
                           src={cell.value}
                           alt="Bazar"
-                          className="h-10 w-full"
+                          className="h-12 w-full"
                         />
                       ) : cell.column.id === "citiesInZone" &&
                         Array.isArray(cell.value) ? (
@@ -104,7 +103,7 @@ const Tables = ({ columns, data }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between border-t border-blue-gray-50 py-3 mb-4 mx-">
+      <div className="flex items-center justify-between border-t border-blue-gray-50 pt-8 ">
         <Typography
           variant="small"
           color="blue-gray"
@@ -133,7 +132,7 @@ const Tables = ({ columns, data }) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

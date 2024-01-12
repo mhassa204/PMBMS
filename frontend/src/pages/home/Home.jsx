@@ -87,36 +87,6 @@ export default function Home() {
       setActive(`basic/${lastElement}`);
       setOpen(1);
     }
-
-    // if (window.location.pathname === "/admin/dashboard") {
-    //   setActive("dashboard");
-    // }
-    // else if (window.location.pathname === "/admin/settings") {
-    //   setActive("settings");
-    // } else if (window.location.pathname === "/admin/user-list") {
-    //   setActive("user-list");
-    // } else if (window.location.pathname === "/admin/city-list") {
-    //   setActive("city-list");
-    // } else if (window.location.pathname === "/admin/stall-types") {
-    //   setActive("stall-types");
-    // } else if (window.location.pathname === "/admin/stall-categories") {
-    //   setActive("stall-categories");
-    // } else if (window.location.pathname === "/admin/bazar-list") {
-    //   setActive("bazar-list");
-    // } else if (window.location.pathname === "/admin/cancellation-reasons") {
-    //   setActive("cancellation-reasons");
-    // } else if (window.location.pathname === "/admin/stall-holders") {
-    //   setActive("stall-holders");
-    // } else if (window.location.pathname === "/admin/income-category") {
-    //   setActive("income-category");
-    // } else if (window.location.pathname === "/admin/zone-list") {
-    //   setActive("zone-list");
-    // } else {
-    //   const path = window.location.pathname;
-    //   const pathParts = path.split("/");
-    //   const lastElement = pathParts[pathParts.length - 1];
-    //   setActive(lastElement);
-    // }
   }, []);
 
   const basicSetupListItems = [
@@ -297,7 +267,7 @@ export default function Home() {
       </div>
       <div className="flex main-body ">
         <div className=" w-[260px] min-h-[90vh]">
-          <Card className="h-full sidebar mt-2 w-[260px] flex flex-column border-r-2 border-gray-100">
+          <Card className="h-full sidebar mt- w-[260px] flex flex-column border-r-2border-gray-100">
             <List className={"flex flex-column"}>
               <Link
                 to="dashboard"
@@ -471,7 +441,7 @@ export default function Home() {
             </List>
           </Card>
         </div>
-        <div className="sidebar w-full">
+        <div className="sidebar bg-green-100 p-3 py-4 w-full">
           <Outlet />
         </div>
       </div>

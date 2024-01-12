@@ -66,7 +66,7 @@ export default function StallCategories() {
   ];
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
@@ -129,7 +129,7 @@ export default function StallCategories() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4">
+      <CardBody>
         <Tables columns={columns} data={data} />
       </CardBody>
     </Card>
