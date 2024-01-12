@@ -10,6 +10,7 @@ const PasswordField = ({
   minLength,
   maxLength,
   placeholder,
+  onKeyDown,
   ...rest
 }) => {
   const { register, formState } = useFormContext();
@@ -19,6 +20,15 @@ const PasswordField = ({
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
+  };
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -44,6 +54,7 @@ const PasswordField = ({
             minLength: minLength ? minLength : undefined,
             maxLength: maxLength ? maxLength : undefined,
           })}
+          onKeyDown={handleKeyDown}
           {...rest}
         />
         <button

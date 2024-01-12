@@ -11,6 +11,7 @@ const Dropdown = ({
   handleChange,
   name,
   options,
+  onKeyDown,
   ...rest
 }) => {
   const { register, setValue, trigger, formState } = useFormContext();
@@ -23,6 +24,15 @@ const Dropdown = ({
 
     setValue(name, selectedValues);
     trigger(name);
+  };
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -44,6 +54,7 @@ const Dropdown = ({
             handleChange({ name: name, value: selectedOptions.value });
         }}
         className={`${type} text-start h-[40px] `}
+        onKeyDown={handleKeyDown}
         {...rest}
         isMulti={type === "basic-multi-select" ? true : false}
         isSearchable={searchable ? true : false}
