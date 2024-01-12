@@ -27,6 +27,10 @@ const shopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  shopName: {
+    type: String,
+    required: true,
+  },
   shopCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "shopcategories",
@@ -44,8 +48,12 @@ const shopSchema = new mongoose.Schema({
     ref: "bazars",
     required: true,
   },
-  size: {
-    type: String,
+  shopLength: {
+    type: Number,
+    required: true,
+  },
+  shopWidth: {
+    type: Number,
     required: true,
   },
   monthlyRent: {

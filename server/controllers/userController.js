@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const verifyToken = require("../middleware/accessAuth");
 const { isSuperAdmin, isAdmin } = require("../middleware/roles");
 
+//login controller
 exports.login = async (req, res) => {
   let user = await User.findOne({
     email: req.body.email,
@@ -32,6 +33,7 @@ exports.login = async (req, res) => {
     res.status(404).json({ message: "User not found" });
   }
 };
+
 // Get all users
 exports.getUsers = [
   verifyToken,
@@ -41,7 +43,9 @@ exports.getUsers = [
     const skip = (currentPage - 1) * itemsPerPage;
     const limit = parseInt(itemsPerPage);
     try {
-      const users = await User.find().skip(skip).limit(limit);
+      const users = await User.find({ userType: { $ne: "SuperAdmin" } })
+        .skip(skip)
+        .limit(limit);
       const totalCount = await User.countDocuments();
       const totalPages = Math.ceil(totalCount / itemsPerPage);
       res.json({ users: users, totalPages: totalPages });

@@ -76,82 +76,99 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (window.location.pathname === "/admin/dashboard") {
-      setActive("dashboard");
-    } else if (window.location.pathname === "/admin/settings") {
-      setActive("settings");
-    } else if (window.location.pathname === "/admin/user-list") {
-      setActive("user-list");
-    } else if (window.location.pathname === "/admin/city-list") {
-      setActive("city-list");
-    } else if (window.location.pathname === "/admin/stall-types") {
-      setActive("stall-types");
-    } else if (window.location.pathname === "/admin/stall-categories") {
-      setActive("stall-categories");
-    } else if (window.location.pathname === "/admin/bazar-list") {
-      setActive("bazar-list");
-    } else if (window.location.pathname === "/admin/cancellation-reasons") {
-      setActive("cancellation-reasons");
-    } else if (window.location.pathname === "/admin/stall-holders") {
-      setActive("stall-holders");
-    } else if (window.location.pathname === "/admin/income-category") {
-      setActive("income-category");
-    } else if (window.location.pathname === "/admin/zone-list") {
-      setActive("zone-list");
+    const path = window.location.pathname;
+    const pathParts = path.split("/");
+    const lastElement = pathParts[pathParts.length - 1];
+
+    if (pathParts[pathParts.length - 2] === "transaction") {
+      setOpen(2);
+      setActive(`transaction/${lastElement}`);
+    } else if (pathParts[pathParts.length - 2] === "basic") {
+      setActive(`basic/${lastElement}`);
+      setOpen(1);
     }
+
+    // if (window.location.pathname === "/admin/dashboard") {
+    //   setActive("dashboard");
+    // }
+    // else if (window.location.pathname === "/admin/settings") {
+    //   setActive("settings");
+    // } else if (window.location.pathname === "/admin/user-list") {
+    //   setActive("user-list");
+    // } else if (window.location.pathname === "/admin/city-list") {
+    //   setActive("city-list");
+    // } else if (window.location.pathname === "/admin/stall-types") {
+    //   setActive("stall-types");
+    // } else if (window.location.pathname === "/admin/stall-categories") {
+    //   setActive("stall-categories");
+    // } else if (window.location.pathname === "/admin/bazar-list") {
+    //   setActive("bazar-list");
+    // } else if (window.location.pathname === "/admin/cancellation-reasons") {
+    //   setActive("cancellation-reasons");
+    // } else if (window.location.pathname === "/admin/stall-holders") {
+    //   setActive("stall-holders");
+    // } else if (window.location.pathname === "/admin/income-category") {
+    //   setActive("income-category");
+    // } else if (window.location.pathname === "/admin/zone-list") {
+    //   setActive("zone-list");
+    // } else {
+    //   const path = window.location.pathname;
+    //   const pathParts = path.split("/");
+    //   const lastElement = pathParts[pathParts.length - 1];
+    //   setActive(lastElement);
+    // }
   }, []);
 
   const basicSetupListItems = [
     {
-      to: "user-list",
-      active: "user-list",
+      to: "basic/user-list",
+      active: "basic/user-list",
       icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
       text: "Users",
     },
     {
-      to: "zone-list",
-      active: "zone-list",
-
+      to: "basic/zone-list",
+      active: "basic/zone-list",
       icon: (
         <FontAwesomeIcon icon={faGlobeEurope} className={`w-4 h-4 me-2 ms-1`} />
       ),
       text: "Zones",
     },
     {
-      to: "stall-types",
-      active: "stall-types",
+      to: "basic/stall-types",
+      active: "basic/stall-types",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Shop Types",
     },
     {
-      to: "stall-categories",
-      active: "stall-categories",
+      to: "basic/stall-categories",
+      active: "basic/stall-categories",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Shop Category",
     },
     {
-      to: "bazar-list",
-      active: "bazar-list",
+      to: "basic/bazar-list",
+      active: "basic/bazar-list",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Bazar",
     },
 
     {
-      to: "income-category",
-      active: "income-category",
+      to: "basic/income-category",
+      active: "basic/income-category",
       icon: <CurrencyDollarIcon className={`w-4 h-4 me-2 ms-1`} />,
       text: "Income Category",
     },
 
     {
-      to: "stall-holders",
-      active: "stall-holders",
+      to: "basic/stall-holders",
+      active: "basic/stall-holders",
       icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
       text: "Stall Holder",
     },
     {
-      to: "cancellation-reasons",
-      active: "cancellation-reasons",
+      to: "basic/cancellation-reasons",
+      active: "basic/cancellation-reasons",
       icon: <MdFreeCancellation className={`w-4 h-4 me-2 ms-1`} />,
       text: "Cancellation Reasons",
     },
@@ -161,44 +178,44 @@ export default function Home() {
     {
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Stalls",
-      to: "stall-list",
-      active: "stall-list",
+      to: "transaction/stall-list",
+      active: "transaction/stall-list",
     },
     {
       icon: <MdAssignmentReturned className={`w-4 h-4 me-2 ms-1`} />,
       text: "Allotments",
-      to: "allotments",
-      active: "allotments",
+      to: "transaction/allotments",
+      active: "transaction/allotments",
     },
     {
       icon: <FaMoneyBillWave className={`w-4 h-4 me-2 ms-1`} />,
       text: "Fine Policy",
-      to: "fine-policy",
-      active: "fine-policy",
+      to: "transaction/fine-policies",
+      active: "transaction/fine-policies",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Vouchers",
-      to: "vouchers",
-      active: "vouchers",
+      to: "transaction/vouchers",
+      active: "transaction/vouchers",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Voucher Generation",
-      to: "voucher-generation",
-      active: "voucher-generation",
+      to: "transaction/voucher-generations",
+      active: "transaction/voucher-generations",
     },
     {
       icon: <FaTag className={`w-4 h-4 me-2 ms-1`} />,
       text: "Admin Voucher",
-      to: "admin-voucher",
-      active: "admin-voucher",
+      to: "transaction/admin-vouchers",
+      active: "transaction/admin-vouchers",
     },
     {
       icon: <FaShieldAlt className={`w-4 h-4 me-2 ms-1`} />,
       text: "Security Adjustments",
-      to: "security-adjustments",
-      active: "security-adjustments",
+      to: "transaction/security-adjustments",
+      active: "transaction/security-adjustments",
     },
   ];
 

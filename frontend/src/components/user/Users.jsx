@@ -2,18 +2,9 @@ import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -55,6 +46,7 @@ export default function Users() {
           city: user.city,
           status: user.status,
           userType: user.userType,
+          ...user,
         }));
         setUsers(u);
         setTotalPages(data.data.totalPages);
@@ -171,7 +163,6 @@ export default function Users() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                dataSlot="icon"
                 className="w-6 h-6 me-1"
               >
                 <path

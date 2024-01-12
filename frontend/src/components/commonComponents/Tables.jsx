@@ -27,6 +27,7 @@ const Tables = ({ columns, data }) => {
     usePagination
   );
 
+  console.log("data: ", data);
   return (
     <>
       <div className="table-scroll">

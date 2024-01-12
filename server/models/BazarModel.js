@@ -13,54 +13,41 @@ const BazarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // shopsInfo: {
-  //   approvedShops: {
-  //     type: Number,
-  //     default: 0,
-  //   },
-  //   shops: [
-  //     {
-  //       totalShops: {
-  //         type: Number,
-  //         default: 0,
-  //       },
-  //       shopType: {
-  //         type: String,
-  //         required: true,
-  //       },
-  //       baseRent: {
-  //         type: Number,
-  //         required: true,
-  //       },
-  //     },
-  //   ],
-  // },
+  prefix: {
+    type: String,
+    required: true,
+  },
+  areaUnit: {
+    type: String,
+    required: true,
+  },
+  area: {
+    type: Number,
+    required: true,
+  },
   dateOfEstablishment: {
     type: Date,
     default: Date.now(),
   },
-  height: {
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  totalShops: {
     type: Number,
+    default: 0,
   },
-  width: {
-    type: Number,
-  },
-  zone: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "zones",
-  },
-  //we can use this to store the shops in the bazar
-  //we only need StoreType to create a shop in bazar form
   approvedShops: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "shops",
     },
   ],
-  prefix: {
-    type: String,
+
+  zone: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "zones",
   },
   zoneManager: {
     type: mongoose.Schema.Types.ObjectId,
@@ -74,16 +61,7 @@ const BazarSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
   },
-  // shops: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "shops",
-  //   },
-  // ],
-  active: {
-    type: Boolean,
-    default: false,
-  },
+
   image: {
     type: String,
   },

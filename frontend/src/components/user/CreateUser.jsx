@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -8,23 +8,15 @@ import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-const cities = [
-  { value: "new-york", label: "New York" },
-  { value: "los-angeles", label: "Los Angeles" },
-  { value: "chicago", label: "Chicago" },
-];
+import { postAPI } from "@hooks/postAPI";
 
 const userTypes = [
   { value: "SuperAdmin", label: "Super Admin" },
-
   { value: "Admin", label: "Admin" },
-
   { value: "ZoneManager", label: "Zone Manager" },
   { value: "BazarManager", label: "Bazar Manager" },
   { value: "Supervisor", label: "Supervisor" },
 ];
-
 const activeOptions = [
   { value: "inactive", label: "Not Active" },
   { value: "active", label: "Active" },
@@ -36,21 +28,18 @@ const breadcrumbItems = [
   { label: "Create User" },
 ];
 
-const CreateUser = () => {
+const CreateUser = ({ pageTitle }) => {
   const navigate = useNavigate();
   const methods = useForm();
+  const [pageTitle1, setPageTitle] = useState(pageTitle || "Create User");
 
   const onSubmit = async (data) => {
-    await axios
-      .post("http://localhost:3000/users", data)
-      .then((res) => {
-        navigate("/admin/user-list");
-        console.log("user registered successfully", res);
-      })
-      .catch((err) => {
-        console.log("Could not registered user", err);
-      });
-    console.log(data);
+    const d = await postAPI("users", data);
+    if (d.success) {
+      navigate("/admin/user-list");
+    } else {
+      console.log("Error in creating user. ", d.error);
+    }
   };
 
   return (

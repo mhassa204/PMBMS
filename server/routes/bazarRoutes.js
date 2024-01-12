@@ -6,7 +6,7 @@ const bazarController = require("../controllers/bazarController");
 
 // Define your routes
 router.get("/", bazarController.getAllBazars);
-router.get("/bazar-shop", bazarController.getShopsInBazar);
+// router.get("/bazar-shop", bazarController.getShopsInBazar);
 router.get("/:id", bazarController.getBazarById);
 router.post("/", bazarController.createBazar);
 router.put("/:id", bazarController.updateBazar);
