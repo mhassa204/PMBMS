@@ -167,11 +167,20 @@ const CreateBazaar = () => {
 
   const handleTotal = (value, index) => {
     const totalShops = value ? parseInt(value, 10) : 0;
-    setShopData((prevShopData) => {
-      const updatedShopData = [...prevShopData];
-      updatedShopData[index].totalShops = totalShops;
-      return updatedShopData;
-    });
+
+    const updatedShopData = [...shopData];
+    updatedShopData[index].totalShops = totalShops;
+
+    const updatedRemainingShops = updatedShopData.reduce(
+      (remaining, shop) => remaining - shop.totalShops,
+      methods.watch("approvedShops")
+    );
+
+    if (updatedRemainingShops < 0 && updatedRemainingShops > totalShops) {
+      alert("Total shops cannot exceed the approved shops.");
+      return;
+    }
+    setShopData(updatedShopData);
   };
 
   const handleBaseRent = (value, index) => {
@@ -183,6 +192,12 @@ const CreateBazaar = () => {
   };
 
   const handlePlusClick = () => {
+    const remainingShopsValue = calculateRemainingShops();
+    if (remainingShopsValue <= 0) {
+      alert("No remaining shops available.");
+      return;
+    }
+
     setShopData((prevShopData) => [
       ...prevShopData,
       {
@@ -191,6 +206,14 @@ const CreateBazaar = () => {
         baseRent: 0,
       },
     ]);
+  };
+
+  const handleMinusClick = (index) => {
+    setShopData((prevShopData) => {
+      const updatedShopData = [...prevShopData];
+      updatedShopData.splice(index, 1);
+      return updatedShopData;
+    });
   };
 
   const calculateRemainingShops = () => {
@@ -352,6 +375,28 @@ const CreateBazaar = () => {
                         required={"Base rent is required"}
                         onChange={(e) => handleBaseRent(e.target.value, index)}
                       />
+                      <div key={index} className="flex items-center">
+                        <button
+                          className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200"
+                          onClick={() => handleMinusClick(index)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            dataSlot="icon"
+                            className="w-5 h-5"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M18 12H6"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </React.Fragment>
                 ))}
