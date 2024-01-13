@@ -1,5 +1,6 @@
 import axios from "axios";
 export const postAPI = async (url, data, contentType) => {
+  console.log("d: ", data);
   const call = await axios
     .post(`http://localhost:3000/${url}`, data, {
       headers: {

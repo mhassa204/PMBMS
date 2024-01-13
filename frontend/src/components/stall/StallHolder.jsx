@@ -54,14 +54,27 @@ export default function StallHolder() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate("/admin/basic/create-shopHolder", {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   useEffect(() => {
     const getShopHolders = async () => {
@@ -188,7 +201,12 @@ export default function StallHolder() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={columns} data={shopHolders} />
+        <Tables
+          columns={columns}
+          data={shopHolders}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

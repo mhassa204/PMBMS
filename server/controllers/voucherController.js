@@ -69,7 +69,7 @@ exports.getVoucherByID = [
 
 //update a voucher
 exports.updateVoucher = [
-  verifyAdmin,
+  verifyToken,
   async (req, res) => {
     let voucher = await Voucher.findByIdAndUpdate(
       req.params.id,
@@ -113,7 +113,7 @@ exports.updateVoucher = [
 
 //create a voucher
 exports.createVoucher = [
-  verifyAdmin,
+  verifyToken,
   async (req, res) => {
     try {
       const data = req.body;

@@ -22,18 +22,25 @@ export default function CancellationReasons() {
 
   const columns = [
     { Header: "Reason", accessor: "reason" },
-    // { Header: "Editable", accessor: "Editable" },
     {
       Header: "Actions",
-      accessor: "actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      accessor: "Actions",
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    console.log("edit button clicked", data);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   useEffect(() => {
     const getIncomeCategories = async () => {
@@ -43,6 +50,7 @@ export default function CancellationReasons() {
         const c = data.data.map((category) => {
           return {
             reason: category.reason,
+            id: category._id,
             actions: "",
           };
         });
@@ -84,7 +92,12 @@ export default function CancellationReasons() {
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={cancellationReasons} />
+        <Tables
+          columns={columns}
+          data={cancellationReasons}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

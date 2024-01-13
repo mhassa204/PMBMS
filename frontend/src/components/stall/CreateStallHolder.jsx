@@ -6,9 +6,12 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import DateField from "@components/commonComponents/DateField";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
+import { useLocation } from "react-router-dom";
 
 export default function CreateStallHolder() {
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location.state.edit;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -27,14 +30,16 @@ export default function CreateStallHolder() {
 
   const breadcrumbItems = [
     { label: "Shop Holder List", path: "/admin/basic/shop-holders" },
-    { label: "Create Shop Holder" },
+    { label: isEditMode ? "Update Shop Holder" : "Create Shop Holder" },
   ];
 
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
       <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create Shop Holder</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update Shop Holder" : "Create Shop Holder"}
+        </h2>
 
         <FormProvider {...methods}>
           <form
@@ -168,7 +173,10 @@ export default function CreateStallHolder() {
               type="basic-single"
             />
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create Zone"} />
+              <ButtonComponent
+                type={"submit"}
+                name={isEditMode ? "Update Shop Holder" : "Create Shop Holder"}
+              />
             </div>
           </form>
         </FormProvider>

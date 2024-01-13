@@ -5,9 +5,12 @@ import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import ProvinceData from "../../data.json";
+import { useLocation } from "react-router-dom";
 
 const CreateZone = () => {
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location.state.edit;
   const [data, setData] = useState({});
   const [districts, setDistricts] = useState([]);
   const [cities, setCities] = useState([]);
@@ -97,7 +100,7 @@ const CreateZone = () => {
 
   const breadcrumbItems = [
     { label: "Zone List", path: "/admin/basic/zone-list" },
-    { label: "Create Zone" },
+    { label: isEditMode ? "Update Zone" : "Create Zone" },
   ];
 
   const onSubmit = (data) => {
@@ -109,7 +112,9 @@ const CreateZone = () => {
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
       <div className="max-w-2xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create Zone</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update Zone" : "Create Zone"}
+        </h2>
 
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -162,7 +167,10 @@ const CreateZone = () => {
               handleChange={handleChange}
             />
 
-            <ButtonComponent type={"submit"} name={"Create Zone"} />
+            <ButtonComponent
+              type={"submit"}
+              name={isEditMode ? "Update Zone" : "Create Zone"}
+            />
           </form>
         </FormProvider>
       </div>

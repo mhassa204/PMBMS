@@ -28,6 +28,8 @@ app.use("/shop-holders", require("./routes/shopHolderRoutes"));
 app.use("/shop-allotments", require("./routes/shopAllotmentRoutes"));
 app.use("/income-categories", require("./routes/incomeCategoryRoutes"));
 app.use("/cancellationreasons", require("./routes/cancellationReasonRoutes"));
+app.use("/finepolicies", require("./routes/finePolicyRoutes"));
+app.use("/vouchers", require("./routes/voucherRoute"));
 // app.use("/files", FileRoutes);
 
 app.route("/").get((req, res) => {

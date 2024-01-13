@@ -30,8 +30,8 @@ const BazarSchema = new mongoose.Schema({
     default: Date.now(),
   },
   active: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ["Active", "Inactive", "Disabled"],
   },
   totalShops: {
     type: Number,
@@ -46,7 +46,6 @@ const BazarSchema = new mongoose.Schema({
 
   zone: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "zones",
   },
   zoneManager: {
@@ -62,9 +61,9 @@ const BazarSchema = new mongoose.Schema({
     ref: "users",
   },
 
-  image: {
-    type: String,
-  },
+  // image: {
+  //   type: String,
+  // },
 });
 
 const BazarModel = mongoose.model("bazars", BazarSchema);
