@@ -11,7 +11,7 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function Users() {
@@ -19,6 +19,7 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const isAvailable = useRef(false);
   const TABS = [
     {
       label: "Admin",
@@ -54,8 +55,12 @@ export default function Users() {
         console.log("Error in getting data. ", data.error);
       }
     };
-    getData();
-  }, []);
+
+    if (isAvailable.current === false) {
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable]);
 
   const columns = [
     { Header: "Username", accessor: "userName" },

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import { MdLocationCity } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function Zones() {
@@ -20,6 +20,7 @@ export default function Zones() {
   const [zones, setZones] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const isAvailable = useRef(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -40,8 +41,11 @@ export default function Zones() {
         console.log("Error in fetching the zones. ", data.error);
       }
     };
-    getData();
-  }, []);
+    if (isAvailable.current === false) {
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable]);
 
   const TABLE_HEAD = [
     { Header: "Zone Name", accessor: "zoneName" },
