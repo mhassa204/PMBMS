@@ -40,7 +40,7 @@ export default function Users() {
       console.log("data: ", data);
       if (data.success) {
         const u = data.data.users.map((user) => ({
-          username: user.username,
+          userName: user.userName,
           email: user.email,
           mobile: user.mobile,
           city: user.city,
@@ -58,7 +58,7 @@ export default function Users() {
   }, []);
 
   const columns = [
-    { Header: "Username", accessor: "username" },
+    { Header: "Username", accessor: "userName" },
     { Header: "Email", accessor: "email" },
     { Header: "Mobile", accessor: "mobile" },
     { Header: "City Name", accessor: "city" },
@@ -73,81 +73,6 @@ export default function Users() {
           <DeleteButton />
         </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      Username: "JohnDoe",
-      Email: "john.doe@example.com",
-      Mobile: "123-456-7890",
-      CityName: "City A",
-      Status: "Active",
-      UserType: "Admin",
-      Actions: "",
-    },
-    {
-      Username: "AliceSmith",
-      Email: "alice.smith@example.com",
-      Mobile: "987-654-3210",
-      CityName: "City B",
-      Status: "Inactive",
-      UserType: "User",
-      Actions: "",
-    },
-    {
-      Username: "BobJohnson",
-      Email: "bob.johnson@example.com",
-      Mobile: "111-222-3333",
-      CityName: "City C",
-      Status: "Active",
-      UserType: "Admin",
-      Actions: "",
-    },
-    {
-      Username: "EvaWhite",
-      Email: "eva.white@example.com",
-      Mobile: "555-666-7777",
-      CityName: "City D",
-      Status: "Inactive",
-      UserType: "User",
-      Actions: "",
-    },
-    {
-      Username: "CharlieBrown",
-      Email: "charlie.brown@example.com",
-      Mobile: "999-888-7777",
-      CityName: "City E",
-      Status: "Active",
-      UserType: "Admin",
-      Actions: "",
-    },
-    {
-      Username: "GraceMiller",
-      Email: "grace.miller@example.com",
-      Mobile: "444-555-6666",
-      CityName: "City F",
-      Status: "Inactive",
-      UserType: "User",
-      Actions: "",
-    },
-    {
-      Username: "DavidJohnson",
-      Email: "david.johnson@example.com",
-      Mobile: "777-888-9999",
-      CityName: "City G",
-      Status: "Active",
-      UserType: "Admin",
-      Actions: "",
-    },
-    {
-      Username: "OliviaFoster",
-      Email: "olivia.foster@example.com",
-      Mobile: "123-987-6543",
-      CityName: "City H",
-      Status: "Inactive",
-      UserType: "User",
-      Actions: "",
     },
   ];
 
@@ -188,7 +113,7 @@ export default function Users() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-user");
+                navigate("/admin/basic/create-user");
               }}
             >
               <UserPlusIcon className="h-5 w-5" />

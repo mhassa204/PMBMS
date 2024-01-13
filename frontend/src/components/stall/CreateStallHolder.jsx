@@ -20,21 +20,21 @@ export default function CreateStallHolder() {
   ];
 
   const activeOptions = [
-    { value: "not-active", label: "Not Active" },
-    { value: "active", label: "Active" },
-    { value: "disabled", label: "Disabled" },
+    { value: "Not Active", label: "Not Active" },
+    { value: "Active", label: "Active" },
+    { value: "Disabled", label: "Disabled" },
   ];
 
   const breadcrumbItems = [
-    { label: "Stall Holder List", path: "/admin/stall-holders" },
-    { label: "Create Stall Holder" },
+    { label: "Shop Holder List", path: "/admin/basic/shop-holders" },
+    { label: "Create Shop Holder" },
   ];
 
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
       <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create Stall Holder</h2>
+        <h2 className="text-2xl font-semibold mb-4">Create Shop Holder</h2>
 
         <FormProvider {...methods}>
           <form
@@ -42,10 +42,10 @@ export default function CreateStallHolder() {
             className="grid grid-cols-2 gap-x-4"
           >
             <InputField
-              label="Stall Holder Name"
+              label="Shop Holder Name"
               type="text"
-              placeholder="Enter Stall Holder Name"
-              name="stallHolderName"
+              placeholder="Enter shop Holder Name"
+              name="shopHolderName"
               required
             />
             <InputField

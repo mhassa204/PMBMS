@@ -92,3 +92,22 @@ exports.deleteZoneById = [
     }
   },
 ];
+
+// Get only zones names
+exports.getZoneNames = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const zones = await Zone.find()
+        .populate({
+          path: "zoneManager",
+          select: "userName",
+        })
+        .select("zoneName zoneManager");
+      res.json({ zones: zones });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get zones" });
+    }
+  },
+];

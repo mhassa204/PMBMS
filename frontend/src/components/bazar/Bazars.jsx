@@ -7,14 +7,6 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -201,7 +193,7 @@ export default function Bazars() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none "
               size="sm"
               onClick={() => {
-                navigate("/admin/create-bazar");
+                navigate("/admin/basic/create-bazar");
               }}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new bazar

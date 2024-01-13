@@ -80,10 +80,10 @@ const Tables = ({ columns, data }) => {
                       className=" px-2 text-nowrap text-sm w-max"
                     >
                       {cell.column.id === "bazarImage" ||
-                      cell.column.id === "CNICFrontImage" ||
-                      cell.column.id === "CNICBackImage" ||
-                      cell.column.id === "FacePicture" ||
-                      cell.column.id === "BiometricImage" ? (
+                      cell.column.id === "cnicFront" ||
+                      cell.column.id === "cnicBack" ||
+                      cell.column.id === "picture" ||
+                      cell.column.id === "biometricImage" ? (
                         <img
                           src={cell.value}
                           alt="Bazar"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./zone.css";
 
 const EditZone = ({ initialData, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
@@ -115,11 +114,14 @@ const EditZone = ({ initialData, onUpdateSuccess }) => {
                   {cityOption.name}
                 </option>
               ))}
-              {city && !getAvailableCities().some((cityOption) => cityOption.name === city) && (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              )}
+              {city &&
+                !getAvailableCities().some(
+                  (cityOption) => cityOption.name === city
+                ) && (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                )}
             </select>
           </label>
           <button

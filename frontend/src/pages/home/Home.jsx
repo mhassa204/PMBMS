@@ -105,14 +105,14 @@ export default function Home() {
       text: "Zones",
     },
     {
-      to: "basic/stall-types",
-      active: "basic/stall-types",
+      to: "basic/shop-types",
+      active: "basic/shop-types",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Shop Types",
     },
     {
-      to: "basic/stall-categories",
-      active: "basic/stall-categories",
+      to: "basic/shop-categories",
+      active: "basic/shop-categories",
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
       text: "Shop Category",
     },
@@ -124,17 +124,17 @@ export default function Home() {
     },
 
     {
-      to: "basic/income-category",
-      active: "basic/income-category",
+      to: "basic/income-categories",
+      active: "basic/income-categories",
       icon: <CurrencyDollarIcon className={`w-4 h-4 me-2 ms-1`} />,
       text: "Income Category",
     },
 
     {
-      to: "basic/stall-holders",
-      active: "basic/stall-holders",
+      to: "basic/shop-holders",
+      active: "basic/shop-holders",
       icon: <UserIcon strokeWidth={3} className={`${styles.prefixIcon}`} />,
-      text: "Stall Holder",
+      text: "Shop Holder",
     },
     {
       to: "basic/cancellation-reasons",
@@ -147,9 +147,9 @@ export default function Home() {
   const transactionListItems = [
     {
       icon: <BsShop className={`w-4 h-4 me-2 ms-1`} />,
-      text: "Stalls",
-      to: "transaction/stall-list",
-      active: "transaction/stall-list",
+      text: "Shops",
+      to: "transaction/shop-list",
+      active: "transaction/shop-list",
     },
     {
       icon: <MdAssignmentReturned className={`w-4 h-4 me-2 ms-1`} />,

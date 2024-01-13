@@ -1,6 +1,7 @@
 import axios from "axios";
 export const getPaginatedData = async (url, currentPage, itemsPerPage, id) => {
   const token = JSON.parse(localStorage.getItem("token"));
+  const userType = JSON.parse(localStorage.getItem("user")).userType;
   const call = await axios
     .get(
       `http://localhost:3000/${url}/${currentPage}/${itemsPerPage}/${
@@ -9,9 +10,7 @@ export const getPaginatedData = async (url, currentPage, itemsPerPage, id) => {
       {
         headers: {
           Authorization: token,
-          userType: JSON.parse(localStorage.getItem("user")).userType
-            ? JSON.parse(localStorage.getItem("user")).userType
-            : "",
+          userType: userType ? userType : "",
         },
       }
     )

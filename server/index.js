@@ -4,7 +4,7 @@ const connect = require("./config/dbConnection");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const FileRoutes = require("./routes/fileRoutes");
+// const FileRoutes = require("./routes/fileRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -26,7 +26,8 @@ app.use("/bazars", require("./routes/bazarRoutes"));
 app.use("/shops", require("./routes/shopRouters"));
 app.use("/shop-holders", require("./routes/shopHolderRoutes"));
 app.use("/shop-allotments", require("./routes/shopAllotmentRoutes"));
-app.use("/files", FileRoutes);
+app.use("/income-categories", require("./routes/incomeCategoryRoutes"));
+// app.use("/files", FileRoutes);
 
 app.route("/").get((req, res) => {
   res.send("homepage of API");

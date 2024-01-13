@@ -13,13 +13,13 @@ import CreateZone from "@components/zone/createZone";
 import CreateUser from "@components/user/CreateUser";
 import CreateBazaar from "@components/bazar/CreateBazaar";
 import ViewUser from "@components/user/ViewUser";
-import StallTypes from "@components/stall/StallTypes";
 import StallCategories from "@components/stall/StallCategories";
 import Bazars from "@components/bazar/Bazars";
 import StallHolder from "@components/stall/StallHolder";
-import IncomeCategory from "@components/income/IncomeCategory";
 import CancellationReasons from "@components/cancellation/CancellationReasons";
 import Zones from "@components/zone/Zones";
+import ShopTypes from "@components/stall/ShopTypes";
+import IncomeCategories from "@components/income/IncomeCategories";
 
 //Transaction
 import VoucherGeneration from "@components/voucher/VoucherGeneration";
@@ -55,8 +55,8 @@ function App() {
           <Route path="/create-user" element={<CreateUser />} />
           <Route path="/create-bazar" element={<CreateBazaar />} />
           <Route path="/generate-voucher" element={<VoucherGeneration />} />
-          <Route path="/create-stall" element={<CreateStall />} />
-          <Route path="/create-stallHolder" element={<CreateStallHolder />} />
+          <Route path="/create-shop" element={<CreateStall />} />
+          <Route path="/create-shopHolder" element={<CreateStallHolder />} />
           <Route path="/create-policy" element={<CreatePolicyForm />} />
           <Route path="/create-voucher" element={<VoucherCreation />} />
           <Route path="/fine-policy" element={<FinePolicyForm />} />
@@ -78,32 +78,32 @@ function App() {
             {/* <Route path="edit-user" element={<EditUserForm />} /> */}
             <Route path="basic/view-user" element={<ViewUser />} />
 
-            <Route
-              path="basic/stall-categories"
-              element={<StallCategories />}
-            />
-            <Route path="basic/income-category" element={<IncomeCategory />} />
-            <Route path="basic/stall-holders" element={<StallHolder />} />
-            <Route path="basic/stall-types" element={<StallTypes />} />
+            <Route path="basic/shop-categories" element={<StallCategories />} />
+            <Route path="basic/shop-holders" element={<StallHolder />} />
             <Route
               path="basic/cancellation-reasons"
               element={<CancellationReasons />}
+            />
+            <Route
+              path="basic/create-shopHolder"
+              element={<CreateStallHolder />}
+            />
+            <Route path="basic/shop-types" element={<ShopTypes />} />
+            <Route
+              path="basic/income-categories"
+              element={<IncomeCategories />}
             />
 
             <Route path="basic/bazar-list" element={<Bazars />} />
             <Route path="basic/create-bazar" element={<CreateBazaar />} />
 
             {/* Transaction Section Routes */}
-            <Route path="transaction/create-stall" element={<CreateStall />} />
+            <Route path="transaction/create-shop" element={<CreateStall />} />
             <Route
               path="transaction/generate-voucher"
               element={<VoucherGeneration />}
             />
 
-            <Route
-              path="transaction/create-stallHolder"
-              element={<CreateStallHolder />}
-            />
             <Route
               path="transaction/create-policy"
               element={<CreatePolicyForm />}
@@ -113,7 +113,7 @@ function App() {
               element={<VoucherCreation />}
             />
 
-            <Route path="transaction/stall-list" element={<StallList />} />
+            <Route path="transaction/shop-list" element={<StallList />} />
             <Route
               path="transaction/security-adjustments"
               element={<SecurityAdjustiment />}

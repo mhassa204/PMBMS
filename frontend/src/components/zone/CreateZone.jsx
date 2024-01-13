@@ -96,7 +96,7 @@ const CreateZone = () => {
   ];
 
   const breadcrumbItems = [
-    { label: "Zone List", path: "/admin/zone-list" },
+    { label: "Zone List", path: "/admin/basic/zone-list" },
     { label: "Create Zone" },
   ];
 

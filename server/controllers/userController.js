@@ -54,6 +54,7 @@ exports.getUsers = [
     }
   },
 ];
+
 // Get a user by ID
 exports.getUserById = [
   verifyToken,
@@ -188,6 +189,22 @@ exports.updateUser = [
       }
       await user.save();
       res.json({ user: user, message: "User updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+];
+
+//get only users usertype and name
+exports.getUsersNames = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const users = await User.find({ userType: { $ne: "SuperAdmin" } }).select(
+        "userName userType"
+      );
+      res.json({ users: users });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

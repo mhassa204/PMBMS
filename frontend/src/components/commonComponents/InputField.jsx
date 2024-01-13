@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 const InputField = ({
   label,
+  value,
   type,
   name,
   required,
@@ -41,6 +42,7 @@ const InputField = ({
         type={type || "text"}
         id={name}
         name={name}
+        value={value}
         placeholder={placeholder}
         min={min && min}
         max={max && max}

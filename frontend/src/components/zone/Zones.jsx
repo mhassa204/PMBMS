@@ -1,20 +1,10 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -35,8 +25,6 @@ export default function Zones() {
     const getData = async () => {
       const data = await getPaginatedData("zones", currentPage, 10);
       if (data.success) {
-        console.log("zones are: ", data.data);
-
         const d = data.data.zones.map((zone) => ({
           zoneName: zone.zoneName,
           province: zone.province,
@@ -44,8 +32,8 @@ export default function Zones() {
           citiesInZone: zone.citiesInZone,
           zoneManager: zone.zoneManager,
           active: zone.active,
+          id: zone._id,
         }));
-        console.log("zones are: ", d);
         setZones(d);
         setTotalPages(data.totalPages);
       } else {
@@ -74,73 +62,6 @@ export default function Zones() {
     },
   ];
 
-  const TABLE_ROWS = [
-    {
-      ZoneName: "Central Zone",
-      Province: "Central",
-      CitiesInZone: ["City A", "City B", "City C"],
-      ZoneManager: "Alice Doe",
-      ZoneDistrict: "District X",
-      Actions: "",
-    },
-    {
-      ZoneName: "Eastern Zone",
-      Province: "Eastern",
-      CitiesInZone: ["City D", "City E", "City F"],
-      ZoneManager: "Bob Smith",
-      ZoneDistrict: "District Y",
-      Actions: "",
-    },
-    {
-      ZoneName: "Western Zone",
-      Province: "Western",
-      CitiesInZone: ["City G", "City H", "City I"],
-      ZoneManager: "Charlie Brown",
-      ZoneDistrict: "District Z",
-      Actions: "",
-    },
-    {
-      ZoneName: "Northern Zone",
-      Province: "Northern",
-      CitiesInZone: ["City J", "City K", "City L"],
-      ZoneManager: "David Johnson",
-      ZoneDistrict: "District W",
-      Actions: "",
-    },
-    {
-      ZoneName: "Southern Zone",
-      Province: "Southern",
-      CitiesInZone: ["City M", "City N", "City O"],
-      ZoneManager: "Eva White",
-      ZoneDistrict: "District V",
-      Actions: "",
-    },
-    {
-      ZoneName: "Central-East Zone",
-      Province: "Central-East",
-      CitiesInZone: ["City P", "City Q", "City R"],
-      ZoneManager: "Frank Adams",
-      ZoneDistrict: "District U",
-      Actions: "",
-    },
-    {
-      ZoneName: "South-West Zone",
-      Province: "South-West",
-      CitiesInZone: ["City S", "City T", "City U"],
-      ZoneManager: "Grace Miller",
-      ZoneDistrict: "District T",
-      Actions: "",
-    },
-    {
-      ZoneName: "North-West Zone",
-      Province: "North-West",
-      CitiesInZone: ["City V", "City W", "City X"],
-      ZoneManager: "Henry Clark",
-      ZoneDistrict: "District S",
-      Actions: "",
-    },
-  ];
-
   return (
     <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -161,7 +82,7 @@ export default function Zones() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-zone");
+                navigate("/admin/basic/create-zone");
               }}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new zone

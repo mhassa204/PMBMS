@@ -1,25 +1,13 @@
-const rotuer = require('express').Router();
+const rotuer = require("express").Router();
+const shopHolderController = require("../controllers/shopHolderController");
 
-const {  getAllShopHolders,
-    createShopHolder,
-    getShopHolderById,
-    updateShopHolder,
-    deleteShopHolder } = require('../controllers/shopHolderController');
-
-
-// Get all shop holders
-rotuer.get('/', getAllShopHolders);
-
-// Get shop holder by ID
-rotuer.get('/:id', getShopHolderById);
-
-// Create shop holder
-rotuer.post('/', createShopHolder);
-
-// Edit shop holder by ID
-rotuer.patch('/:id', updateShopHolder);
-
-// Delete shop holder by ID
-rotuer.delete('/:id', deleteShopHolder);
+rotuer.get(
+  "/:currentPage/:itemsPerPage",
+  shopHolderController.getAllShopHolders
+); // Get all shop holders
+rotuer.get("/:id", shopHolderController.getShopHolderById); // Get shop holder by ID
+rotuer.post("/", shopHolderController.createShopHolder); // Create shop holder
+rotuer.patch("/:id", shopHolderController.updateShopHolder); // Edit shop holder by ID
+rotuer.delete("/:id", shopHolderController.deleteShopHolder); // Delete shop holder by ID
 
 module.exports = rotuer;

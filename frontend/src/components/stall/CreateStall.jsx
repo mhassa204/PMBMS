@@ -65,8 +65,8 @@ const CreateStall = () => {
   ];
 
   const breadcrumbItems = [
-    { label: "Stall List", path: "/admin/stall-list" },
-    { label: "Create Stall" },
+    { label: "Shop List", path: "/admin/basic/shop-list" },
+    { label: "Create Shop" },
   ];
 
   return (

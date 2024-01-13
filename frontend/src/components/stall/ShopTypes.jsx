@@ -15,14 +15,13 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useEffect, useRef, useState } from "react";
 import { getAPIData } from "@hooks/getAPIData";
 
-export default function StallCategories() {
+export default function ShopTypes() {
   const navigate = useNavigate();
-  const [shopCategories, setShopCategories] = useState([]);
+  const [shopTypes, setShopTypes] = useState([]);
   const isAvailable = useRef(false);
 
   const columns = [
-    { Header: "Shop Category", accessor: "StallCategory" },
-    { Header: "Editable", accessor: "Editable" },
+    { Header: "Shop Type", accessor: "ShopTypes" },
     {
       Header: "Actions",
       accessor: "actions",
@@ -36,53 +35,23 @@ export default function StallCategories() {
   ];
 
   useEffect(() => {
-    const getCategories = async () => {
-      const data = await getAPIData("shops/shop-categories");
+    const getTypes = async () => {
+      const data = await getAPIData("shops/shop-types");
       if (data.success) {
-        const c = data.data.categories.map((category) => {
+        const c = data.data.shopTypes.map((type) => {
           return {
-            StallCategory: category.name,
-            Editable: category.editable ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m4.5 12.75 6 6 9-13.5"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            ),
+            ShopTypes: type.name,
             actions: "",
+            id: type._id,
           };
         });
-        setShopCategories(c);
+        setShopTypes(c);
       } else {
         console.log(error.message);
       }
     };
     if (isAvailable.current === false) {
-      getCategories();
+      getTypes();
       isAvailable.current = true;
     }
   }, [isAvailable]);
@@ -93,10 +62,10 @@ export default function StallCategories() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Shop Categories
+              Shop Types
             </Typography>
             <Typography color="gray" className="mt-1 text-start font-normal">
-              See information about all shop categories
+              See information about all shop types
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -107,14 +76,13 @@ export default function StallCategories() {
                 navigate("/admin/basic/create-shop");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new
-              category
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new type
             </Button>
           </div>
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={shopCategories} />
+        <Tables columns={columns} data={shopTypes} />
       </CardBody>
     </Card>
   );

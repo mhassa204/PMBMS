@@ -15,14 +15,14 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useEffect, useRef, useState } from "react";
 import { getAPIData } from "@hooks/getAPIData";
 
-export default function StallCategories() {
+export default function IncomeCategories() {
   const navigate = useNavigate();
-  const [shopCategories, setShopCategories] = useState([]);
+  const [incomeCategories, setIncomeCategories] = useState([]);
   const isAvailable = useRef(false);
 
   const columns = [
-    { Header: "Shop Category", accessor: "StallCategory" },
-    { Header: "Editable", accessor: "Editable" },
+    { Header: "Income Category", accessor: "incomeCategory" },
+    // { Header: "Editable", accessor: "Editable" },
     {
       Header: "Actions",
       accessor: "actions",
@@ -36,53 +36,22 @@ export default function StallCategories() {
   ];
 
   useEffect(() => {
-    const getCategories = async () => {
-      const data = await getAPIData("shops/shop-categories");
+    const getIncomeCategories = async () => {
+      const data = await getAPIData("income-categories");
       if (data.success) {
-        const c = data.data.categories.map((category) => {
+        const c = data.data.incomeCategories.map((category) => {
           return {
-            StallCategory: category.name,
-            Editable: category.editable ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m4.5 12.75 6 6 9-13.5"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            ),
+            incomeCategory: category.name,
             actions: "",
           };
         });
-        setShopCategories(c);
+        setIncomeCategories(c);
       } else {
         console.log(error.message);
       }
     };
     if (isAvailable.current === false) {
-      getCategories();
+      getIncomeCategories();
       isAvailable.current = true;
     }
   }, [isAvailable]);
@@ -93,10 +62,10 @@ export default function StallCategories() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Shop Categories
+              Income Categories
             </Typography>
             <Typography color="gray" className="mt-1 text-start font-normal">
-              See information about all shop categories
+              See information about all income categories
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -114,7 +83,7 @@ export default function StallCategories() {
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={shopCategories} />
+        <Tables columns={columns} data={incomeCategories} />
       </CardBody>
     </Card>
   );

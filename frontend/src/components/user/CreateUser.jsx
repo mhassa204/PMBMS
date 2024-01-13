@@ -6,7 +6,6 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
 
@@ -24,19 +23,18 @@ const activeOptions = [
 ];
 
 const breadcrumbItems = [
-  { label: "User List", path: "/admin/user-list" },
+  { label: "User List", path: "/admin/basic/user-list" },
   { label: "Create User" },
 ];
 
 const CreateUser = ({ pageTitle }) => {
   const navigate = useNavigate();
   const methods = useForm();
-  const [pageTitle1, setPageTitle] = useState(pageTitle || "Create User");
 
   const onSubmit = async (data) => {
     const d = await postAPI("users", data);
     if (d.success) {
-      navigate("/admin/user-list");
+      navigate("/admin/basic/user-list");
     } else {
       console.log("Error in creating user. ", d.error);
     }
