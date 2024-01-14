@@ -27,7 +27,7 @@ import VoucherCreation from "@components/voucher/VoucherCreation";
 import StallList from "@components/stall/StallList";
 import FinePolicyForm from "@components/fine/FinePolicyForm";
 import CreatePolicyForm from "@components/fine/FinePolicyForm";
-import Vouchers from "@components/voucher/Voucher";
+import Voucher from "@components/voucher/Voucher";
 import Allotments from "@components/allotments/Allotments";
 import SecurityAdjustiment from "@components/security/SecurityAdjustments";
 import FinePolicies from "@components/fine/FinePolicies";
@@ -39,6 +39,8 @@ import CreateStall from "@components/stall/CreateStall";
 import Users from "@components/user/Users";
 import CreateStallHolder from "@components/stall/CreateStallHolder";
 import Login from "@pages/authentication/Login";
+import CreateSecurityAdjustments from "@components/security/CreateSecurityAdjustments";
+import CreateAllotment from "@components/allotments/CreateAllotment";
 // import Signup from "@pages/authentication/Signup";
 
 function App() {
@@ -118,11 +120,23 @@ function App() {
               path="transaction/security-adjustments"
               element={<SecurityAdjustiment />}
             />
-            <Route path="transaction/vouchers" element={<Vouchers />} />
+            <Route
+              path="transaction/create-security-adjustments"
+              element={<CreateSecurityAdjustments />}
+            />
+            <Route path="transaction/vouchers" element={<Voucher />} />
             <Route path="transaction/allotments" element={<Allotments />} />
+            <Route
+              path="transaction/create-allotments"
+              element={<CreateAllotment />}
+            />
             <Route
               path="transaction/fine-policies"
               element={<FinePolicies />}
+            />
+            <Route
+              path="transaction/create-fine-policies"
+              element={<FinePolicyForm />}
             />
             <Route
               path="transaction/voucher-generations"
