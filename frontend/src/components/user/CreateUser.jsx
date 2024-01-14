@@ -17,27 +17,15 @@ const CreateUser = ({ pageTitle }) => {
   const data = location?.state?.data;
 
   useEffect(() => {
+    console.log("data hn mai data hn", data);
     if (isEditMode) {
       methods.reset(data);
-
-      methods.setValue("city", {
-        label: data.city,
-        value: data.city,
-      });
-      // methods.setValue("userType", {
-      //   label: data.userType,
-      //   value: data.userType,
-      // });
-      // methods.setValue("status", {
-      //   label: data.status,
-      //   value: data.status,
-      // });
     }
-  }, []);
+  }, [data, isEditMode]);
 
   const onSubmit = async (data) => {
     if (isEditMode) {
-      console.log(data);
+      console.log("data hn mai data hn", data);
     } else {
       const d = await postAPI("users", data);
       if (d.success) {
@@ -110,7 +98,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select City"
               options={City}
               searchable={true}
-              // value={data && { label: data.city, value: data.city }}
+              defaultValue={data && { label: data.city, value: data.city }}
               type="basic-single"
             />
             <InputField
@@ -125,7 +113,9 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select User Type"
               name="userType"
               options={userTypes}
-              // value={data && { label: data.userType, value: data.userType }}
+              defaultValue={
+                data && { label: data.userType, value: data.userType }
+              }
               type="basic-single"
             />
             <Dropdown
@@ -133,7 +123,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select Status"
               name="status"
               options={activeOptions}
-              // value={data && { label: data.status, value: data.status }}
+              value={data && { label: data.status, value: data.status }}
               type="basic-single"
             />
             <div className="mt-5">

@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 const Dropdown = ({
   label,
   type,
+  defaultValue,
   required,
   searchable,
   placeholder,
@@ -17,14 +18,20 @@ const Dropdown = ({
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
+  // Inside the handleChange1 function
   const handleChange1 = (selectedOptions) => {
+    console.log("Selected Options:", selectedOptions);
+
     const selectedValues = Array.isArray(selectedOptions)
       ? selectedOptions.map((option) => option.value)
       : selectedOptions.value;
 
+    console.log("Selected Values:", selectedValues);
+
     setValue(name, selectedValues);
     trigger(name);
   };
+
   const handleKeyDown = (e) => {
     if (onKeyDown) {
       onKeyDown(e);
@@ -49,13 +56,18 @@ const Dropdown = ({
         placeholder={placeholder}
         {...register(name, { required: `${label} is required` })}
         onChange={(selectedOptions) => {
-          handleChange1(selectedOptions);
-          handleChange &&
-            handleChange({ name: name, value: selectedOptions.value });
+          const selectedValues = Array.isArray(selectedOptions)
+            ? selectedOptions.map((option) => option.value)
+            : selectedOptions.value;
+
+          setValue(name, selectedValues);
+          trigger(name);
+          handleChange && handleChange({ name: name, value: selectedValues });
         }}
         className={`${type} text-start h-[40px] `}
         onKeyDown={handleKeyDown}
         {...rest}
+        defaultValue={defaultValue}
         isMulti={type === "basic-multi-select" ? true : false}
         isSearchable={searchable ? true : false}
       />
