@@ -3,7 +3,7 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import { Typography } from "@material-tailwind/react";
 import "@src/styles/tableStyles.css";
 
-const Tables = ({ columns, data }) => {
+const Tables = ({ columns, data, handleEdit, handleDelete }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -26,7 +26,6 @@ const Tables = ({ columns, data }) => {
     usePagination
   );
 
-  console.log("data: ", data);
   return (
     <div>
       <div className="table-scroll">
@@ -95,6 +94,24 @@ const Tables = ({ columns, data }) => {
                       ) : (
                         <p className="py-3"> {cell.render("Cell")}</p>
                       )}
+                      {/* {cell.column.id === "Actions" ? (
+                        <td className="px-2">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleEdit(row.original._id)}
+                              className="px-3 py-1 text-white bg-[#2f9149] rounded-md"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(row.original._id)}
+                              className="px-3 py-1 text-white bg-red-500 rounded-md"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      ) : null} */}
                     </td>
                   ))}
                 </tr>

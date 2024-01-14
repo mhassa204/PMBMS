@@ -52,14 +52,27 @@ export default function StallList() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate("/admin/transaction/create-shop", {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   const data = [
     {
@@ -177,7 +190,7 @@ export default function StallList() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-shop");
+                navigate("/admin/transaction/create-shop");
               }}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new shop
@@ -224,7 +237,12 @@ export default function StallList() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={columns} data={data} />
+        <Tables
+          columns={columns}
+          data={data}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

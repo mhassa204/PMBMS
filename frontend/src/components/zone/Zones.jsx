@@ -57,14 +57,27 @@ export default function Zones() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate("/admin/basic/create-zone", {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   return (
     <Card className="w-full bazar-list">
@@ -96,7 +109,12 @@ export default function Zones() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={TABLE_HEAD} data={zones} />
+        <Tables
+          columns={TABLE_HEAD}
+          data={zones}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

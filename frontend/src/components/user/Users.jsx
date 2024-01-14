@@ -38,7 +38,6 @@ export default function Users() {
   useEffect(() => {
     const getData = async () => {
       const data = await getPaginatedData("users", currentPage, 10);
-      console.log("data: ", data);
       if (data.success) {
         const u = data.data.users.map((user) => ({
           userName: user.userName,
@@ -47,7 +46,7 @@ export default function Users() {
           city: user.city,
           status: user.status,
           userType: user.userType,
-          ...user,
+          id: user._id,
         }));
         setUsers(u);
         setTotalPages(data.data.totalPages);
@@ -72,14 +71,27 @@ export default function Users() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate(`/admin/basic/create-user`, {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   return (
     <Card className="w-full bazar-list">
@@ -166,7 +178,12 @@ export default function Users() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={columns} data={users} />
+        <Tables
+          columns={columns}
+          data={users}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

@@ -4,8 +4,8 @@ export const getPaginatedData = async (url, currentPage, itemsPerPage, id) => {
   const userType = JSON.parse(localStorage.getItem("user")).userType;
   const call = await axios
     .get(
-      `http://localhost:3000/${url}/${currentPage}/${itemsPerPage}/${
-        id ? id : ""
+      `http://localhost:3000/${url}/${currentPage}/${itemsPerPage}${
+        id ? "/" + id : ""
       }`,
       {
         headers: {

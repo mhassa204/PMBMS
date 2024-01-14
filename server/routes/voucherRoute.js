@@ -7,3 +7,5 @@ router.get("/:id", VoucherController.getVoucherByID); // Get a single voucher by
 router.post("/", VoucherController.createVoucher); // Create a new voucher
 router.put("/:id", VoucherController.updateVoucher); // Update a voucher
 router.delete("/:id", VoucherController.deleteVoucher); // Delete a voucher
+
+module.exports = router;

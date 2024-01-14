@@ -22,18 +22,25 @@ export default function IncomeCategories() {
 
   const columns = [
     { Header: "Income Category", accessor: "incomeCategory" },
-    // { Header: "Editable", accessor: "Editable" },
     {
       Header: "Actions",
-      accessor: "actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      accessor: "Actions",
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    console.log("delete button clicked: ", data);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   useEffect(() => {
     const getIncomeCategories = async () => {
@@ -42,6 +49,7 @@ export default function IncomeCategories() {
         const c = data.data.incomeCategories.map((category) => {
           return {
             incomeCategory: category.name,
+            id: category._id,
             actions: "",
           };
         });
@@ -83,7 +91,12 @@ export default function IncomeCategories() {
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={incomeCategories} />
+        <Tables
+          columns={columns}
+          data={incomeCategories}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

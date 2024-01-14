@@ -15,53 +15,74 @@ import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import profilePic from "@images/me.png";
 import bazar from "@images/bazar.jpg";
+import { useEffect, useRef, useState } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function Bazars() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [bazars, setBazars] = useState([]);
+  const isAvailable = useRef(false);
 
-  const handleClick = () => {
-    navigate("/admin/basic/create-bazar", { state: true });
-  };
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
+  // const handleClick = (e) => {
+  //   console.log(e);
+  //   navigate("/admin/basic/create-bazar", { state: true });
+  // };
 
   const TABLE_HEAD = [
-    { Header: "Bazar Name", accessor: "bazarName" },
-    { Header: "Bazar Address", accessor: "bazarAddress" },
-    { Header: "Status", accessor: "Status" },
-    { Header: "Total Stalls", accessor: "totalStalls" },
-    { Header: "Prefix", accessor: "Prefix" },
+    { Header: "Bazar Name", accessor: "name" },
+    { Header: "Bazar Address", accessor: "address" },
+    { Header: "Active", accessor: "active" },
+    { Header: "Total Stalls", accessor: "totalShops" },
+    { Header: "Prefix", accessor: "prefix" },
     { Header: "Bazar Image", accessor: "bazarImage" },
-    { Header: "City", accessor: "City" },
+    { Header: "City", accessor: "city" },
     { Header: "Bazar Manager", accessor: "bazarManager" },
+    { Header: "Zone", accessor: "zone" },
     { Header: "Zone Manager", accessor: "zoneManager" },
+    { Header: "Supervisor", accessor: "supervisor" },
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton
-            onClick={() => {
-              handleClick();
-            }}
-          />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate(`/admin/basic/create-bazar`, {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getPaginatedData("bazars", currentPage, 10);
+      if (data.success) {
+        setBazars(data.data.bazars);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log(data.error);
+      }
+    };
+    getData();
+    if (isAvailable.current === false) {
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable]);
 
   const TABLE_ROWS = [
     {
@@ -240,7 +261,12 @@ export default function Bazars() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={TABLE_HEAD} data={TABLE_ROWS} />
+        <Tables
+          columns={TABLE_HEAD}
+          data={bazars}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

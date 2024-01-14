@@ -25,15 +25,23 @@ export default function StallCategories() {
     { Header: "Editable", accessor: "Editable" },
     {
       Header: "Actions",
-      accessor: "actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      accessor: "Actions",
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    console.log("delete button clicked: ", data);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   useEffect(() => {
     const getCategories = async () => {
@@ -42,6 +50,7 @@ export default function StallCategories() {
         const c = data.data.categories.map((category) => {
           return {
             StallCategory: category.name,
+            id: category._id,
             Editable: category.editable ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +123,12 @@ export default function StallCategories() {
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={shopCategories} />
+        <Tables
+          columns={columns}
+          data={shopCategories}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

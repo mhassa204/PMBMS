@@ -24,15 +24,23 @@ export default function ShopTypes() {
     { Header: "Shop Type", accessor: "ShopTypes" },
     {
       Header: "Actions",
-      accessor: "actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      accessor: "Actions",
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    console.log("edit button clicked", data);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   useEffect(() => {
     const getTypes = async () => {
@@ -82,7 +90,12 @@ export default function ShopTypes() {
         </div>
       </CardHeader>
       <CardBody>
-        <Tables columns={columns} data={shopTypes} />
+        <Tables
+          columns={columns}
+          data={shopTypes}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );

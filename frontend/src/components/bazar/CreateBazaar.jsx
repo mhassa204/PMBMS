@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -11,66 +11,43 @@ import Cities from "@src/City.json";
 import { postAPI } from "@hooks/postAPI";
 import { getAPIData } from "@hooks/getAPIData";
 
-const activeOptions = [
-  { value: "not-active", label: "Not Active" },
-  { value: "active", label: "Active" },
-  { value: "disabled", label: "Disabled" },
-];
-
-// const shopType = [
-//   { value: "Outlets", label: "Outlets" },
-//   { value: "Stalls", label: "Stalls" },
-//   { value: "Masjids", label: "Masjids" },
-//   { value: "Foodcourt", label: "Food Courts" },
-//   { value: "Joyland", label: "Joy Land" },
-// ];
-
-// const zone = [
-//   { value: "zone1", label: "Zone 1" },
-//   { value: "zone2", label: "Zone 2" },
-//   { value: "zone3", label: "Zone 3" },
-//   { value: "zone4", label: "Zone 4" },
-
-//   { value: "zone5", label: "Zone 5" },
-// ];
-// const bazaarManager = [
-//   { value: "bazaarManager1", label: "Bazaar Manager 1" },
-//   { value: "bazaarManager2", label: "Bazaar Manager 2" },
-//   { value: "bazaarManager3", label: "Bazaar Manager 3" },
-//   { value: "bazaarManager4", label: "Bazaar Manager 4" },
-
-//   { value: "bazaarManager5", label: "Bazaar Manager 5" },
-// ];
-// const supervisor = [
-//   { value: "supervisor1", label: "Supervisor 1" },
-//   { value: "supervisor2", label: "Supervisor 2" },
-//   { value: "supervisor3", label: "Supervisor 3" },
-//   { value: "supervisor4", label: "Supervisor 4" },
-
-//   { value: "supervisor5", label: "Supervisor 5" },
-// ];
-
-const areaType = [
-  { value: "Marla", label: "Marla" },
-  { value: "Canal", label: "Canal" },
-];
-
-const breadcrumbItems = [
-  { label: "Bazar List", path: "/admin/basic/bazar-list" },
-  { label: "Create Bazar" },
-];
-
 const CreateBazaar = () => {
   const methods = useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const isEditMode = location.state;
-  const [zoneManager, setZoneManager] = useState([]);
+  const isEditMode = location?.state?.edit;
+  const data = location?.state?.data;
+  const [zoneManager, setZoneManager] = useState("");
   const [bazarManagers, setBazarManagers] = useState([]);
   const [supervisors, setSupervisors] = useState([]);
   const [zone, setZone] = useState([]);
   const [zonesData, setZonesData] = useState([]);
   const [shopType, setShopType] = useState([]);
+  const isAvailable = useRef(false);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    setValue("name", data.name);
+    setValue("prefix", data.prefix);
+    setValue("address", data.address);
+    setValue("city", data.city);
+    setValue("areaUnit", data.areaUnit);
+    setValue("area", data.area);
+    setValue("dateOfEstablishment", data.dateOfEstablishment);
+    setValue("active", data.active);
+    setValue("totalShops", data.totalShops);
+    setValue("zone", data.zone);
+    setValue("bazarManager", data.bazarManager);
+    setValue("supervisor", data.supervisor);
+    setValue("zoneManager", data.zoneManager);
+  }, [setValue, data]);
 
   const [shopData, setShopData] = useState([
     {
@@ -106,7 +83,6 @@ const CreateBazaar = () => {
         console.log("error: ", d.error);
       }
     };
-    getData();
 
     const getZones = async () => {
       const zones = await getAPIData("zones/zone");
@@ -117,12 +93,10 @@ const CreateBazaar = () => {
         }));
         setZone(zoneData);
         setZonesData(zones.data.zones);
-        // console.log('zones')
       } else {
         console.log("error: ", zones.error);
       }
     };
-    getZones();
 
     const getShopTypes = async () => {
       const shopTypes = await getAPIData("shops/shop-types");
@@ -139,7 +113,14 @@ const CreateBazaar = () => {
       }
     };
     getShopTypes();
-  }, []);
+
+    if (isAvailable.current === false) {
+      getShopTypes();
+      getZones();
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable]);
 
   const handleShopTypeChange = (selectedOptions, index) => {
     let newShopsTypes = [...shopType];
@@ -221,7 +202,7 @@ const CreateBazaar = () => {
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const updatedData = {
       name: data.name,
       prefix: data.prefix,
@@ -235,11 +216,35 @@ const CreateBazaar = () => {
       zone: data.zone,
       bazarManager: data.bazarManager,
       supervisor: data.supervisor,
-      zoneManager: data.zoneManager,
-      shops: shopData,
+      zoneManager: zoneManager,
+      shops: { approvedShops: data.totalShops, shops: shopData },
     };
+
+    const response = await postAPI("bazars", updatedData);
+    if (response.success) {
+      console.log("Bazar created successfully.");
+      // navigate("/admin/basic/bazar-list");
+    } else {
+      console.log("Bazar creation failed.");
+    }
     console.log("Bazar data: ", updatedData);
   };
+
+  const activeOptions = [
+    { value: "not-active", label: "Not Active" },
+    { value: "active", label: "Active" },
+    { value: "disabled", label: "Disabled" },
+  ];
+
+  const areaType = [
+    { value: "Marla", label: "Marla" },
+    { value: "Canal", label: "Canal" },
+  ];
+
+  const breadcrumbItems = [
+    { label: "Bazar List", path: "/admin/basic/bazar-list" },
+    { label: isEditMode ? "Update Bazar" : "Create Bazar" },
+  ];
 
   return (
     <div className="p-4">
@@ -359,6 +364,8 @@ const CreateBazaar = () => {
                         type="number"
                         name={`totalShops${index}`}
                         required={"Total shops is required"}
+                        // max={20}
+                        // min={0}
                         onChange={(e) => handleTotal(e.target.value, index)}
                       />
                       <InputField
@@ -372,7 +379,10 @@ const CreateBazaar = () => {
                       <div key={index} className="flex items-center">
                         <button
                           className="border h-[39px] w-[38px] mt-[3px] rounded flex items-center justify-center hover:bg-gray-200"
-                          onClick={() => handleMinusClick(index)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleMinusClick(index);
+                          }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -380,7 +390,6 @@ const CreateBazaar = () => {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            dataSlot="icon"
                             className="w-5 h-5"
                           >
                             <path
@@ -434,7 +443,7 @@ const CreateBazaar = () => {
                   const zoneManager = zonesData.find(
                     (zone) => zone.zoneName === e.value
                   ).zoneManager;
-                  setZoneManager(zoneManager);
+                  setZoneManager(zoneManager.userName);
                 }}
                 type="basic-single"
               />

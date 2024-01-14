@@ -6,30 +6,14 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
-
-const userTypes = [
-  { value: "SuperAdmin", label: "Super Admin" },
-  { value: "Admin", label: "Admin" },
-  { value: "ZoneManager", label: "Zone Manager" },
-  { value: "BazarManager", label: "Bazar Manager" },
-  { value: "Supervisor", label: "Supervisor" },
-];
-const activeOptions = [
-  { value: "inactive", label: "Not Active" },
-  { value: "active", label: "Active" },
-  { value: "disabled", label: "Disabled" },
-];
-
-const breadcrumbItems = [
-  { label: "User List", path: "/admin/basic/user-list" },
-  { label: "Create User" },
-];
 
 const CreateUser = ({ pageTitle }) => {
   const navigate = useNavigate();
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location.state.edit;
 
   const onSubmit = async (data) => {
     const d = await postAPI("users", data);
@@ -40,12 +24,31 @@ const CreateUser = ({ pageTitle }) => {
     }
   };
 
+  const userTypes = [
+    { value: "SuperAdmin", label: "Super Admin" },
+    { value: "Admin", label: "Admin" },
+    { value: "ZoneManager", label: "Zone Manager" },
+    { value: "BazarManager", label: "Bazar Manager" },
+    { value: "Supervisor", label: "Supervisor" },
+  ];
+  const activeOptions = [
+    { value: "inactive", label: "Not Active" },
+    { value: "active", label: "Active" },
+    { value: "disabled", label: "Disabled" },
+  ];
+
+  const breadcrumbItems = [
+    { label: "User List", path: "/admin/basic/user-list" },
+    { label: isEditMode ? "Update User" : "Create User" },
+  ];
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
 
       <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create User</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update User" : "Create User"}
+        </h2>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -107,7 +110,10 @@ const CreateUser = ({ pageTitle }) => {
               type="basic-single"
             />
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create User"} />
+              <ButtonComponent
+                type={"submit"}
+                name={isEditMode ? "Update User" : "Create User"}
+              />
             </div>
           </form>
         </FormProvider>
