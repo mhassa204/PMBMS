@@ -6,10 +6,22 @@ exports.getIncomeCategories = [
   verifyToken,
   async (req, res) => {
     try {
-      const incomeCategories = await IncomeCategory.find();
+      const currentPage = parseInt(req.params.currentPage);
+      const itemsPerPage = parseInt(req.params.itemsPerPage);
+      const incomeCategories = await IncomeCategory.find()
+        .skip((currentPage - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+      const totalItems = await IncomeCategory.countDocuments();
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (!incomeCategories) {
+        return res.status(404).json({
+          message: "income categories not found",
+        });
+      }
       res.status(200).json({
         message: "income categories retrieved successfully",
         incomeCategories: incomeCategories,
+        totalPages: totalPages,
       });
     } catch (err) {
       res.status(404).json({
@@ -26,6 +38,7 @@ exports.createIncomeCategory = [
   async (req, res) => {
     try {
       const incomeCategory = await new IncomeCategory(req.body);
+      await incomeCategory.save();
       res.status(201).json({
         message: "income category created successfully",
         incomeCategory: incomeCategory,

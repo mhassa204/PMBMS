@@ -34,19 +34,21 @@ const CreateBazaar = () => {
   } = useForm();
 
   useEffect(() => {
-    setValue("name", data.name);
-    setValue("prefix", data.prefix);
-    setValue("address", data.address);
-    setValue("city", data.city);
-    setValue("areaUnit", data.areaUnit);
-    setValue("area", data.area);
-    setValue("dateOfEstablishment", data.dateOfEstablishment);
-    setValue("active", data.active);
-    setValue("totalShops", data.totalShops);
-    setValue("zone", data.zone);
-    setValue("bazarManager", data.bazarManager);
-    setValue("supervisor", data.supervisor);
-    setValue("zoneManager", data.zoneManager);
+    if (data) {
+      setValue("name", data.name);
+      setValue("prefix", data.prefix);
+      setValue("address", data.address);
+      setValue("city", data.city);
+      setValue("areaUnit", data.areaUnit);
+      setValue("area", data.area);
+      setValue("dateOfEstablishment", data.dateOfEstablishment);
+      setValue("active", data.active);
+      setValue("totalShops", data.totalShops);
+      setValue("zone", data.zone);
+      setValue("bazarManager", data.bazarManager);
+      setValue("supervisor", data.supervisor);
+      setValue("zoneManager", data.zoneManager);
+    }
   }, [setValue, data]);
 
   const [shopData, setShopData] = useState([

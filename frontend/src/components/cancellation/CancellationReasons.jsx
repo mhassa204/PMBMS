@@ -14,11 +14,24 @@ import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useEffect, useRef, useState } from "react";
 import { getAPIData } from "@hooks/getAPIData";
+import SimpleInputField from "@components/commonComponents/SimpleInputField";
+import { updateAPI } from "@hooks/updateAPI";
+import { postAPI } from "@hooks/postAPI";
+import { deleteAPI } from "@hooks/deleteAPI";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function CancellationReasons() {
   const navigate = useNavigate();
   const [cancellationReasons, setCancellationReasons] = useState([]);
   const isAvailable = useRef(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [edit, setEdit] = useState(false);
+  const [reasonToEdit, setReasonToEdit] = useState({
+    id: "",
+    name: "",
+  });
+  const [updateTable, setUpdateTable] = useState(false);
 
   const columns = [
     { Header: "Reason", accessor: "reason" },
@@ -27,19 +40,67 @@ export default function CancellationReasons() {
       accessor: "Actions",
       Cell: ({ row }) => (
         <div className="flex items-center gap-4">
-          <EditButton onClick={() => handleEdit(row.original)} />
-          <DeleteButton onClick={() => handleDelete(row.original.id)} />
+          <EditButton
+            onClick={() => {
+              setEdit(true);
+              handleEdit(row.original);
+            }}
+          />
+          <DeleteButton
+            onClick={() => {
+              handleDelete(row.original.id);
+            }}
+          />
         </div>
       ),
     },
   ];
 
   const handleEdit = (data) => {
-    console.log("edit button clicked", data);
+    setReasonToEdit({
+      id: data.id,
+      name: data.reason,
+    });
   };
 
-  const handleDelete = (id) => {
-    console.log("delete button clicked: ", id);
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("cancellationreasons", id);
+    if (d.success) {
+      setUpdateTable(true);
+    } else {
+      alert(d.error.response.data.message);
+    }
+  };
+
+  const handleAddUpdateReason = async (data) => {
+    if (edit) {
+      const d = await updateAPI(
+        `cancellationreasons`,
+        { reason: data.name },
+        data.id
+      );
+      if (d.success) {
+        setUpdateTable(true);
+        setEdit(false);
+        setReasonToEdit({
+          id: "",
+          name: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    } else {
+      const d = await postAPI(`cancellationreasons`, { reason: data.name });
+      if (d.success) {
+        setUpdateTable(true);
+        setReasonToEdit({
+          id: "",
+          name: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    }
   };
 
   useEffect(() => {
@@ -59,16 +120,17 @@ export default function CancellationReasons() {
         console.log(error.message);
       }
     };
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || updateTable) {
       getIncomeCategories();
       isAvailable.current = true;
+      setUpdateTable(false);
     }
-  }, [isAvailable]);
+  }, [isAvailable, updateTable]);
 
   return (
     <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
               Canellation Reasons
@@ -78,16 +140,20 @@ export default function CancellationReasons() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
-              size="sm"
-              onClick={() => {
-                navigate("/admin/basic/create-shop");
-              }}
-            >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new
-              reason
-            </Button>
+            <div className="flex items-center ">
+              <SimpleInputField
+                type="text"
+                placeholder="Enter reason"
+                label="Cancellation Reason"
+                name="reason"
+                value={reasonToEdit}
+                buttonType="submit"
+                buttonName={edit ? "Save" : "Add"}
+                handleChange={(val) => {
+                  handleAddUpdateReason(val);
+                }}
+              />
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -97,6 +163,9 @@ export default function CancellationReasons() {
           data={cancellationReasons}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

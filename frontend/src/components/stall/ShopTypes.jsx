@@ -13,12 +13,23 @@ import Tables from "@components/commonComponents/Tables";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useEffect, useRef, useState } from "react";
-import { getAPIData } from "@hooks/getAPIData";
+import { getPaginatedData } from "@hooks/getPaginatedData";
+import SimpleInputField from "@components/commonComponents/SimpleInputField";
+import { updateAPI } from "@hooks/updateAPI";
+import { postAPI } from "@hooks/postAPI";
+import { deleteAPI } from "@hooks/deleteAPI";
 
 export default function ShopTypes() {
-  const navigate = useNavigate();
   const [shopTypes, setShopTypes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const isAvailable = useRef(false);
+  const [edit, setEdit] = useState(false);
+  const [typeToEdit, setTypeToEdit] = useState({
+    id: "",
+    name: "",
+  });
+  const [updateTable, setUpdateTable] = useState(false);
 
   const columns = [
     { Header: "Shop Type", accessor: "ShopTypes" },
@@ -27,24 +38,72 @@ export default function ShopTypes() {
       accessor: "Actions",
       Cell: ({ row }) => (
         <div className="flex items-center gap-4">
-          <EditButton onClick={() => handleEdit(row.original)} />
-          <DeleteButton onClick={() => handleDelete(row.original.id)} />
+          <EditButton
+            onClick={() => {
+              setEdit(true);
+              handleEdit(row.original);
+            }}
+          />
+          <DeleteButton
+            onClick={() => {
+              handleDelete(row.original.id);
+            }}
+          />
         </div>
       ),
     },
   ];
 
   const handleEdit = (data) => {
-    console.log("edit button clicked", data);
+    setTypeToEdit({
+      id: data.id,
+      name: data.ShopTypes,
+    });
   };
 
-  const handleDelete = (id) => {
-    console.log("delete button clicked: ", id);
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("shops/shop-types", id);
+    if (d.success) {
+      setUpdateTable(true);
+    } else {
+      alert(d.error.response.data.message);
+    }
+  };
+
+  const handleAddUpdateType = async (data) => {
+    if (edit) {
+      const d = await updateAPI(
+        `shops/shop-types`,
+        { name: data.name },
+        data.id
+      );
+      if (d.success) {
+        setUpdateTable(true);
+        setEdit(false);
+        setTypeToEdit({
+          id: "",
+          name: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    } else {
+      const d = await postAPI(`shops/shop-types`, { name: data.name });
+      if (d.success) {
+        setUpdateTable(true);
+        setTypeToEdit({
+          id: "",
+          name: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    }
   };
 
   useEffect(() => {
     const getTypes = async () => {
-      const data = await getAPIData("shops/shop-types");
+      const data = await getPaginatedData("shops/shop-types", currentPage, 15);
       if (data.success) {
         const c = data.data.shopTypes.map((type) => {
           return {
@@ -54,20 +113,22 @@ export default function ShopTypes() {
           };
         });
         setShopTypes(c);
+        setTotalPages(data.data.totalPages);
       } else {
         console.log(error.message);
       }
     };
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || currentPage || updateTable) {
       getTypes();
       isAvailable.current = true;
+      setUpdateTable(false);
     }
-  }, [isAvailable]);
+  }, [isAvailable, currentPage, updateTable]);
 
   return (
     <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
               Shop Types
@@ -77,15 +138,20 @@ export default function ShopTypes() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
-              size="sm"
-              onClick={() => {
-                navigate("/admin/basic/create-shop");
-              }}
-            >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new type
-            </Button>
+            <div className="flex items-center ">
+              <SimpleInputField
+                type="text"
+                placeholder="Enter shop type"
+                label="Shop Type"
+                name="shopType"
+                value={typeToEdit}
+                buttonType="submit"
+                buttonName={edit ? "Save" : "Add"}
+                handleChange={(val) => {
+                  handleAddUpdateType(val);
+                }}
+              />
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -95,6 +161,9 @@ export default function ShopTypes() {
           data={shopTypes}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

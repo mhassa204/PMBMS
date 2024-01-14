@@ -83,7 +83,7 @@ exports.deleteReason = [
   async (req, res) => {
     try {
       const cancellationReason =
-        await CancellationReasonModel.findByIdAndRemove(req.params.id);
+        await CancellationReasonModel.findByIdAndDelete(req.params.id);
       if (!cancellationReason) {
         return res
           .status(404)

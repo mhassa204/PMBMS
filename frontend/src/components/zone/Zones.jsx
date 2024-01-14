@@ -41,11 +41,11 @@ export default function Zones() {
         console.log("Error in fetching the zones. ", data.error);
       }
     };
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || currentPage) {
       getData();
       isAvailable.current = true;
     }
-  }, [isAvailable]);
+  }, [isAvailable, currentPage]);
 
   const TABLE_HEAD = [
     { Header: "Zone Name", accessor: "zoneName" },
@@ -114,6 +114,9 @@ export default function Zones() {
           data={zones}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

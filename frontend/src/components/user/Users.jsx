@@ -20,20 +20,6 @@ export default function Users() {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const isAvailable = useRef(false);
-  const TABS = [
-    {
-      label: "Admin",
-      value: "admin",
-    },
-    {
-      label: "Supervisor",
-      value: "supervisor",
-    },
-    {
-      label: "Bazar Manager",
-      value: "bazar-manager",
-    },
-  ];
 
   useEffect(() => {
     const getData = async () => {
@@ -47,6 +33,7 @@ export default function Users() {
           status: user.status,
           userType: user.userType,
           id: user._id,
+          ...user,
         }));
         setUsers(u);
         setTotalPages(data.data.totalPages);
@@ -54,12 +41,11 @@ export default function Users() {
         console.log("Error in getting data. ", data.error);
       }
     };
-
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || currentPage) {
       getData();
       isAvailable.current = true;
     }
-  }, [isAvailable]);
+  }, [isAvailable, currentPage]);
 
   const columns = [
     { Header: "Username", accessor: "userName" },
@@ -183,6 +169,9 @@ export default function Users() {
           data={users}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

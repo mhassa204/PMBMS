@@ -13,14 +13,38 @@ const CreateUser = ({ pageTitle }) => {
   const navigate = useNavigate();
   const methods = useForm();
   const location = useLocation();
-  const isEditMode = location.state.edit;
+  const isEditMode = location?.state?.edit;
+  const data = location?.state?.data;
+
+  useEffect(() => {
+    if (isEditMode) {
+      methods.reset(data);
+
+      methods.setValue("city", {
+        label: data.city,
+        value: data.city,
+      });
+      // methods.setValue("userType", {
+      //   label: data.userType,
+      //   value: data.userType,
+      // });
+      // methods.setValue("status", {
+      //   label: data.status,
+      //   value: data.status,
+      // });
+    }
+  }, []);
 
   const onSubmit = async (data) => {
-    const d = await postAPI("users", data);
-    if (d.success) {
-      navigate("/admin/basic/user-list");
+    if (isEditMode) {
+      console.log(data);
     } else {
-      console.log("Error in creating user. ", d.error);
+      const d = await postAPI("users", data);
+      if (d.success) {
+        navigate("/admin/basic/user-list");
+      } else {
+        console.log("Error in creating user. ", d.error);
+      }
     }
   };
 
@@ -86,13 +110,14 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select City"
               options={City}
               searchable={true}
+              // value={data && { label: data.city, value: data.city }}
               type="basic-single"
             />
             <InputField
               label=" Mobile Number"
               placeholder="Enter Mobile Number"
               type="text"
-              name="mobileNumber"
+              name="mobile"
               required
             />
             <Dropdown
@@ -100,6 +125,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select User Type"
               name="userType"
               options={userTypes}
+              // value={data && { label: data.userType, value: data.userType }}
               type="basic-single"
             />
             <Dropdown
@@ -107,6 +133,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select Status"
               name="status"
               options={activeOptions}
+              // value={data && { label: data.status, value: data.status }}
               type="basic-single"
             />
             <div className="mt-5">

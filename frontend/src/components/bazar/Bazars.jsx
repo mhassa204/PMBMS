@@ -77,12 +77,11 @@ export default function Bazars() {
         console.log(data.error);
       }
     };
-    getData();
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || currentPage) {
       getData();
       isAvailable.current = true;
     }
-  }, [isAvailable]);
+  }, [isAvailable, currentPage]);
 
   const TABLE_ROWS = [
     {
@@ -266,6 +265,9 @@ export default function Bazars() {
           data={bazars}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

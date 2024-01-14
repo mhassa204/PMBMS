@@ -16,6 +16,10 @@ const finePolicySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "incomecategory",
   },
+  dateModified: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const FinePolicy = mongoose.model("finepolicies", finePolicySchema);

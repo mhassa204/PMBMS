@@ -1,11 +1,12 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const DateField = ({ label, name, required, onKeyDown, ...rest }) => {
+const DateField = ({ label, name, required, value, onKeyDown, ...rest }) => {
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setValue(name, e.target.value);
     trigger(name);
   };
@@ -19,6 +20,7 @@ const DateField = ({ label, name, required, onKeyDown, ...rest }) => {
       e.preventDefault();
     }
   };
+  // console.log(value);
 
   return (
     <div className="mb-4">
@@ -36,6 +38,7 @@ const DateField = ({ label, name, required, onKeyDown, ...rest }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         {...rest}
+        value={value && value}
         className="border rounded-md px-3 py-2 w-full text-start"
       />
       {errors[name] && (

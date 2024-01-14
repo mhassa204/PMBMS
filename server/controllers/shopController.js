@@ -121,22 +121,43 @@ exports.createShopCategory = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
-    const category = await ShopCategory.findOne({ name: req.body.name });
+    const category = await ShopCategory.findOne({
+      name: req.body.name,
+    });
     if (category) {
-      res.status(400).json({ message: "category already exist" });
+      return res.status(400).json({ message: "category already exists" });
+    } else {
+      try {
+        const category1 = await new ShopCategory(req.body);
+        const savedCategory = await category1.save();
+        return res.status(200).json({
+          message: "category created successfully!",
+          category: savedCategory,
+        });
+      } catch (err) {
+        return res
+          .status(400)
+          .json({ message: "could not create category", error: err });
+      }
     }
+  },
+];
+
+//Get all shop categories
+exports.getSimpleShopCategory = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
     try {
-      const category1 = await new ShopCategory(req.body);
-      const savedCategory = await category1.save();
+      const categories = await ShopCategory.find();
       res.status(200).json({
-        message: "category created successfully!",
-        category: savedCategory,
+        message: "categories retrieved successfully",
+        categories: categories,
       });
-      console.log("hellow ahmad");
     } catch (err) {
       res
         .status(400)
-        .json({ message: "could not create category", error: err });
+        .json({ message: "could not find categories", error: err });
     }
   },
 ];
@@ -147,10 +168,19 @@ exports.getShopCategories = [
   isSuperAdmin,
   async (req, res) => {
     try {
-      const categories = await ShopCategory.find();
+      const currentPage = parseInt(req.params.currentPage);
+      const itemsPerPage = parseInt(req.params.itemsPerPage);
+      const categories = await ShopCategory.find()
+        .skip((currentPage - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+      const totalItems = await ShopCategory.countDocuments();
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (!categories) return res.status(400).json("No categories found");
       res.status(200).json({
-        message: "categories found successfully",
+        message: "categories retrieved successfully",
         categories: categories,
+        totalItems: totalItems,
+        totalPages: totalPages,
       });
     } catch (err) {
       res
@@ -242,8 +272,8 @@ exports.createShopType = [
   },
 ];
 
-//get all the shop types
-exports.getShopTypes = [
+//get simple shop types
+exports.getSimpleShopType = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
@@ -251,8 +281,35 @@ exports.getShopTypes = [
       const shopTypes = await ShopType.find();
       if (!shopTypes) return res.status(400).json("No shop types found");
       res.status(200).json({
-        message: "Shop types retrieved successfully",
+        message: "shop types retrieved successfully",
         shopTypes: shopTypes,
+      });
+    } catch (err) {
+      res.status(400).json({ message: "could not get shop types", error: err });
+    }
+  },
+];
+
+//get all the shop types
+exports.getShopTypes = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const currentPage = parseInt(req.params.currentPage);
+      const itemsPerPage = parseInt(req.params.itemsPerPage);
+      const shopTypes = await ShopType.find()
+        .skip((currentPage - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+      const totalItems = await ShopType.countDocuments();
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (!shopTypes) return res.status(400).json("No shop types found");
+
+      res.status(200).json({
+        message: "shop types retrieved successfully",
+        shopTypes: shopTypes,
+        totalItems: totalItems,
+        totalPages: totalPages,
       });
     } catch (err) {
       res.status(400).json({ message: "could not get shop types", error: err });
@@ -283,6 +340,7 @@ exports.updateShopTypeById = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
+    console.log("updating shop type: ", req.body, req.params);
     try {
       const shopType = await ShopType.findByIdAndUpdate(
         req.params.id,

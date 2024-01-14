@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const updateAPI = (url, data, contentType, id) => {
+export const updateAPI = (url, data, id, contentType) => {
+  console.log(url, data, id);
   const call = axios
     .put(`http://localhost:3000/${url}/${id ? id : ""}`, data, {
       headers: {

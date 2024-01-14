@@ -41,6 +41,7 @@ export default function StallHolder() {
     // { Header: "Prefix", accessor: "Prefix" },
     { Header: "Shop Holder Name", accessor: "name" },
     { Header: "Father/Husband Name", accessor: "fatherName" },
+    { Header: "Email", accessor: "email" },
     { Header: "DOB", accessor: "DOB" },
     { Header: "CNIC", accessor: "cnic" },
     { Header: "CNIC Expiry", accessor: "cnicExpiry" },
@@ -85,6 +86,7 @@ export default function StallHolder() {
           const t = d.data.shopHolders.map((item) => ({
             name: item.name,
             fatherName: item.fatherName,
+            email: item.email,
             DOB: formatDate(item.DOB),
             cnic: item.cnic,
             cnicExpiry: formatDate(item.cnicExpiry),
@@ -96,6 +98,7 @@ export default function StallHolder() {
             biometricImage: item.biometricImage,
             status: item.status,
             id: item._id,
+            ...item,
           }));
           setShopHolders(t);
           setTotalPages(d.data.totalPages);
@@ -106,13 +109,12 @@ export default function StallHolder() {
         console.error("Error fetching shop holders:", error);
       }
     };
-    getShopHolders();
 
-    if (isAvailable.current === false) {
+    if (isAvailable.current === false || currentPage) {
       getShopHolders();
       isAvailable.current = true;
     }
-  }, [isAvailable]);
+  }, [isAvailable, currentPage]);
 
   return (
     <Card className="w-full bazar-list">
@@ -206,6 +208,9 @@ export default function StallHolder() {
           data={shopHolders}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

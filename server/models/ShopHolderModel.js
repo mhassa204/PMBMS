@@ -58,7 +58,8 @@ const shopHolderSchema = new mongoose.Schema({
     type: String,
   },
   blacklist: {
-    type: Boolean,
+    type: String,
+    enum: ["True", "False"],
   },
   cnicFront: {
     type: String,

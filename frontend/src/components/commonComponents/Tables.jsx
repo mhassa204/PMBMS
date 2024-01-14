@@ -2,8 +2,9 @@ import React from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Typography } from "@material-tailwind/react";
 import "@src/styles/tableStyles.css";
+import { Pagination } from "react-bootstrap";
 
-const Tables = ({ columns, data, handleEdit, handleDelete }) => {
+const Tables = ({ columns, data, totalPages, currentPage, setCurrentPage }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -25,6 +26,35 @@ const Tables = ({ columns, data, handleEdit, handleDelete }) => {
     useSortBy,
     usePagination
   );
+
+  const lastVisiblePage = Math.min(currentPage + 4, totalPages);
+  const firstVisiblePage = Math.max(lastVisiblePage - 9, 1);
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = firstVisiblePage; i <= lastVisiblePage; i++) {
+      pageNumbers.push(
+        <Pagination.Item
+          key={i}
+          active={i === currentPage}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+    return pageNumbers;
+  };
 
   return (
     <div>
@@ -120,7 +150,7 @@ const Tables = ({ columns, data, handleEdit, handleDelete }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between border-t border-blue-gray-50 pt-8 ">
+      {/* <div className="flex items-center justify-between border-t border-blue-gray-50 pt-8 ">
         <Typography
           variant="small"
           color="blue-gray"
@@ -148,6 +178,23 @@ const Tables = ({ columns, data, handleEdit, handleDelete }) => {
             Next
           </button>
         </div>
+      </div> */}
+      <div className=" flex mt-8 flex-wrap justify-center">
+        <Pagination>
+          <Pagination.Prev
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Pagination.Prev>
+          {renderPageNumbers()}
+          <Pagination.Next
+            disabled={currentPage === totalPages}
+            onClick={handleNextPage}
+          >
+            Next
+          </Pagination.Next>
+        </Pagination>
       </div>
     </div>
   );

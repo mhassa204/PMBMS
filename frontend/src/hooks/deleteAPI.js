@@ -8,10 +8,10 @@ export const deleteAPI = async (url, id) => {
       },
     })
     .then((res) => {
-      return res.data;
+      return { success: true, data: res.data };
     })
     .catch((err) => {
-      return err.response.data;
+      return { success: false, error: err };
     });
   return call;
 };

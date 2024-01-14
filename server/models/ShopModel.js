@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const shopCategorySchema = new mongoose.Schema({
   editable: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   name: {
     type: String,

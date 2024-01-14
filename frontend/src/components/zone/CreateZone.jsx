@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const CreateZone = () => {
   const methods = useForm();
   const location = useLocation();
-  const isEditMode = location.state.edit;
+  const isEditMode = location?.state?.edit;
   const [data, setData] = useState({});
   const [districts, setDistricts] = useState([]);
   const [cities, setCities] = useState([]);

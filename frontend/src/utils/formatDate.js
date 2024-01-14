@@ -1,7 +1,8 @@
-export const formatDate = (date) => {
-  const newDate = new Date(date);
-  const day = newDate.getDate();
-  const month = newDate.getMonth() + 1;
-  const year = newDate.getFullYear();
-  return `${day}-${month}-${year}`;
-};
+export function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}

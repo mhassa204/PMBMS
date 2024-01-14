@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -7,11 +7,19 @@ import DateField from "@components/commonComponents/DateField";
 import ImageField from "@components/commonComponents/ImageField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import { useLocation } from "react-router-dom";
+import { formatDate } from "@utils/formatDate";
 
 export default function CreateStallHolder() {
   const methods = useForm();
   const location = useLocation();
   const isEditMode = location.state.edit;
+  const data = location.state.data;
+
+  useEffect(() => {
+    if (isEditMode) {
+      methods.reset(data);
+    }
+  }, []);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -25,7 +33,12 @@ export default function CreateStallHolder() {
   const activeOptions = [
     { value: "Not Active", label: "Not Active" },
     { value: "Active", label: "Active" },
-    { value: "Disabled", label: "Disabled" },
+    { value: "Blocked", label: "Blocked" },
+  ];
+
+  const blacklist = [
+    { value: "True", label: "True" },
+    { value: "False", label: "False" },
   ];
 
   const breadcrumbItems = [
@@ -50,7 +63,7 @@ export default function CreateStallHolder() {
               label="Shop Holder Name"
               type="text"
               placeholder="Enter shop Holder Name"
-              name="shopHolderName"
+              name="name"
               required
             />
             <InputField
@@ -72,7 +85,12 @@ export default function CreateStallHolder() {
               }}
             />
 
-            <DateField label="DOB" name="dob" required />
+            <DateField
+              label="DOB"
+              value={formatDate(data.DOB)}
+              name="DOB"
+              required
+            />
             <InputField
               label="CNIC"
               type="text"
@@ -80,20 +98,31 @@ export default function CreateStallHolder() {
               required
               placeholder="Enter CNIC"
             />
-            <DateField label="CNIC Expiry" name="expiry" required />
+            <DateField
+              label="CNIC Expiry"
+              value={formatDate(data.cnicExpiry)}
+              name="cnicExpiry"
+              required
+            />
 
             <Dropdown
               label="Gender"
               name="gender"
               placeholder="Select Gender"
               options={genders}
+              value={
+                data && {
+                  value: data.gender,
+                  label: data.gender,
+                }
+              }
               type="basic-single"
             />
             <InputField
               label="Permanent Address"
               placeholder="Enter Permanent Address"
               type="text"
-              name="permanentAddress"
+              name="address"
               required
             />
 
@@ -101,7 +130,7 @@ export default function CreateStallHolder() {
               label="Temporary Address"
               placeholder="Enter Temporary Address"
               type="text"
-              name="temporaryAddress"
+              name="secondaryAddress"
               required
             />
 
@@ -109,7 +138,7 @@ export default function CreateStallHolder() {
               label="Primary Contact"
               placeholder="Enter Primary Contact"
               type="text"
-              name="primaryContact"
+              name="contactNumber"
               required
             />
 
@@ -117,13 +146,13 @@ export default function CreateStallHolder() {
               label="Secondary Contact"
               placeholder="Enter Secondary Contact"
               type="text"
-              name="secondaryContact"
+              name="secondaryContactNumber"
               required
             />
             <InputField
               label="Application Ref #"
               type="text"
-              name="refNo"
+              name="applicationReference"
               placeholder="Enter Application Ref #"
             />
 
@@ -138,7 +167,7 @@ export default function CreateStallHolder() {
               label="Referred By"
               placeholder="Enter Referral"
               type="text"
-              name="reference"
+              name="referredBy"
               required
             />
 
@@ -152,7 +181,14 @@ export default function CreateStallHolder() {
             <Dropdown
               label="Blacklist"
               name="blacklist"
-              options={activeOptions}
+              placeholder="Select an option"
+              options={blacklist}
+              value={
+                data && {
+                  value: data.blacklist,
+                  label: data.blacklist,
+                }
+              }
               type="basic-single"
             />
 
@@ -166,10 +202,16 @@ export default function CreateStallHolder() {
             />
 
             <Dropdown
-              label="Active"
-              name="active-options"
-              placeholder="Select Status"
+              label="Status"
+              name="status"
+              placeholder="Select status"
               options={activeOptions}
+              value={
+                data && {
+                  value: data.status,
+                  label: data.status,
+                }
+              }
               type="basic-single"
             />
             <div className="mt-5">
