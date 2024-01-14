@@ -72,12 +72,6 @@ const CreateBazaar = () => {
   const [zonesData, setZonesData] = useState([]);
   const [shopType, setShopType] = useState([]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   const [shopData, setShopData] = useState([
     {
       shopType: "Shops",
