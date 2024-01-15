@@ -176,8 +176,6 @@ const CreateZone = () => {
     }
   }, [isEditMode, data1, methods.reset]);
 
-  console.log(districtModified, data1.citiesInZone);
-
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />

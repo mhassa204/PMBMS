@@ -12,8 +12,33 @@ const { isSuperAdmin } = require("../middleware/roles");
 // Get all shops
 exports.getAllShops = async (req, res) => {
   try {
-    const shops = await Shop.find();
-    res.status(200).json({ message: "shops found successfully", shops: shops });
+    const currentPage = parseInt(req.params.currentPage);
+    const itemsPerPage = parseInt(req.params.itemsPerPage);
+    const shops = await Shop.find()
+      .populate([
+        {
+          path: "shopType",
+          select: "name",
+        },
+        {
+          path: "shopCategory",
+          select: "name",
+        },
+        {
+          path: "bazar",
+          select: "name",
+        },
+      ])
+      .skip((currentPage - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    const totalItems = await Shop.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    if (!shops) return res.status(400).json("No shops found");
+    res.status(200).json({
+      message: "shops retrieved successfully",
+      shops: shops,
+      totalPages: totalPages,
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -72,6 +97,7 @@ exports.editShopByID = [
   isSuperAdmin,
   async (req, res) => {
     try {
+      console.log(req.body);
       const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
@@ -271,24 +297,6 @@ exports.createShopType = [
     }
   },
 ];
-
-//get simple shop types
-// exports.getSimpleShopType = [
-//   verifyToken,
-//   isSuperAdmin,
-//   async (req, res) => {
-//     try {
-//       const shopTypes = await ShopType.find();
-//       if (!shopTypes) return res.status(400).json("No shop types found");
-//       res.status(200).json({
-//         message: "shop types retrieved successfully",
-//         shopTypes: shopTypes,
-//       });
-//     } catch (err) {
-//       res.status(400).json({ message: "could not get shop types", error: err });
-//     }
-//   },
-// ];
 
 //get all the shop types
 exports.getShopTypes = [

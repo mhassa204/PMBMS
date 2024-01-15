@@ -12,7 +12,7 @@ import EditZone from "@components/zone/editZone";
 import CreateZone from "@components/zone/createZone";
 import CreateUser from "@components/user/CreateUser";
 import CreateBazaar from "@components/bazar/CreateBazaar";
-import ViewUser from "@components/user/ViewUser";
+// import ViewUser from "@components/user/ViewUser";
 import StallCategories from "@components/stall/StallCategories";
 import Bazars from "@components/bazar/Bazars";
 import StallHolder from "@components/stall/StallHolder";
@@ -78,7 +78,7 @@ function App() {
             <Route path="basic/user-list" element={<Users />} />
             <Route path="basic/create-user" element={<CreateUser />} />
             {/* <Route path="edit-user" element={<EditUserForm />} /> */}
-            <Route path="basic/view-user" element={<ViewUser />} />
+            {/* <Route path="basic/view-user" element={<ViewUser />} /> */}
 
             <Route path="basic/shop-categories" element={<StallCategories />} />
             <Route path="basic/shop-holders" element={<StallHolder />} />

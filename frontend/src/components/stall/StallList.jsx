@@ -21,9 +21,15 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
+import { useState, useRef, useEffect } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function StallList() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [shops, setShops] = useState([]);
+  const isAvailable = useRef(false);
   const TABS = [
     {
       label: "All",
@@ -40,15 +46,14 @@ export default function StallList() {
   ];
 
   const columns = [
-    { Header: "Stall ID", accessor: "StallID" },
-    { Header: "Stall Code", accessor: "StallCode" },
-    { Header: "Size", accessor: "Size" },
-    { Header: "Bazar Name", accessor: "BazarName" },
-    { Header: "Stall Category", accessor: "StallCategory" },
-    { Header: "Stall Type", accessor: "StallType" },
-    { Header: "Status", accessor: "Status" },
-    { Header: "Late Fine", accessor: "LateFine" },
-    { Header: "Monthly Rent", accessor: "MonthlyRent" },
+    { Header: "Shop ID", accessor: "shopID" },
+    { Header: "Shop Name", accessor: "shopName" },
+    { Header: "Size", accessor: "size" },
+    { Header: "Bazar Name", accessor: "bazar" },
+    { Header: "Shop Category", accessor: "shopCategory" },
+    { Header: "Shop Type", accessor: "shopType" },
+    { Header: "Status", accessor: "vacant" },
+    { Header: "Monthly Rent", accessor: "monthlyRent" },
     {
       Header: "Actions",
       accessor: "Actions",
@@ -60,6 +65,38 @@ export default function StallList() {
       ),
     },
   ];
+
+  useEffect(() => {
+    const getShops = async () => {
+      const data = await getPaginatedData("shops/shops", currentPage, 15);
+      if (data.success) {
+        const d = data.data.shops.map((shop) => ({
+          shopID: shop.shopID,
+          shopName: shop.shopName,
+          size: shop.shopWidth + " * " + shop.shopLength,
+          bazar: shop?.bazar?.name,
+          shopCategory: shop?.shopCategory?.name,
+          shopType: shop?.shopType?.name,
+          vacant: shop.vacant,
+          monthlyRent: shop.monthlyRent,
+          id: shop._id,
+          shopWidth: shop.shopWidth,
+          shopLength: shop.shopLength,
+          shopCategoryId: shop?.shopCategory?._id,
+          shopTypeId: shop?.shopType?._id,
+          bazarId: shop?.bazar?._id,
+        }));
+        setShops(d);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log("Error in fetching the shops. ", shops.error);
+      }
+    };
+    if (isAvailable.current === false || currentPage) {
+      getShops();
+      isAvailable.current = true;
+    }
+  }, [isAvailable, currentPage]);
 
   const handleEdit = (data) => {
     navigate("/admin/transaction/create-shop", {
@@ -239,9 +276,12 @@ export default function StallList() {
       <CardBody>
         <Tables
           columns={columns}
-          data={data}
+          data={shops}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
         />
       </CardBody>
     </Card>

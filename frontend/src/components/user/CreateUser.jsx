@@ -27,7 +27,7 @@ const CreateUser = () => {
 
   const onSubmit = async (data) => {
     if (isEditMode) {
-      const d = await updateAPI("users", data, data._id);
+      const d = await updateAPI("users", data, data.id);
       if (d.success) {
         navigate("/admin/basic/user-list");
       } else {

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const shopController = require("../controllers/shopController");
 
 //Shop routes
-router.get("/shops", shopController.getAllShops); // Get all shops
+router.get("/shops/:currentPage/:itemsPerPage", shopController.getAllShops); // Get all shops
 router.get("/shop/:id", shopController.getShopByID); // Get shop by ID
 router.post("/shop", shopController.createShop); // Create shop
 router.put("/shop/:id", shopController.editShopByID); // Edit shop by ID

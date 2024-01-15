@@ -68,3 +68,35 @@ exports.getZoneBazars = [
     }
   },
 ];
+
+//controller to get only shop types and categories
+exports.getSimpleShopTypeCategory = [
+  verifyToken,
+  async (req, res) => {
+    try {
+      const shopCategories = await ShopCategory.find();
+      const shopTypes = await ShopType.find();
+      res.json({
+        shopCategories: shopCategories,
+        shopTypes: shopTypes,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+];
+
+//get only bazar names
+exports.getOnlyBazarNames = [
+  verifyToken,
+  async (req, res) => {
+    try {
+      const bazars = await BazarModel.find().select("name");
+      res.json({
+        bazars: bazars,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+];
