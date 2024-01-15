@@ -1,4 +1,5 @@
 import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { BrowserRouter as Router } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -17,6 +18,7 @@ import {
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
+import ViewButton from "@components/commonComponents/ViewButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
@@ -37,7 +39,6 @@ export default function Users() {
       value: "bazar-manager",
     },
   ];
-
   const columns = [
     { Header: "Username", accessor: "Username" },
     { Header: "Email", accessor: "Email" },
@@ -48,8 +49,16 @@ export default function Users() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <ViewButton
+            handleClick={() => {
+              console.log(row.original);
+              const user = row.original;
+              navigate("/admin/view-user", { state: { user } });
+              console.log("view button clicked");
+            }}
+          />
           <EditButton />
           <DeleteButton />
         </div>
@@ -66,6 +75,7 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
+      id: 1,
     },
     {
       Username: "AliceSmith",
@@ -75,6 +85,7 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
+      id: 2,
     },
     {
       Username: "BobJohnson",
@@ -84,6 +95,7 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
+      id: 3,
     },
     {
       Username: "EvaWhite",
@@ -93,6 +105,7 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
+      id: 4,
     },
     {
       Username: "CharlieBrown",
@@ -102,6 +115,7 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
+      id: 5,
     },
     {
       Username: "GraceMiller",
@@ -111,6 +125,7 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
+      id: 6,
     },
     {
       Username: "DavidJohnson",
@@ -120,6 +135,7 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
+      id: 7,
     },
     {
       Username: "OliviaFoster",
@@ -129,6 +145,7 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
+      id: 8,
     },
   ];
 
