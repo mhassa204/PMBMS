@@ -1,4 +1,5 @@
 const Zone = require("../models/ZoneModel");
+const User = require("../models/UserModel");
 const { isSuperAdmin } = require("../middleware/roles");
 const verifyToken = require("../middleware/accessAuth");
 
@@ -7,14 +8,41 @@ exports.createZone = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
-    const zone = new Zone(req.body);
     try {
-      const newZone = await zone.save();
+      const {
+        zoneName,
+        province,
+        zoneDistrict,
+        citiesInZone,
+        zoneManager,
+        active,
+      } = req.body;
+      // console.log(req.body);
+
+      if (
+        !zoneName ||
+        !province ||
+        !zoneDistrict ||
+        !citiesInZone ||
+        !zoneManager
+      ) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+      const newZone = new Zone({
+        zoneName,
+        province,
+        zoneDistrict,
+        citiesInZone,
+        zoneManager: zoneManager,
+        active: active,
+      });
+      await newZone.save();
       res
         .status(201)
         .json({ message: "Zone added successfully", zone: newZone });
     } catch (error) {
-      res.status(400).json({ error: "Failed to create zone" });
+      console.error("Error creating zone:", error);
+      res.status(500).json({ error: "Failed to create zone" });
     }
   },
 ];
@@ -24,16 +52,30 @@ exports.getZones = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
-    console.log("hei: ", req.params);
     const currentPage = req.params.currentPage;
     const itemsPerPage = req.params.itemsPerPage;
     try {
       const zones = await Zone.find()
+        .populate({
+          path: "zoneManager",
+          select: "userName",
+        })
         .skip((currentPage - 1) * itemsPerPage)
         .limit(itemsPerPage);
+      const formatedZones = zones.map((zone) => {
+        return {
+          _id: zone._id,
+          zoneName: zone.zoneName,
+          province: zone.province,
+          zoneDistrict: zone.zoneDistrict,
+          citiesInZone: zone.citiesInZone,
+          zoneManager: zone.zoneManager.userName,
+          active: zone.active,
+        };
+      });
       const totalCount = await Zone.countDocuments();
       const totalPages = Math.ceil(totalCount / itemsPerPage);
-      res.json({ zones: zones, totalPages: totalPages });
+      res.json({ zones: formatedZones, totalPages: totalPages });
     } catch (error) {
       res.status(500).json({ error: "Failed to get zones" });
     }
@@ -63,9 +105,18 @@ exports.updateZoneById = [
   isSuperAdmin,
   async (req, res) => {
     try {
-      const zone = await Zone.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const zone = await Zone.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+          zoneManager: await User.findOne({
+            userName: req.body.zoneManager,
+          }),
+        },
+        {
+          new: true,
+        }
+      );
       if (!zone) {
         return res.status(404).json({ error: "Zone not found" });
       }
@@ -89,25 +140,6 @@ exports.deleteZoneById = [
       res.json({ message: "Zone deleted successfully" });
     } catch (error) {
       res.status(500).json({ error: "Failed to delete zone" });
-    }
-  },
-];
-
-// Get only zones names
-exports.getZoneNames = [
-  verifyToken,
-  isSuperAdmin,
-  async (req, res) => {
-    try {
-      const zones = await Zone.find()
-        .populate({
-          path: "zoneManager",
-          select: "userName",
-        })
-        .select("zoneName zoneManager");
-      res.json({ zones: zones });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get zones" });
     }
   },
 ];

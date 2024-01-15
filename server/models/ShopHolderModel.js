@@ -45,7 +45,7 @@ const shopHolderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Active", "Not Active", "Disabled"],
+    enum: ["Active", "Inactive"],
     required: true,
   },
   applicationReference: {

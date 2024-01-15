@@ -29,10 +29,10 @@ const Schema = mongoose.Schema({
     type: String,
     required: true,
   },
-  status: {
+  active: {
     type: String,
-    enum: ["disabled", "inactive", "active"],
-    default: "inactive",
+    enum: ["Inactive", "Active"],
+    default: "Inactive",
   },
   userType: {
     type: String,

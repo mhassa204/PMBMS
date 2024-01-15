@@ -31,7 +31,7 @@ const BazarSchema = new mongoose.Schema({
   },
   active: {
     type: String,
-    enum: ["Active", "Inactive", "Disabled"],
+    enum: ["Active", "Inactive"],
   },
   totalShops: {
     type: Number,

@@ -30,6 +30,7 @@ app.use("/income-categories", require("./routes/incomeCategoryRoutes"));
 app.use("/cancellationreasons", require("./routes/cancellationReasonRoutes"));
 app.use("/finepolicies", require("./routes/finePolicyRoutes"));
 app.use("/vouchers", require("./routes/voucherRoute"));
+app.use("/common", require("./routes/commonRoutes"));
 // app.use("/files", FileRoutes);
 
 app.route("/").get((req, res) => {

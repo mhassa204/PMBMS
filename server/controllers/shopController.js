@@ -273,22 +273,22 @@ exports.createShopType = [
 ];
 
 //get simple shop types
-exports.getSimpleShopType = [
-  verifyToken,
-  isSuperAdmin,
-  async (req, res) => {
-    try {
-      const shopTypes = await ShopType.find();
-      if (!shopTypes) return res.status(400).json("No shop types found");
-      res.status(200).json({
-        message: "shop types retrieved successfully",
-        shopTypes: shopTypes,
-      });
-    } catch (err) {
-      res.status(400).json({ message: "could not get shop types", error: err });
-    }
-  },
-];
+// exports.getSimpleShopType = [
+//   verifyToken,
+//   isSuperAdmin,
+//   async (req, res) => {
+//     try {
+//       const shopTypes = await ShopType.find();
+//       if (!shopTypes) return res.status(400).json("No shop types found");
+//       res.status(200).json({
+//         message: "shop types retrieved successfully",
+//         shopTypes: shopTypes,
+//       });
+//     } catch (err) {
+//       res.status(400).json({ message: "could not get shop types", error: err });
+//     }
+//   },
+// ];
 
 //get all the shop types
 exports.getShopTypes = [

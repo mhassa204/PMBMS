@@ -18,14 +18,14 @@ const userModel = new mongoose.Schema({
     type: String,
     required: true,
   },
-  mobileNumber: {
+  mobile: {
     type: String,
     required: true,
   },
   status: {
     type: String,
-    enum: ["disabled", "inactive", "active"],
-    default: "inactive",
+    enum: ["Inactive", "Active"],
+    default: "Inactive",
   },
   userType: {
     type: String,

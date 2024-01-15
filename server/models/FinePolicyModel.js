@@ -5,8 +5,8 @@ const finePolicySchema = new mongoose.Schema({
   fineAfter15th: { type: Number, required: true },
   fineAfter25th: { type: Number, required: true },
   active: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ["Active", "Inactive"],
   },
   bazar: {
     type: mongoose.Schema.Types.ObjectId,

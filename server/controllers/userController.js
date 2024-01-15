@@ -106,45 +106,33 @@ exports.getUserById = [
 // ];
 
 exports.addUser = [
-  // verifyToken, // Uncomment this line if you have a verifyToken middleware
-
+  verifyToken,
+  isSuperAdmin,
   async (req, res) => {
-    // Store req.body in a variable for better readability
     const u = req.body;
-    //check if user already exist
     let userExist = await User.findOne({ email: u.email });
     if (userExist) {
-      console.log("user exists already");
       res.status(400).json({ message: "Email already exist!" });
     } else {
       try {
-        // Generate a salt and hash the password
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(u.password, salt);
-
-        // Create a new user using the User model
         const user = new User({
           userName: u.userName,
           email: u.email,
           password: hashedPassword,
           city: u.city,
-          mobileNumber: u.mobileNumber,
+          mobile: u.mobile,
           userType: u.userType,
           status: u.status,
         });
 
-        // Save the new user to the database
         const newUser = await user.save();
-        // console.log("Created user:", newUser);
-
-        // Respond with the newly created user and a success message
         res.status(201).json({
           user: newUser,
           message: "User registered successfully",
         });
       } catch (error) {
-        // Handle any errors and respond with an error message
-        console.error("Error:", error.message);
         res.status(400).json({ message: error.message });
       }
     }
@@ -157,12 +145,11 @@ exports.deleteUser = [
   isSuperAdmin,
   async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findByIdAndDelete(req.params.id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
       if (user) {
-        await user.remove();
         res.json({ message: "User deleted successfully" });
       }
     } catch (error) {
@@ -196,17 +183,17 @@ exports.updateUser = [
 ];
 
 //get only users usertype and name
-exports.getUsersNames = [
-  verifyToken,
-  isSuperAdmin,
-  async (req, res) => {
-    try {
-      const users = await User.find({ userType: { $ne: "SuperAdmin" } }).select(
-        "userName userType"
-      );
-      res.json({ users: users });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-];
+// exports.getUsersNames = [
+//   verifyToken,
+//   isSuperAdmin,
+//   async (req, res) => {
+//     try {
+//       const users = await User.find({ userType: { $ne: "SuperAdmin" } }).select(
+//         "userName userType"
+//       );
+//       res.json({ users: users });
+//     } catch (error) {
+//       res.status(500).json({ message: error.message });
+//     }
+//   },
+// ];

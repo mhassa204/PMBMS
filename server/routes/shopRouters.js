@@ -20,7 +20,7 @@ router.put("/shop-categories/:id", shopController.updateShopCategory); //update 
 router.delete("/shop-categories/:id", shopController.deleteShopCategory); //delete a shop category
 
 //Shop type routes
-router.get("/shop-types", shopController.getSimpleShopType); // get simple shop type
+// router.get("/shop-types", shopController.getSimpleShopType); // get simple shop type
 router.post("/shop-types", shopController.createShopType); // create shop type
 router.get("/shop-types/:id", shopController.getShopTypeById); //get shop type by id
 router.get(
