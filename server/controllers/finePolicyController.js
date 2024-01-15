@@ -4,11 +4,13 @@ const FinePolicy = require("../models/FinePolicyModel");
 const IncomeCategory = require("../models/IncomeCategoryModel");
 const BazarModel = require("../models/BazarModel");
 
-//get all fine policies
+//get all fine policies -done
 exports.getFinePolicies = [
   verifyToken,
   async (req, res) => {
     try {
+      const currentPage = parseInt(req.params.currentPage);
+      const itemsPerPage = parseInt(req.params.itemsPerPage);
       const finepolicies = await FinePolicy.find()
         .populate({
           path: "bazar",
@@ -17,14 +19,29 @@ exports.getFinePolicies = [
         .populate({
           path: "incomeCategory",
           select: "name",
+        })
+        .populate({
+          path: "zone",
+          select: "zoneName",
+        })
+        .skip((currentPage - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+      if (finepolicies.length === 0) {
+        return res.status(404).json({
+          message: "Fine policies not found",
         });
-      res.status(201).json({
-        message: "fine policies retrieved",
+      }
+
+      const totalItems = await FinePolicy.countDocuments();
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      res.status(200).json({
+        message: "Fine policies retrieved",
         finepolicies: finepolicies,
+        totalPages: totalPages,
       });
     } catch (error) {
       res.status(500).json({
-        message: "internal server error",
+        message: "Internal server error",
         error: error,
       });
     }
@@ -62,21 +79,13 @@ exports.getFinePolicy = [
   },
 ];
 
-//create a fine policy
+//create a fine policy -done
 exports.createFinePolicy = [
   verifyToken,
   async (req, res) => {
     try {
-      const data = req.body;
-      const policy = await FinePolicy.findById(req.params.id);
-      if (policy) {
-        res.status(400).json({
-          message: "fine policy already exist",
-        });
-      }
       const finePolicy = await new FinePolicy({
-        ...body,
-        bazar: await BazarModel.findOne({ name: req.body.bazar }),
+        ...req.body,
         incomeCategory: await IncomeCategory.findOne({
           name: req.body.incomeCategory,
         }),
@@ -94,23 +103,26 @@ exports.createFinePolicy = [
   },
 ];
 
-//update a fine policy
+//update a fine policy -done
 exports.updateFinePolicy = [
   verifyToken,
   async (req, res) => {
     try {
-      const finePolicy = await FinePolicy.findById(req.params.id);
-      if (!finePolicy) {
+      const result = await FinePolicy.findByIdAndUpdate(
+        req.params.id,
+        req.body
+      );
+      if (!result) {
         res.status(400).json({
           message: "fine policy not found",
         });
       }
-      const data = req.body;
-      await FinePolicy.findByIdAndUpdate(req.params.id, data);
       res.status(201).json({
         message: "fine policy updated successfully",
+        finePolicy: result,
       });
     } catch (err) {
+      console.log("error");
       res.status(500).json({
         message: "Internal server error",
       });
@@ -118,18 +130,17 @@ exports.updateFinePolicy = [
   },
 ];
 
-//delete a fine policy
+//delete a fine policy -done
 exports.deleteFinePolicy = [
   verifyToken,
   async (req, res) => {
     try {
-      const finePolicy = await FinePolicy.findById(req.params.id);
+      const finePolicy = await FinePolicy.findByIdAndDelete(req.params.id);
       if (!finePolicy) {
         res.status(400).json({
           message: "fine policy not found",
         });
       }
-      await FinePolicy.findByIdAndDelete(req.params.id);
       res.status(201).json({
         message: "fine policy deleted successfully",
       });

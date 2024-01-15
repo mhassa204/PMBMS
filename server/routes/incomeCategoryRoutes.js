@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const incomeCategoriesController = require("../controllers/incomeCategoriesController");
 
+router.get("/categories", incomeCategoriesController.getSimpleIncomeCategories);
 router.get(
   "/:currentPage/:itemsPerPage",
   incomeCategoriesController.getIncomeCategories

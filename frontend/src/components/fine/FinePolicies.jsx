@@ -13,53 +13,96 @@ import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
+import { deleteAPI } from "@hooks/deleteAPI";
+import { formatDate } from "@utils/formatDate";
 
 export default function FinePolicies() {
   const navigate = useNavigate();
+  const [finePolicies, setFinePolicies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const isAvailable = useRef(false);
 
-  const handleClick = () => {
-    navigate("/admin/transaction/create-fine-policies", { state: true });
-  };
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getPaginatedData("finepolicies", currentPage, 15);
+      if (data.success) {
+        console.log("data: ", data.data.finepolicies);
+        const formatedPolicites = data.data.finepolicies.map((p) => {
+          return {
+            fineName: p.fineName,
+            zone: p.zone.zoneName,
+            bazarName: p.bazar.name,
+            incomeCategory: p.incomeCategory.name,
+            fineAfter10th: p.fineAfter10th,
+            fineAfter20th: p.fineAfter20th,
+            fineAfter25th: p.fineAfter25th,
+            active: p.active,
+            modifyDate: formatDate(p.modifyDate),
+            bazarId: p.bazar._id,
+            incomeCategoryId: p.incomeCategory._id,
+            zoneId: p.zone._id,
+            id: p._id,
+          };
+        });
+        console.log("formated: ", formatedPolicites);
+        setFinePolicies(formatedPolicites);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log("Error in getting data. ", data.error);
+      }
+    };
+    if (isAvailable.current === false || currentPage) {
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable, currentPage]);
 
   const TABLE_HEAD = [
+    { Header: "Fine Name", accessor: "fineName" },
+    { Header: "Zone", accessor: "zone" },
     { Header: "Bazar Name", accessor: "bazarName" },
     { Header: "Income Category", accessor: "incomeCategory" },
-    { Header: "Fine % After 10th Date", accessor: "fine10" },
-    { Header: "Fine % After 20th Date", accessor: "fine20" },
-    { Header: "Fine % After 25th Date", accessor: "fine25" },
+    { Header: "Fine % After 10th Date", accessor: "fineAfter10th" },
+    { Header: "Fine % After 20th Date", accessor: "fineAfter20th" },
+    { Header: "Fine % After 25th Date", accessor: "fineAfter25th" },
     { Header: "Active", accessor: "active" },
-    { Header: "User Name", accessor: "username" },
     { Header: "Modify Date", accessor: "modifyDate" },
-
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton
-            onClick={() => {
-              handleClick();
-            }}
-          />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    console.log("edit button clicked: ", data);
+    navigate(`/admin/transaction/create-fine-policies`, {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("finepolicies", id);
+    if (d.success) {
+      setFinePolicies(finePolicies.filter((p) => p.id !== id));
+    } else {
+      console.log("Error in deleting user. ", d.error);
+    }
+    console.log("delete button clicked: ", id);
+  };
 
   const TABLE_ROWS = [
     {
@@ -153,7 +196,7 @@ export default function FinePolicies() {
       </CardHeader>
 
       <CardBody>
-        <Tables columns={TABLE_HEAD} data={TABLE_ROWS} />
+        <Tables columns={TABLE_HEAD} data={finePolicies} />
       </CardBody>
     </Card>
   );

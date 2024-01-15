@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const shopAllotmentSchema = new mongoose.Schema({
-  TxID: { type: String, required: true, unique: true },
   allotmentDate: { type: Date, default: Date.now },
   shop: { type: mongoose.Schema.Types.ObjectId, ref: "shops", required: true },
   shopholder: {
@@ -22,13 +21,13 @@ const shopAllotmentSchema = new mongoose.Schema({
   securityPaidDate: {
     type: Date,
   },
-  securityPaidAmount: {
+  securityAmount: {
     type: Number,
     default: 0,
   },
-  securityPaidVoucherId: {
-    type: String,
-  },
+  // securityPaidVoucher: {
+  //   type: String,
+  // },
   agreementDocs: [
     {
       type: String,

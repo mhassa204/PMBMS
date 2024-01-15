@@ -113,3 +113,22 @@ exports.getIncomeCategory = [
     }
   },
 ];
+
+// get all simple income categories
+exports.getSimpleIncomeCategories = [
+  verifyToken,
+  async (req, res) => {
+    try {
+      const incomeCategories = await IncomeCategory.find();
+      res.status(200).json({
+        message: "income categories retrieved successfully",
+        incomeCategories: incomeCategories,
+      });
+    } catch (err) {
+      res.status(400).json({
+        message: "income categories cannot be retrieved",
+        error: err,
+      });
+    }
+  },
+];

@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
 
 const voucherSchema = new mongoose.Schema({
-  voucher_ID: { type: String, required: true, unique: true },
-  stall: { type: mongoose.Schema.Types.ObjectId, ref: "shops", required: true },
+  voucherId: { type: String, required: true, unique: true },
+  zone: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "zones",
+  },
+  bazar: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "bazars",
+  },
+  shop: { type: mongoose.Schema.Types.ObjectId, ref: "shops", required: true },
   shopHolder: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "shopholders",
@@ -16,11 +24,26 @@ const voucherSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "shoptypes",
   },
+  month: {
+    type: String,
+    required: true,
+  },
   amount: { type: Number, required: true },
+  startDate: {
+    type: Date,
+    required: true,
+  },
   dueDate: { type: Date, required: true },
   lateFine: { type: Number, required: true },
-  voucherForMonth: { type: Date, required: true },
   dateGenerated: { type: Date, default: Date.now },
+  waiverAmount: {
+    type: Number,
+    default: 0,
+  },
+  balance: {
+    type: Number,
+    default: 0,
+  },
   paidAmount: {
     type: Number,
     default: 0,
@@ -35,6 +58,22 @@ const voucherSchema = new mongoose.Schema({
     type: String,
     enum: ["redeemed", "not_redeemed"],
     default: "not_redeemed",
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  modifyDate: {
+    type: Date,
+    default: Date.now,
+  },
+  modifyBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
   },
 });
 

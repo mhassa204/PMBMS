@@ -200,13 +200,13 @@ export default function VoucherCreation() {
             1. Date & Amount Information
           </h4>
           <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
-            <InputField
+            {/* <InputField
               label="Voucher Type"
               type="text"
               name="voucherType"
               placeholder="Enter voucher type"
               required
-            />
+            /> */}
             <Dropdown
               label="Month"
               name="month"
@@ -221,29 +221,42 @@ export default function VoucherCreation() {
               required
             />
             <DateInput
-              label="End Date"
-              name="endDate"
+              label="Due Date"
+              name="dueDate"
               placeholder="Select end date"
               required
             />
           </div>
           <h4 className="text-md text-start font-semibold mb-3">
-            2. Stall & Stall Holder Information
+            2. Shop & Shop Holder Information
           </h4>
           <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
-            <InputField
-              label="Stall Name"
-              type="text"
-              name="stallName"
-              placeholder="Enter stall name"
+            <Dropdown
+              label="Zone"
+              name="zone"
+              options={incomeCategory}
+              placeholder="Select a zone"
               required
             />
-
-            <InputField
-              label="Stall Holder Name"
-              type="text"
-              name="stallHolderName"
-              placeholder="Enter stall holder name"
+            <Dropdown
+              label="Bazar"
+              name="bazar"
+              options={incomeCategory}
+              placeholder="Select a bazar"
+              required
+            />
+            <Dropdown
+              label="Shop"
+              name="shop"
+              options={incomeCategory}
+              placeholder="Select a shop"
+              required
+            />
+            <Dropdown
+              label="Shop Holder"
+              name="shopHolder"
+              options={incomeCategory}
+              placeholder="Select a shop holder"
               required
             />
             <Dropdown
@@ -254,10 +267,10 @@ export default function VoucherCreation() {
               required
             />
             <Dropdown
-              label="Stall Type"
-              name="stallType"
+              label="Shop Type"
+              name="shopType"
               options={stallType}
-              placeholder="Select a stall type"
+              placeholder="Select a shop type"
               required
             />
           </div>
