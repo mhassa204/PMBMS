@@ -1,28 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const shopAllotmentController = require("../controllers/shopAllotmentController");
 
-const {
-    assignShop,
-    approveShopAllotment,
-    rejectShopAllotment,
-    getAllShopAllotments,
-    getShopAllotmentByID,
-    editShopAllotmentByID,
-    deleteShopAllotmentByID,
-} = require("../controllers/shopAllotmentController");
-
-router.get("/", getAllShopAllotments);
-
-router.get("/:id", getShopAllotmentByID);
-
-router.put("/:id", editShopAllotmentByID);
-
-router.delete("/:id", deleteShopAllotmentByID);
-
-router.post("/assign-shop", assignShop);
-
-router.post("/approve-shop-allotment", approveShopAllotment);
-
-router.post("/reject-shop-allotment", rejectShopAllotment);
+router.get("/", shopAllotmentController.getAllShopAllotments);
+router.get("/:id", shopAllotmentController.getShopAllotmentByID);
+router.put("/:id", shopAllotmentController.editShopAllotmentByID);
+router.delete("/:id", shopAllotmentController.deleteShopAllotmentByID);
+router.post("/assign-shop", shopAllotmentController.assignShop);
+router.post("/approve-allotment", shopAllotmentController.approveShopAllotment);
+router.post("/reject-allotment", shopAllotmentController.rejectShopAllotment);
 
 module.exports = router;

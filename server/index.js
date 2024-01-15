@@ -2,8 +2,9 @@ const express = require("express");
 require("dotenv").config();
 const connect = require("./config/dbConnection");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
-const FileRoutes = require("./routes/fileRoutes");
+// const FileRoutes = require("./routes/fileRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -15,6 +16,8 @@ connect();
 
 app.use(express.json());
 app.use(errorHandler);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Define your routes here
 app.use("/users", require("./routes/userRoutes"));
@@ -23,7 +26,12 @@ app.use("/bazars", require("./routes/bazarRoutes"));
 app.use("/shops", require("./routes/shopRouters"));
 app.use("/shop-holders", require("./routes/shopHolderRoutes"));
 app.use("/shop-allotments", require("./routes/shopAllotmentRoutes"));
-app.use("/files", FileRoutes);
+app.use("/income-categories", require("./routes/incomeCategoryRoutes"));
+app.use("/cancellationreasons", require("./routes/cancellationReasonRoutes"));
+app.use("/finepolicies", require("./routes/finePolicyRoutes"));
+app.use("/vouchers", require("./routes/voucherRoute"));
+app.use("/common", require("./routes/commonRoutes"));
+// app.use("/files", FileRoutes);
 
 app.route("/").get((req, res) => {
   res.send("homepage of API");

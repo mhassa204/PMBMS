@@ -1,7 +1,7 @@
 import React from "react";
-export default function EditButton({ handleChange }) {
+export default function EditButton({ onClick }) {
   return (
-    <button onClick={handleChange} className="rounded">
+    <button onClick={onClick} className="rounded">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

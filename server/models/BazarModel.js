@@ -13,44 +13,40 @@ const BazarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shopsInfo: {
-    approvedShops: {
-      type: Number,
-      default: 0,
-    },
-    shops: [
-      {
-        totalShops: {
-          type: Number,
-          default: 0,
-        },
-        shopType: {
-          type: String,
-          required: true,
-        },
-        baseRent: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
-  },
-  zone: {
-    type: mongoose.Schema.Types.ObjectId,
+  prefix: {
+    type: String,
     required: true,
-    ref: "zones",
   },
-  //we can use this to store the shops in the bazar
-  //we only need StoreType to create a shop in bazar form
+  areaUnit: {
+    type: String,
+    required: true,
+  },
+  area: {
+    type: Number,
+    required: true,
+  },
+  dateOfEstablishment: {
+    type: Date,
+    default: Date.now(),
+  },
+  active: {
+    type: String,
+    enum: ["Active", "Inactive"],
+  },
+  totalShops: {
+    type: Number,
+    default: 0,
+  },
   approvedShops: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "shops",
     },
   ],
-  prefix: {
-    type: String,
-    required: true,
+
+  zone: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "zones",
   },
   zoneManager: {
     type: mongoose.Schema.Types.ObjectId,
@@ -64,15 +60,11 @@ const BazarSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
   },
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  image: {
-    type: String,
-  },
+
+  // image: {
+  //   type: String,
+  // },
 });
 
 const BazarModel = mongoose.model("bazars", BazarSchema);
-
 module.exports = BazarModel;

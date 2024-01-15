@@ -1,136 +1,200 @@
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
-  Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
-
-import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
-import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
+import { useEffect, useRef, useState } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
+import { updateAPI } from "@hooks/updateAPI";
+import { postAPI } from "@hooks/postAPI";
+import { deleteAPI } from "@hooks/deleteAPI";
 
 export default function StallCategories() {
-  const navigate = useNavigate();
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
+  const [shopCategories, setShopCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const isAvailable = useRef(false);
+  const [edit, setEdit] = useState(false);
+  const [categoryToEdit, setCategoryToEdit] = useState({
+    id: "",
+    name: "",
+    editable: "",
+  });
+  const [updateTable, setUpdateTable] = useState(false);
 
   const columns = [
-    { Header: "Stall Category", accessor: "StallCategory" },
-    { Header: "Editable", accessor: "Editable" },
+    { Header: "Shop Category", accessor: "StallCategory" },
+    { Header: "Editable", accessor: "editable" },
     {
       Header: "Actions",
-      accessor: "actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      accessor: "Actions",
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton
+            onClick={() => {
+              setEdit(true);
+              handleEdit(row.original);
+            }}
+          />
+          <DeleteButton
+            onClick={() => {
+              handleDelete(row.original.id);
+            }}
+          />
         </div>
       ),
     },
   ];
 
-  const data = [
-    { StallCategory: "Vegetables", Editable: "Yes", actions: "" },
-    { StallCategory: "Fruits", Editable: "No", actions: "" },
-    { StallCategory: "Chicken", Editable: "Yes", actions: "" },
-    { StallCategory: "Mutton", Editable: "No", actions: "" },
-    { StallCategory: "Beaf", Editable: "Yes", actions: "" },
-    { StallCategory: "Grocery", Editable: "Yes", actions: "" },
-    { StallCategory: "Bookshop", Editable: "No", actions: "" },
-  ];
+  const handleEdit = (data) => {
+    setCategoryToEdit({
+      id: data.id,
+      name: data.StallCategory,
+      editable: data.editable,
+    });
+  };
+
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("shops/shop-categories", id);
+    if (d.success) {
+      setUpdateTable(true);
+    } else {
+      alert(d.error.response.data.message);
+    }
+  };
+
+  const handleAddUpdateCategory = async (data) => {
+    if (edit) {
+      const d = await updateAPI(
+        `shops/shop-categories`,
+        { name: data.name, editable: data.editable },
+        data.id
+      );
+      if (d.success) {
+        setUpdateTable(true);
+        setEdit(false);
+        setCategoryToEdit({
+          id: "",
+          name: "",
+          editable: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    } else {
+      const d = await postAPI(`shops/shop-categories`, {
+        name: data.name,
+        editable: data.editable,
+      });
+      if (d.success) {
+        setUpdateTable(true);
+        setCategoryToEdit({
+          id: "",
+          name: "",
+          editable: "",
+        });
+      } else {
+        alert(d.error.response.data.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const data = await getPaginatedData(
+        "shops/shop-categories",
+        currentPage,
+        15
+      );
+      if (data.success) {
+        const c = data.data.categories.map((category) => {
+          return {
+            StallCategory: category.name,
+            id: category._id,
+            editable: category.editable,
+            actions: "",
+          };
+        });
+        setShopCategories(c);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log(error.message);
+      }
+    };
+    if (isAvailable.current === false || currentPage || updateTable) {
+      getCategories();
+      isAvailable.current = true;
+      setUpdateTable(false);
+    }
+  }, [isAvailable, currentPage, updateTable]);
+
+  const handleSelectChange = (e) => {
+    setCategoryToEdit({ ...categoryToEdit, editable: e.target.value });
+  };
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Stall Categories
+              Shop Categories
             </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              See information about all stall categories
+            <Typography color="gray" className="mt-1 text-start font-normal">
+              See information about all shop categories
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:border-green-300"
-              size="sm"
-              onClick={() => {
-                navigate("/admin/create-stall");
-              }}
-            >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new
-              category
-            </Button>
-          </div>
-        </div>
-        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full mb-[-20px] md:w-72">
-            <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+            <div className="flex items-center ">
+              <select
+                value={categoryToEdit.editable}
+                onChange={handleSelectChange}
+                className="ml-2 outline-none border-1 border-dark px-1 h-[40px] me-2 rounded "
+              >
+                <option value={""}>Select Editable</option>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </select>
               <input
-                type="search"
-                className="relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="button-addon2"
+                type={"text"}
+                name={"shopCategory"}
+                value={categoryToEdit.name}
+                placeholder={"Enter shop category"}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setCategoryToEdit({
+                    ...categoryToEdit,
+                    name: e.target.value,
+                  });
+                }}
+                className={`w-full h-[40px] border-1 border-gray-900 ring-0 outline-none p-2 rounded-md `}
               />
-
-              <button className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <button
+                type={"submit"}
+                onClick={(e) => handleAddUpdateCategory(categoryToEdit)}
+                className="bg-[#0b6323] ms-2 h-[40px] hover:bg-darkblue-700 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                {edit ? "Save" : "Add"}
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
       </CardHeader>
-
-      <CardBody className="px-4">
-        <Tables columns={columns} data={data} />
+      <CardBody>
+        <Tables
+          columns={columns}
+          data={shopCategories}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </CardBody>
     </Card>
   );

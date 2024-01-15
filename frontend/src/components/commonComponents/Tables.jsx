@@ -1,10 +1,10 @@
 import React from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Typography } from "@material-tailwind/react";
 import "@src/styles/tableStyles.css";
+import { Pagination } from "react-bootstrap";
 
-const Tables = ({ columns, data }) => {
+const Tables = ({ columns, data, totalPages, currentPage, setCurrentPage }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -27,12 +27,41 @@ const Tables = ({ columns, data }) => {
     usePagination
   );
 
+  const lastVisiblePage = Math.min(currentPage + 4, totalPages);
+  const firstVisiblePage = Math.max(lastVisiblePage - 9, 1);
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = firstVisiblePage; i <= lastVisiblePage; i++) {
+      pageNumbers.push(
+        <Pagination.Item
+          key={i}
+          active={i === currentPage}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+    return pageNumbers;
+  };
+
   return (
-    <>
+    <div>
       <div className="table-scroll">
         <table
           {...getTableProps()}
-          className="mt-4 w-full border-collapse table-auto text-left rounded-md overflow-hidden"
+          className="w-full border-collapse table-auto text-left rounded-md overflow-hidden"
         >
           <thead className="bg-[#2f9149] text-white">
             {headerGroups.map((headerGroup) => (
@@ -60,18 +89,6 @@ const Tables = ({ columns, data }) => {
                           d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
                         />
                       </svg>
-                      {/* {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <ChevronDownIcon
-                            strokeWidth={2}
-                            className="h-4 w-4"
-                          />
-                        ) : (
-                          <ChevronUpIcon strokeWidth={2} className="h-4 w-4" />
-                        )
-                      ) : (
-                        ""
-                      )} */}
                     </div>
                   </th>
                 ))}
@@ -84,7 +101,7 @@ const Tables = ({ columns, data }) => {
               return (
                 <tr
                   key={row.id}
-                  className="bg-white border-b border-blue-gray-50"
+                  className="border-b border-blue-gray-50 hover:bg-gray-100"
                 >
                   {row.cells.map((cell) => (
                     <td
@@ -92,18 +109,93 @@ const Tables = ({ columns, data }) => {
                       className=" px-2 text-nowrap text-sm w-max"
                     >
                       {cell.column.id === "bazarImage" ||
-                      cell.column.id === "CNICFrontImage" ||
-                      cell.column.id === "CNICBackImage" ||
-                      cell.column.id === "FacePicture" ||
-                      cell.column.id === "BiometricImage" ? (
+                      cell.column.id === "cnicFront" ||
+                      cell.column.id === "cnicBack" ||
+                      cell.column.id === "picture" ||
+                      cell.column.id === "biometricImage" ? (
                         <img
                           src={cell.value}
                           alt="Bazar"
-                          className="h-10 w-full"
+                          className="h-12 w-full"
                         />
+                      ) : cell.column.id === "citiesInZone" &&
+                        Array.isArray(cell.value) ? (
+                        <p className="py-3">{cell.value.join(", ")}</p>
+                      ) : cell.column.id === "active" ||
+                        cell.column.id === "status" ||
+                        cell.column.id === "editable" ||
+                        cell.column.id === "vacant" ? (
+                        cell.value === "Active" || cell.value === true ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m4.5 12.75 6 6 9-13.5"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                        )
                       ) : (
                         <p className="py-3"> {cell.render("Cell")}</p>
                       )}
+                      {/* {(cell.column.id === "active" ||
+                        cell.column.id === "status" ||
+                        cell.column.id === "vacant") && (
+                        <div>
+                          {cell.value === "Active" || cell.value === true ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 12.75 6 6 9-13.5"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18 18 6M6 6l12 12"
+                              />
+                            </svg>
+                          )}
+                        </div>
+                      )} */}
                     </td>
                   ))}
                 </tr>
@@ -112,7 +204,7 @@ const Tables = ({ columns, data }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between border-t border-blue-gray-50 py-3 mb-4 mx-">
+      {/* <div className="flex items-center justify-between border-t border-blue-gray-50 pt-8 ">
         <Typography
           variant="small"
           color="blue-gray"
@@ -140,8 +232,25 @@ const Tables = ({ columns, data }) => {
             Next
           </button>
         </div>
+      </div> */}
+      <div className=" flex mt-8 flex-wrap justify-center">
+        <Pagination>
+          <Pagination.Prev
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Pagination.Prev>
+          {renderPageNumbers()}
+          <Pagination.Next
+            disabled={currentPage === totalPages}
+            onClick={handleNextPage}
+          >
+            Next
+          </Pagination.Next>
+        </Pagination>
       </div>
-    </>
+    </div>
   );
 };
 

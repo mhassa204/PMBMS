@@ -7,6 +7,7 @@ const DateInput = ({
   minDate,
   maxDate,
   placeholder,
+  value,
   required,
   ...rest
 }) => {
@@ -26,6 +27,7 @@ const DateInput = ({
         type="date"
         id={name}
         name={name}
+        value={value}
         placeholder={placeholder}
         className={`w-full border p-2 rounded ${
           errors[name] && "border-red-500"

@@ -2,18 +2,17 @@ const mongoose = require("mongoose");
 
 const shopAllotmentSchema = new mongoose.Schema({
   TxID: { type: String, required: true, unique: true },
-  AllotmentDate: { type: Date, default: Date.now },
-  Shop: { type: mongoose.Schema.Types.ObjectId, ref: "Shop", required: true },
-  monthlyRent: { type: Number, required: true },
+  allotmentDate: { type: Date, default: Date.now },
+  shop: { type: mongoose.Schema.Types.ObjectId, ref: "shops", required: true },
   shopholder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "ShopHolder",
+    ref: "shopholders",
     required: true,
-  }, // Assuming there is a 'ShopHolder' model
-  voucher: { type: mongoose.Schema.Types.ObjectId, ref: "Voucher" },
-  Status: {
+  },
+  voucher: { type: mongoose.Schema.Types.ObjectId, ref: "vouchers" },
+  status: {
     type: String,
-    enum: ["Pending", "Active" ,"Rejected"],
+    enum: ["Pending", "Active", "Rejected"],
     default: "Pending",
   },
   securityPaid: {
@@ -27,23 +26,21 @@ const shopAllotmentSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  securityPaidTxID: {
+  securityPaidVoucherId: {
     type: String,
   },
-  Agreement: {
-    type: String,
-  },
-  AgreementDate: {
+  agreementDocs: [
+    {
+      type: String,
+    },
+  ],
+  agreementDate: {
     type: Date,
   },
-  AgreementExpiry: {
+  agreementExpiry: {
     type: Date,
   },
+});
 
-  }
-);
-
-
-const ShopAllotment = mongoose.model("ShopAllotment", shopAllotmentSchema);
-
+const ShopAllotment = mongoose.model("shopallotments", shopAllotmentSchema);
 module.exports = ShopAllotment;

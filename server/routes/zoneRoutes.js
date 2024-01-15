@@ -1,16 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getZones, getZoneById, createZone, deleteZoneById, updateZoneById } = require('../controllers/zoneController');
+const zoneController = require("../controllers/zoneController");
 
-
-router.get('/', getZones);
-
-router.get('/:id', getZoneById);
-
-router.post('/',  createZone);
-
-router.delete('/:id', deleteZoneById);
-
-router.patch('/:id', updateZoneById);
+// router.get("/zone", zoneController.getZoneNames);
+router.get("/:currentPage/:itemsPerPage", zoneController.getZones);
+router.get("/:id", zoneController.getZoneById);
+router.post("/", zoneController.createZone);
+router.delete("/:id", zoneController.deleteZoneById);
+router.put("/:id", zoneController.updateZoneById);
 
 module.exports = router;

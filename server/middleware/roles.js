@@ -1,6 +1,7 @@
 const verifyToken = require("../middleware/accessAuth");
 exports.isSuperAdmin = async (req, res, next) => {
-  if (verifyToken && req.decoded.userType === "SuperAdmin") {
+  if (verifyToken && req.decoded.userRole === "SuperAdmin") {
+    console.log(req.decoded);
     next();
   } else {
     return res
@@ -10,7 +11,7 @@ exports.isSuperAdmin = async (req, res, next) => {
 };
 
 exports.isAdmin = async (req, res, next) => {
-  if (verifyToken && req.decoded.userType === "Admin") {
+  if (verifyToken && req.decoded.userRole === "Admin") {
     next();
   } else {
     return res

@@ -1,46 +1,67 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import "./viewUserStyle.css"; 
-import { text } from "@fortawesome/fontawesome-svg-core";
+import React, { useState, useEffect } from 'react';
+import EditUserForm from './editUserform';
+import DeleteUser from './deleteUser';
+import './viewUserStyle.css';
 
-const ViewUser = () => {
-  const location = useLocation();
-  const user = location.state?.user;
 
-  if (!user) {
-    return <div className="viewUser-container"><p className="userInfo-value">User data not available</p></div>;
-  }
+const ViewUser = ({user,onClose}) => {
+  const [userData, setUserData] = useState(user);
+  const [editButton, setEditButton] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const handleConfirmation = () => {
+    setShowDeleteConfirmation(!showDeleteConfirmation);
+  };
+
+  const handleEdit = () => {
+    setEditButton(!editButton);
+  };
+
+
+  const handleUserChange = (changedUser) => {
+    setUserData(changedUser);
+  };
+
+  //use effect to make it rerender everytime user is changed
+  useEffect(() => {
+    setUserData(user);
+  }, [user]);
 
   return (
-    <div className="p-4">
-      <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">User Details</h2>
-        <div className="grid grid-cols-2 gap-x-4">
-          <UserInfo title="Email:" value={user.Email} />
-          <UserInfo title="Username:" value={user.Username} />
-          <UserInfo title="Contact #:" value={user.Mobile} />
-          <UserInfo title="City:" value={user.CityName} />
-          <UserInfo title="User Type:" value={user.UserType} />
-          <UserInfo title="Status:" value={user.Status} />
-          <div className="col-span-2 mt-5 flex justify-end">
-            <Link to="/admin/user-list">
-              <button className="viewUser-backbutton">Back</button>
-            </Link>
-          </div>
-        </div>
+    <div className="user-details">
+      <div  className='title'>
+      <h2>User Details</h2>
       </div>
+      <span className="close-btn" onClick={onClose}>X</span>
+      <div className='form-data'>
+       {Object.entries(userData).map(([key, value], index) => (
+        <p key={index}>{key}: {value}</p>
+        ))}
+        
+        {/* <p>Username: {userData.username}</p>
+        <p>Email: {userData.email}</p>
+        <p>Password: {userData.password}</p>
+        <p>Phone #: {userData.phone}</p>
+        <p>Status: {userData.status}</p>
+        <p>User Type: {userData.userType}</p> */}
+        {/* Display other user details based on the received user data */}
+      </div>
+      <div className="button-container">
+        <button className="editButton" onClick={handleEdit}>
+          Edit
+        </button>
+        {/* <button className="deleteButton" onClick={handleDelete}>
+          Delete
+        </button> */}
+        <DeleteUser
+          user={userData}
+          showConfirmation={showDeleteConfirmation}
+          handleConfirmation={handleConfirmation}
+          />
+        {editButton && <EditUserForm user={userData} handleEdit={handleEdit} handleUserChange={handleUserChange} />}
+          </div>
     </div>
   );
 };
-
-const UserInfo = ({ title, value }) => (
-    <div className="userInfo">
-      <div className="userInfo-title"> {title}       
-      <div className="userInfo-value">{value}</div>
-</div>
-    </div>
-  );
-  
 
 export default ViewUser;

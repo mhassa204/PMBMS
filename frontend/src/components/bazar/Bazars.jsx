@@ -7,14 +7,6 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -23,163 +15,71 @@ import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import profilePic from "@images/me.png";
 import bazar from "@images/bazar.jpg";
+import { useEffect, useRef, useState } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function Bazars() {
   const navigate = useNavigate();
-
-  const handleClick = (index) => {
-    navigate("/admin/create-bazar", { state: true });
-  };
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [bazars, setBazars] = useState([]);
+  const isAvailable = useRef(false);
 
   const TABLE_HEAD = [
-    { Header: "Bazar Name", accessor: "bazarName" },
-    { Header: "Bazar Address", accessor: "bazarAddress" },
-    { Header: "Status", accessor: "Status" },
-    { Header: "Total Stalls", accessor: "totalStalls" },
-    { Header: "Prefix", accessor: "Prefix" },
+    { Header: "Bazar Name", accessor: "name" },
+    { Header: "Bazar Address", accessor: "address" },
+    { Header: "Active", accessor: "active" },
+    { Header: "Total Stalls", accessor: "totalShops" },
+    { Header: "Prefix", accessor: "prefix" },
     { Header: "Bazar Image", accessor: "bazarImage" },
-    { Header: "City", accessor: "City" },
+    { Header: "City", accessor: "city" },
     { Header: "Bazar Manager", accessor: "bazarManager" },
+    { Header: "Zone", accessor: "zone" },
     { Header: "Zone Manager", accessor: "zoneManager" },
+    { Header: "Supervisor", accessor: "supervisor" },
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton
-            onClick={() => {
-              handleClick(index);
-            }}
-          />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
 
-  const TABLE_ROWS = [
-    {
-      bazarName: "Ahmed Bazar",
-      bazarAddress: "123 Main Street, Lahore",
-      Status: "Active",
-      totalStalls: 10,
-      Prefix: "ABZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Lahore",
-      bazarManager: "Ali Ahmed",
-      zoneManager: "Zohaib Khan",
-      Actions: "",
-    },
-    {
-      bazarName: "Faisalabad Market",
-      bazarAddress: "456 Elm Street, Faisalabad",
-      Status: "Inactive",
-      totalStalls: 8,
-      Prefix: "FBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Faisalabad",
-      bazarManager: "Farah Naz",
-      zoneManager: "Zain Ul Abidin",
-      Actions: "",
-    },
-    {
-      bazarName: "Karim Market",
-      bazarAddress: "789 Oak Street, Karachi",
-      Status: "Pending",
-      totalStalls: 12,
-      Prefix: "KBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Karachi",
-      bazarManager: "Khadija Javed",
-      zoneManager: "Bilal Ahmed",
-      Actions: "",
-    },
-    {
-      bazarName: "Rahim Market",
-      bazarAddress: "101 Pine Street, Rawalpindi",
-      Status: "Active",
-      totalStalls: 11,
-      Prefix: "RBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Rawalpindi",
-      bazarManager: "Rukhsar Shah",
-      zoneManager: "Tariq Mehmood",
-      Actions: "",
-    },
-    {
-      bazarName: "Saima Market",
-      bazarAddress: "202 Cedar Street, Islamabad",
-      Status: "Inactive",
-      totalStalls: 9,
-      Prefix: "SBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Islamabad",
-      bazarManager: "Saba Malik",
-      zoneManager: "Umar Khan",
-      Actions: "",
-    },
-    {
-      bazarName: "Gulshan Bazar",
-      bazarAddress: "303 Maple Street, Peshawar",
-      Status: "Active",
-      totalStalls: 13,
-      Prefix: "GBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Peshawar",
-      bazarManager: "Ghulam Abbas",
-      zoneManager: "Tahira Batool",
-      Actions: "",
-    },
-    {
-      bazarName: "Iqbal Market",
-      bazarAddress: "404 Birch Street, Quetta",
-      Status: "Blocked",
-      totalStalls: 10,
-      Prefix: "IBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Quetta",
-      bazarManager: "Imran Khan",
-      zoneManager: "Nadia Akhtar",
-      Actions: "",
-    },
-    {
-      bazarName: "Zia Bazar",
-      bazarAddress: "505 Elm Street, Multan",
-      Status: "Expired",
-      totalStalls: 8,
-      Prefix: "ZBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Multan",
-      bazarManager: "Zainab Ali",
-      zoneManager: "Usman Ghani",
-      Actions: "",
-    },
-  ];
+  const handleEdit = (data) => {
+    navigate(`/admin/basic/create-bazar`, {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getPaginatedData("bazars", currentPage, 10);
+      if (data.success) {
+        setBazars(data.data.bazars);
+        setTotalPages(data.data.totalPages);
+      } else {
+        console.log(data.error);
+      }
+    };
+    if (isAvailable.current === false || currentPage) {
+      getData();
+      isAvailable.current = true;
+    }
+  }, [isAvailable, currentPage]);
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
@@ -201,7 +101,7 @@ export default function Bazars() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none "
               size="sm"
               onClick={() => {
-                navigate("/admin/create-bazar");
+                navigate("/admin/basic/create-bazar");
               }}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new bazar
@@ -247,8 +147,16 @@ export default function Bazars() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4 ">
-        <Tables columns={TABLE_HEAD} data={TABLE_ROWS} />
+      <CardBody>
+        <Tables
+          columns={TABLE_HEAD}
+          data={bazars}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </CardBody>
     </Card>
   );

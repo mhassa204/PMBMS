@@ -1,120 +1,248 @@
+const { Shop, ShopType, ShopCategory } = require("../models/ShopModel");
 const BazarModel = require("../models/BazarModel");
-const { Shop, ShopType } = require("../models/ShopModel");
-const asyncHandler = require("express-async-handler");
 const ZoneModel = require("../models/ZoneModel");
+const verifyToken = require("../middleware/accessAuth");
+const { isSuperAdmin } = require("../middleware/roles");
+const User = require("../models/UserModel");
+const Zone = require("../models/ZoneModel");
 
 // Controller functions
 
 // Get all bazars
-const getAllBazars = asyncHandler(async (req, res) => {
-  const bazars = await BazarModel.find();
-  res.status(200).json(bazars);
-});
+exports.getAllBazars = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    const currentPage = parseInt(req.params.currentPage) || 1;
+    const itemsPerPage = parseInt(req.params.itemsPerPage) || 10;
+    const skip = (currentPage - 1) * itemsPerPage;
+    const limit = itemsPerPage;
+    try {
+      const bazars = await BazarModel.find()
+        // .populate({
+        //   path: "zone",
+        //   select: "zoneName",
+        // })
+        .populate([
+          {
+            path: "zone",
+            select: "zoneName",
+          },
+          {
+            path: "zoneManager",
+            select: "userName",
+          },
+          {
+            path: "bazarManager",
+            select: "userName",
+          },
+          {
+            path: "supervisor",
+            select: "userName",
+          },
+        ])
+        .skip(skip)
+        .limit(limit);
 
-const createBazar = asyncHandler(async (req, res) => {
-  // Extract Bazar details from the request body
-  const {
-    name,
-    address,
-    city,
-    zone,
-    baseRentPermanent,
-    prefix,
-    image,
-    zoneManager,
-    bazarManager,
-    supervisor,
-    shopTypes,
-  } = req.body;
-
-  // const city1 = await CityModel.findOne({ name: city });
-  const zone1 = await ZoneModel.findOne({ name: zone });
-
-  // console.log(city1);
-  console.log(zone1);
-
-  // Create Bazar instance
-  const bazar = new BazarModel({
-    name,
-    address,
-    // city: city1._id,
-    zone: zone1._id,
-    baseRentPermanent,
-    prefix,
-    image,
-    zoneManager,
-    bazarManager,
-    supervisor,
-  });
-
-  // Save the Bazar to get the _id
-  const newBazar = await bazar.save();
-
-  console.log(zone1.name);
-  // console.log(city1.prefix);
-
-  // Create and save shops based on the provided Shop Types
-  const shopTypesArray = Object.keys(shopTypes);
-  let counter = 0;
-  for (const shopTypeName of shopTypesArray) {
-    const shopTypeCount = shopTypes[shopTypeName];
-    for (let i = 0; i < shopTypeCount; i++) {
-      const shop = new Shop({
-        // shopID: `${city1.prefix}-${zone1.name}-${newBazar.prefix}-${shopTypeName}-${counter}`,
-        shopType: shopTypeName, // Get the ShopType ObjectId based on the name
-        bazar: newBazar._id,
-        size: "default", // Set the default size or modify as needed
-      });
-      counter++;
-      await shop.save();
-      newBazar.approvedShops.push(shop._id); // Add the shop to the approvedShops array in Bazar
+      const transformedBazars = bazars.map((bazar) => ({
+        name: bazar.name,
+        address: bazar.address,
+        active: bazar.active,
+        area: bazar.area,
+        areaUnit: bazar.areaUnit,
+        dateOfEstablishment: bazar.dateOfEstablishment,
+        totalShops: bazar.totalShops,
+        prefix: bazar.prefix,
+        totalShops: bazar.totalShops,
+        bazarImage: bazar.bazarImage || "",
+        city: bazar.city,
+        bazarManager: bazar.bazarManager?.userName,
+        zone: bazar.zone?.zoneName,
+        zoneManager: bazar.zoneManager?.userName,
+        supervisor: bazar.supervisor?.userName,
+        id: bazar._id,
+      }));
+      const totalBazars = await BazarModel.countDocuments();
+      const totalPages = Math.ceil(totalBazars / itemsPerPage);
+      res
+        .status(200)
+        .json({ bazars: transformedBazars, totalBazars, totalPages });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "could not retrieve bazars", error: err });
     }
+  },
+];
+
+exports.createBazar = async (req, res) => {
+  const bazarData = req.body;
+  const zone = await ZoneModel.findOne({ zoneName: bazarData.zone });
+  const zoneManager = await User.findOne({ userName: bazarData.zoneManager });
+  const bazarManager = await User.findOne({ userName: bazarData.bazarManager });
+  const supervisor = await User.findOne({ userName: bazarData.supervisor });
+
+  try {
+    const bazar = await new BazarModel({
+      name: bazarData.name,
+      city: bazarData.city,
+      prefix: bazarData.prefix,
+      areaUnit: bazarData.areaUnit,
+      area: bazarData.area,
+      dateOfEstablishment: bazarData.dateOfEstablishment,
+      active: bazarData.active,
+      totalShops: bazarData.totalShops,
+      address: bazarData.address,
+      zone: zone._id,
+      bazarManager: bazarManager._id,
+      zoneManager: zoneManager._id,
+      supervisor: supervisor._id,
+    });
+    if (
+      !bazar.zone ||
+      !bazar.bazarManager ||
+      !bazar.zoneManager ||
+      !bazar.supervisor
+    ) {
+      return res.status(404).json({ message: "Bazar not found" });
+    }
+    const newBazar = await bazar.save({ validateBeforeSave: false });
+
+    const shopsInBazar = [];
+    const shops = req.body.shops;
+
+    const shop = shops.shops.map(async (shop) => {
+      for (let i = 0; i < shop.totalShops; i++) {
+        const newShop = await new Shop({
+          shopID: `${bazar.prefix}-${shop.shopType}-${i + 1}`,
+          shopName: `${bazar.prefix}-${shop.shopType}-${i + 1}`,
+          shopType: await ShopType.findOne({ name: shop.shopType }),
+          vacant: true,
+          bazar: bazar._id,
+          monthlyRent: shop.baseRent,
+          shopLength: 0,
+          shopWidth: 0,
+        });
+        const s = await newShop.save();
+        shopsInBazar.push(s);
+      }
+      // }
+    });
+    await Promise.all(shop);
+    newBazar.approvedShops.push(...shopsInBazar);
+    await newBazar.save();
+    res
+      .status(201)
+      .json({ message: "Bazar created successfully", bazar: bazar });
+  } catch (error) {
+    console.log("getting error bsdk");
+    res.status(500).json({ message: "internal server error" });
   }
-
-  // Save the updated Bazar with the created shops
-  await newBazar.save();
-
-  res.status(201).json(newBazar);
-});
+};
 
 // Get a single bazar
-const getBazarById = asyncHandler(async (req, res) => {
-  const bazar = await BazarModel.findById(req.params.id);
-  if (bazar) {
-    res.status(200).json(bazar);
-  } else {
-    res.status(404).json({ message: "Bazar not found" });
-  }
-});
+exports.getBazarById = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const bazar = await BazarModel.findById(req.params.id)
+        .populate({
+          path: "zones",
+          select: "name",
+        })
+        .populate({
+          path: "shops",
+        })
+        .populate({
+          path: "users",
+          select: "name",
+        });
+      if (bazar) {
+        res
+          .status(200)
+          .json({ message: "bazar retrieved successfully", bazar: bazar });
+      } else {
+        res.status(404).json({ message: "bazar not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "internal server error" });
+    }
+  },
+];
 
 // Update a bazar
-const updateBazar = asyncHandler(async (req, res) => {
-  const bazar = await BazarModel.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  if (bazar) {
-    res.json(bazar);
-  } else {
-    res.status(404).json({ message: "Bazar not found" });
-  }
-});
+exports.updateBazar = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const bazar = await BazarModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+          bazarManager: await User.findOne({ userName: req.body.bazarManager }),
+          zoneManager: await User.findOne({ userName: req.body.zoneManager }),
+          zone: await Zone.findOne({ zoneName: req.body.zoneName }),
+          supervisor: await User.findOne({ userName: req.body.supervisor }),
+        },
+        {
+          new: true,
+        }
+      );
+      if (bazar) {
+        res.json({ message: "bazar updated successfully", bazar: bazar });
+      } else {
+        res.status(404).json({ message: "Bazar not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "internal server error" });
+    }
+  },
+];
 
 // Delete a bazar
-const deleteBazar = asyncHandler(async (req, res) => {
-  const bazar = await BazarModel.findById(req.params.id);
-  if (bazar) {
-    await bazar.remove();
-    res.status(200).json({ message: "Bazar deleted" });
-  } else {
-    res.status(404).json({ message: "Bazar not found" });
-  }
-});
+exports.deleteBazar = [
+  verifyToken,
+  isSuperAdmin,
+  async (req, res) => {
+    try {
+      const bazar = await BazarModel.findById(req.params.id);
+      if (bazar) {
+        for (let shop in bazar.approvedShops) {
+          const shops = await Shop.findByIdAndDelete(shop);
+        }
+        bazar.remove();
+        res.status(200).json({ message: "Bazar deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Bazar not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "internal server error" });
+    }
+  },
+];
 
-// Export controller functions
-module.exports = {
-  getAllBazars,
-  createBazar,
-  getBazarById,
-  updateBazar,
-  deleteBazar,
-};
+//Get shops in bazar
+// exports.getShopsInBazar = [
+//   verifyToken,
+//   isSuperAdmin,
+//   async (req, res) => {
+//     try {
+//       const bazar = await BazarModel.findById(req.params.id).populate({
+//         path: "shops",
+//       });
+//       if (!bazar || !bazar.shops.length) {
+//         return res.status(404).json({ message: "No Shop Found!" });
+//       } else {
+//         res
+//           .status(200)
+//           .json({ message: "Shops not found in bazar", shops: bazar.shops });
+//       }
+//     } catch (err) {
+//       res
+//         .status(500)
+//         .json({ message: `Error getting the data from the database ${err}` });
+//     }
+//   },
+// ];

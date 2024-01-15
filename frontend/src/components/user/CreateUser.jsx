@@ -6,59 +6,63 @@ import Dropdown from "@components/commonComponents/Dropdown";
 import PasswordField from "@components/commonComponents/PasswordField";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-const cities = [
-  { value: "new-york", label: "New York" },
-  { value: "los-angeles", label: "Los Angeles" },
-  { value: "chicago", label: "Chicago" },
-];
-
-const userTypes = [
-  { value: "SuperAdmin", label: "Super Admin" },
-
-  { value: "Admin", label: "Admin" },
-
-  { value: "ZoneManager", label: "Zone Manager" },
-  { value: "BazarManager", label: "Bazar Manager" },
-  { value: "Supervisor", label: "Supervisor" },
-];
-
-const activeOptions = [
-  { value: "inactive", label: "Not Active" },
-  { value: "active", label: "Active" },
-  { value: "disabled", label: "Disabled" },
-];
-
-const breadcrumbItems = [
-  { label: "User List", path: "/admin/user-list" },
-  { label: "Create User" },
-];
+import { useLocation, useNavigate } from "react-router-dom";
+import { postAPI } from "@hooks/postAPI";
+import activeOptions from "@data/active.json";
+import { updateAPI } from "@hooks/updateAPI";
 
 const CreateUser = () => {
   const navigate = useNavigate();
   const methods = useForm();
+  const location = useLocation();
+  const isEditMode = location?.state?.edit;
+  const data = location?.state?.data;
+
+  useEffect(() => {
+    console.log("data hn mai data hn", data);
+    if (isEditMode) {
+      methods.reset(data);
+    }
+  }, [data, isEditMode]);
 
   const onSubmit = async (data) => {
-    await axios
-      .post("http://localhost:3000/users", data)
-      .then((res) => {
-        navigate("/login");
-        console.log("user registered successfully", res);
-      })
-      .catch((err) => {
-        console.log("Could not registered user", err);
-      });
-    console.log(data);
+    if (isEditMode) {
+      const d = await updateAPI("users", data, data._id);
+      if (d.success) {
+        navigate("/admin/basic/user-list");
+      } else {
+        console.log("Error in updating user. ", d.error);
+      }
+    } else {
+      const d = await postAPI("users", data);
+      if (d.success) {
+        navigate("/admin/basic/user-list");
+      } else {
+        console.log("Error in creating user. ", d.error);
+      }
+    }
   };
 
+  const userTypes = [
+    { value: "SuperAdmin", label: "Super Admin" },
+    { value: "Admin", label: "Admin" },
+    { value: "ZoneManager", label: "Zone Manager" },
+    { value: "BazarManager", label: "Bazar Manager" },
+    { value: "Supervisor", label: "Supervisor" },
+  ];
+
+  const breadcrumbItems = [
+    { label: "User List", path: "/admin/basic/user-list" },
+    { label: isEditMode ? "Update User" : "Create User" },
+  ];
   return (
     <div className="p-4">
       <Breadcrumb items={breadcrumbItems} />
 
       <div className="max-w-3xl mx-auto my-10 p-6 bg-white border rounded-md textBlue">
-        <h2 className="text-2xl font-semibold mb-4">Create User</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {isEditMode ? "Update User" : "Create User"}
+        </h2>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -86,9 +90,9 @@ const CreateUser = () => {
               label="Password"
               name="password"
               placeholder="Enter Password"
-              required
+              required={isEditMode ? false : true}
               minLength={6}
-              maxLength={20}
+              maxLength={!isEditMode && 20}
             />
             <Dropdown
               label="City"
@@ -96,13 +100,14 @@ const CreateUser = () => {
               placeholder="Select City"
               options={City}
               searchable={true}
+              defaultValue={data && { label: data.city, value: data.city }}
               type="basic-single"
             />
             <InputField
               label=" Mobile Number"
               placeholder="Enter Mobile Number"
               type="text"
-              name="mobileNumber"
+              name="mobile"
               required
             />
             <Dropdown
@@ -110,6 +115,9 @@ const CreateUser = () => {
               placeholder="Select User Type"
               name="userType"
               options={userTypes}
+              defaultValue={
+                data && { label: data.userType, value: data.userType }
+              }
               type="basic-single"
             />
             <Dropdown
@@ -117,10 +125,14 @@ const CreateUser = () => {
               placeholder="Select Status"
               name="status"
               options={activeOptions}
+              defaultValue={data && { label: data.status, value: data.status }}
               type="basic-single"
             />
             <div className="mt-5">
-              <ButtonComponent type={"submit"} name={"Create User"} />
+              <ButtonComponent
+                type={"submit"}
+                name={isEditMode ? "Update User" : "Create User"}
+              />
             </div>
           </form>
         </FormProvider>

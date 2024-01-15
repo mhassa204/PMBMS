@@ -3,18 +3,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -22,8 +13,14 @@ import ViewButton from "@components/commonComponents/ViewButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
+import { useEffect, useRef, useState } from "react";
+import { getPaginatedData } from "@hooks/getPaginatedData";
+import { deleteAPI } from "@hooks/deleteAPI";
 
 export default function Users() {
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const TABS = [
     {
@@ -39,26 +36,19 @@ export default function Users() {
       value: "bazar-manager",
     },
   ];
+
   const columns = [
-    { Header: "Username", accessor: "Username" },
-    { Header: "Email", accessor: "Email" },
-    { Header: "Mobile", accessor: "Mobile" },
-    { Header: "City Name", accessor: "CityName" },
-    { Header: "Status", accessor: "Status" },
-    { Header: "User Type", accessor: "UserType" },
+    { Header: "Username", accessor: "userName" },
+    { Header: "Email", accessor: "email" },
+    { Header: "Mobile", accessor: "mobile" },
+    { Header: "City Name", accessor: "city" },
+    { Header: "Status", accessor: "status" },
+    { Header: "User Type", accessor: "userType" },
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: ({ row }) => (
-        <div className="flex items-center gap-4">
-          <ViewButton
-            handleClick={() => {
-              console.log(row.original);
-              const user = row.original;
-              navigate("/admin/view-user", { state: { user } });
-              console.log("view button clicked");
-            }}
-          />
+      Cell: () => (
+        <div className="flex gap-2">
           <EditButton />
           <DeleteButton />
         </div>
@@ -75,7 +65,6 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
-      id: 1,
     },
     {
       Username: "AliceSmith",
@@ -85,7 +74,6 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
-      id: 2,
     },
     {
       Username: "BobJohnson",
@@ -95,7 +83,6 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
-      id: 3,
     },
     {
       Username: "EvaWhite",
@@ -105,7 +92,6 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
-      id: 4,
     },
     {
       Username: "CharlieBrown",
@@ -115,7 +101,6 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
-      id: 5,
     },
     {
       Username: "GraceMiller",
@@ -125,7 +110,6 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
-      id: 6,
     },
     {
       Username: "DavidJohnson",
@@ -135,7 +119,6 @@ export default function Users() {
       Status: "Active",
       UserType: "Admin",
       Actions: "",
-      id: 7,
     },
     {
       Username: "OliviaFoster",
@@ -145,12 +128,11 @@ export default function Users() {
       Status: "Inactive",
       UserType: "User",
       Actions: "",
-      id: 8,
     },
   ];
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
@@ -161,7 +143,6 @@ export default function Users() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                dataSlot="icon"
                 className="w-6 h-6 me-1"
               >
                 <path
@@ -187,7 +168,7 @@ export default function Users() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-user");
+                navigate("/admin/basic/create-user");
               }}
             >
               <UserPlusIcon className="h-5 w-5" />
@@ -234,8 +215,16 @@ export default function Users() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4">
-        <Tables columns={columns} data={data} />
+      <CardBody>
+        <Tables
+          columns={columns}
+          data={users}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </CardBody>
     </Card>
   );

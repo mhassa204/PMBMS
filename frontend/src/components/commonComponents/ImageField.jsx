@@ -16,7 +16,7 @@ const ImageField = ({ label, name, required, ...rest }) => {
     reader.onloadend = () => {
       setImagePreview(reader.result);
     };
-    await setValue(name, file);
+    setValue(name, file);
     clearErrors(name);
   };
   return (

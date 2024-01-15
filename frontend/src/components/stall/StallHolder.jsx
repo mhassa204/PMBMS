@@ -1,20 +1,10 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -23,9 +13,16 @@ import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import front from "@images/front.jpg";
 import back from "@images/back.jpg";
+import { useEffect, useRef, useState } from "react";
+import { formatDate } from "@utils/formatDate";
+import { getPaginatedData } from "@hooks/getPaginatedData";
 
 export default function StallHolder() {
   const navigate = useNavigate();
+  const isAvailable = useRef(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [shopHolders, setShopHolders] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const TABS = [
     {
       label: "All",
@@ -41,164 +38,86 @@ export default function StallHolder() {
     },
   ];
   const columns = [
-    { Header: "Prefix", accessor: "Prefix" },
-    { Header: "Stall Holder Name", accessor: "StallHolderName" },
-    { Header: "Father/Husband Name", accessor: "FatherHusbandName" },
+    // { Header: "Prefix", accessor: "Prefix" },
+    { Header: "Shop Holder Name", accessor: "name" },
+    { Header: "Father/Husband Name", accessor: "fatherName" },
+    { Header: "Email", accessor: "email" },
     { Header: "DOB", accessor: "DOB" },
-    { Header: "CNIC", accessor: "CNIC" },
-    { Header: "CNIC Expiry", accessor: "CNICExpiry" },
-    { Header: "Gender", accessor: "Gender" },
-    { Header: "Primary Contact", accessor: "PrimaryContact" },
-    { Header: "CNIC Front Image", accessor: "CNICFrontImage" },
-    { Header: "CNIC Back Image", accessor: "CNICBackImage" },
-    { Header: "Face Picture", accessor: "FacePicture" },
-    { Header: "Biometric Image", accessor: "BiometricImage" },
-    { Header: "Status", accessor: "Status" },
+    { Header: "CNIC", accessor: "cnic" },
+    { Header: "CNIC Expiry", accessor: "cnicExpiry" },
+    { Header: "Gender", accessor: "gender" },
+    { Header: "Primary Contact", accessor: "contactNumber" },
+    { Header: "CNIC Front Image", accessor: "cnicFront" },
+    { Header: "CNIC Back Image", accessor: "cnicBack" },
+    { Header: "Face Picture", accessor: "picture" },
+    { Header: "Biometric Image", accessor: "biometricImage" },
+    { Header: "Status", accessor: "status" },
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
 
-  const data = [
-    {
-      Prefix: "SH001",
-      StallHolderName: "John Doe",
-      FatherHusbandName: "Michael Doe",
-      DOB: "1990-05-15",
-      CNIC: "12345-6789012-3",
-      CNICExpiry: "2025-05-15",
-      Gender: "Male",
-      PrimaryContact: "+1 123 456 7890",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/abcde.jpg",
-      BiometricImage: "https://i.imgur.com/uvwxy.jpg",
-      Status: "Active",
-      Actions: "",
-    },
-    {
-      Prefix: "SH002",
-      StallHolderName: "Alice Johnson",
-      FatherHusbandName: "David Johnson",
-      DOB: "1985-08-20",
-      CNIC: "98765-4321098-7",
-      CNICExpiry: "2024-08-20",
-      Gender: "Female",
-      PrimaryContact: "+1 987 654 3210",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/pqrst.jpg",
-      BiometricImage: "https://i.imgur.com/uvwxy.jpg",
-      Status: "Inactive",
-      Actions: "",
-    },
-    {
-      Prefix: "SH003",
-      StallHolderName: "Bob Smith",
-      FatherHusbandName: "Charlie Smith",
-      DOB: "1988-12-10",
-      CNIC: "56789-0123456-8",
-      CNICExpiry: "2023-12-10",
-      Gender: "Male",
-      PrimaryContact: "+1 567 890 1234",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/nopqr.jpg",
-      BiometricImage: "https://i.imgur.com/xyzab.jpg",
-      Status: "Active",
-      Actions: "",
-    },
-    {
-      Prefix: "SH004",
-      StallHolderName: "Eva White",
-      FatherHusbandName: "Frank White",
-      DOB: "1992-03-25",
-      CNIC: "34567-8901234-5",
-      CNICExpiry: "2026-03-25",
-      Gender: "Female",
-      PrimaryContact: "+1 345 678 9012",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/abcde.jpg",
-      BiometricImage: "https://i.imgur.com/ijklm.jpg",
-      Status: "Active",
-      Actions: "",
-    },
-    {
-      Prefix: "SH005",
-      StallHolderName: "Grace Miller",
-      FatherHusbandName: "Henry Miller",
-      DOB: "1987-07-08",
-      CNIC: "87654-3210987-6",
-      CNICExpiry: "2022-07-08",
-      Gender: "Female",
-      PrimaryContact: "+1 876 543 2109",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/pqrst.jpg",
-      BiometricImage: "https://i.imgur.com/xyzab.jpg",
-      Status: "Inactive",
-      Actions: "",
-    },
-    {
-      Prefix: "SH006",
-      StallHolderName: "Frank Adams",
-      FatherHusbandName: "George Adams",
-      DOB: "1995-11-18",
-      CNIC: "23456-7890123-4",
-      CNICExpiry: "2027-11-18",
-      Gender: "Male",
-      PrimaryContact: "+1 234 567 8901",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/pqrst.jpg",
-      BiometricImage: "https://i.imgur.com/xyzab.jpg",
-      Status: "Active",
-      Actions: "",
-    },
-    {
-      Prefix: "SH007",
-      StallHolderName: "Mia Garcia",
-      FatherHusbandName: "Nick Garcia",
-      DOB: "1989-02-14",
-      CNIC: "45678-9012345-6",
-      CNICExpiry: "2023-02-14",
-      Gender: "Female",
-      PrimaryContact: "+1 456 789 0123",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/abcde.jpg",
-      BiometricImage: "https://i.imgur.com/uvwxy.jpg",
-      Status: "Inactive",
-      Actions: "",
-    },
-    {
-      Prefix: "SH008",
-      StallHolderName: "Olivia Foster",
-      FatherHusbandName: "Paul Foster",
-      DOB: "1993-09-30",
-      CNIC: "67890-1234567-8",
-      CNICExpiry: "2028-09-30",
-      Gender: "Female",
-      PrimaryContact: "+1 678 901 2345",
-      CNICFrontImage: front,
-      CNICBackImage: back,
-      FacePicture: "https://i.imgur.com/pqrst.jpg",
-      BiometricImage: "https://i.imgur.com/xyzab.jpg",
-      Status: "Active",
-      Actions: "",
-    },
-  ];
+  const handleEdit = (data) => {
+    navigate("/admin/basic/create-shopHolder", {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
+
+  useEffect(() => {
+    const getShopHolders = async () => {
+      try {
+        const d = await getPaginatedData("shop-holders", currentPage, 10);
+        if (d.success) {
+          // setShopHolders(d.data.shopHolders);
+          const t = d.data.shopHolders.map((item) => ({
+            ...item,
+            name: item.name,
+            fatherName: item.fatherName,
+            email: item.email,
+            DOB: formatDate(item.DOB),
+            cnic: item.cnic,
+            cnicExpiry: formatDate(item.cnicExpiry),
+            gender: item.gender,
+            contactNumber: item.contactNumber,
+            cnicFront: item.cnicFront,
+            cnicBack: item.cnicBack,
+            picture: item.picture,
+            biometricImage: item.biometricImage,
+            status: item.status,
+            id: item._id,
+          }));
+          setShopHolders(t);
+          setTotalPages(d.data.totalPages);
+        } else {
+          console.error("API request failed:", d.message);
+        }
+      } catch (error) {
+        console.error("Error fetching shop holders:", error);
+      }
+    };
+
+    if (isAvailable.current === false || currentPage) {
+      getShopHolders();
+      isAvailable.current = true;
+    }
+  }, [isAvailable, currentPage]);
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
@@ -209,7 +128,6 @@ export default function StallHolder() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                dataSlot="icon"
                 className="w-6 h-6 me-1"
               >
                 <path
@@ -223,12 +141,12 @@ export default function StallHolder() {
                 variant="h5"
                 color="blue-gray"
               >
-                Stall holder list
+                Shop holder list
               </Typography>
             </div>
 
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all stall holders
+              See information about all shop holders
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -236,10 +154,10 @@ export default function StallHolder() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-stallHolder");
+                navigate("/admin/basic/create-shopHolder");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new stall
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new shop
               holder
             </Button>
           </div>
@@ -283,8 +201,16 @@ export default function StallHolder() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4 ">
-        <Tables columns={columns} data={data} />
+      <CardBody>
+        <Tables
+          columns={columns}
+          data={shopHolders}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </CardBody>
     </Card>
   );

@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 const InputField = ({
   label,
+  value,
   type,
   name,
   required,
@@ -12,10 +13,21 @@ const InputField = ({
   max,
   handleChange,
   disabled,
+  onKeyDown,
   ...rest
 }) => {
   const { register, formState } = useFormContext();
   const { errors } = formState;
+
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="mb-4">
@@ -30,9 +42,11 @@ const InputField = ({
         type={type || "text"}
         id={name}
         name={name}
+        value={value}
         placeholder={placeholder}
         min={min && min}
         max={max && max}
+        onKeyDown={handleKeyDown}
         // onChange={(e) => {
         //   handleChange && handleChange(e);
         // }}

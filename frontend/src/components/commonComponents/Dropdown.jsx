@@ -5,24 +5,27 @@ import { useFormContext } from "react-hook-form";
 const Dropdown = ({
   label,
   type,
+  defaultValue,
   required,
   searchable,
   placeholder,
   handleChange,
   name,
   options,
+  onKeyDown,
   ...rest
 }) => {
   const { register, setValue, trigger, formState } = useFormContext();
   const { errors } = formState;
 
-  const handleChange1 = (selectedOptions) => {
-    const selectedValues = Array.isArray(selectedOptions)
-      ? selectedOptions.map((option) => option.value)
-      : selectedOptions.value;
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
 
-    setValue(name, selectedValues);
-    trigger(name);
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -37,14 +40,20 @@ const Dropdown = ({
         id={name}
         options={options}
         placeholder={placeholder}
-        {...register(name, { required: `${label} is required` })}
+        {...register(name, { required: `${label} is required ` })}
         onChange={(selectedOptions) => {
-          handleChange1(selectedOptions);
-          handleChange &&
-            handleChange({ name: name, value: selectedOptions.value });
+          const selectedValues = Array.isArray(selectedOptions)
+            ? selectedOptions.map((option) => option.value)
+            : selectedOptions.value;
+
+          setValue(name, selectedValues);
+          trigger(name);
+          handleChange && handleChange({ name: name, value: selectedValues });
         }}
         className={`${type} text-start h-[40px] `}
+        onKeyDown={handleKeyDown}
         {...rest}
+        defaultValue={defaultValue}
         isMulti={type === "basic-multi-select" ? true : false}
         isSearchable={searchable ? true : false}
       />

@@ -1,15 +1,15 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Import your controller modules
-const {getAllBazars, getBazarById, createBazar, updateBazar, deleteBazar} = require('../controllers/bazarController');
+const bazarController = require("../controllers/bazarController");
 
 // Define your routes
-router.get('/', getAllBazars);
-router.get('/:id', getBazarById);
-router.post('/', createBazar);
-router.put('/:id', updateBazar);
-router.delete('/:id', deleteBazar);
+router.get("/:currentPage/:itemsPerPage", bazarController.getAllBazars);
+// router.get("/bazar-shop", bazarController.getShopsInBazar);
+router.get("/:id", bazarController.getBazarById);
+router.post("/", bazarController.createBazar);
+router.put("/:id", bazarController.updateBazar);
+router.delete("/:id", bazarController.deleteBazar);
 
 module.exports = router;

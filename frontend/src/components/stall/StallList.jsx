@@ -52,14 +52,27 @@ export default function StallList() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: () => (
-        <div className="flex gap-2">
-          <EditButton />
-          <DeleteButton />
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-4">
+          <EditButton onClick={() => handleEdit(row.original)} />
+          <DeleteButton onClick={() => handleDelete(row.original.id)} />
         </div>
       ),
     },
   ];
+
+  const handleEdit = (data) => {
+    navigate("/admin/transaction/create-shop", {
+      state: {
+        edit: true,
+        data: data,
+      },
+    });
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete button clicked: ", id);
+  };
 
   const data = [
     {
@@ -161,15 +174,15 @@ export default function StallList() {
   ];
 
   return (
-    <Card className="w-full mt-4 bazar-list">
+    <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
             <Typography className="text-start" variant="h5" color="blue-gray">
-              Stall list
+              Shop list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all stalls
+              See information about all shop
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -177,10 +190,10 @@ export default function StallList() {
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
               size="sm"
               onClick={() => {
-                navigate("/admin/create-stall");
+                navigate("/admin/transaction/create-shop");
               }}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new stall
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add new shop
             </Button>
           </div>
         </div>
@@ -223,8 +236,13 @@ export default function StallList() {
         </div> */}
       </CardHeader>
 
-      <CardBody className="px-4 ">
-        <Tables columns={columns} data={data} />
+      <CardBody>
+        <Tables
+          columns={columns}
+          data={data}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </CardBody>
     </Card>
   );
