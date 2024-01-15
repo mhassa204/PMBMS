@@ -19,6 +19,7 @@ const CreateUser = () => {
   const data = location?.state?.data;
 
   useEffect(() => {
+    console.log("data hn mai data hn", data);
     if (isEditMode) {
       methods.reset(data);
     }
