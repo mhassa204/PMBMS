@@ -1,4 +1,5 @@
 import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { BrowserRouter as Router } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -8,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
+import ViewButton from "@components/commonComponents/ViewButton";
 import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
@@ -20,33 +22,20 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
-  const isAvailable = useRef(false);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getPaginatedData("users", currentPage, 10);
-      if (data.success) {
-        const u = data.data.users.map((user) => ({
-          ...user,
-          userName: user.userName,
-          email: user.email,
-          mobile: user.mobile,
-          city: user.city,
-          status: user.status,
-          userType: user.userType,
-          id: user._id,
-        }));
-        setUsers(u);
-        setTotalPages(data.data.totalPages);
-      } else {
-        console.log("Error in getting data. ", data.error);
-      }
-    };
-    if (isAvailable.current === false || currentPage) {
-      getData();
-      isAvailable.current = true;
-    }
-  }, [isAvailable, currentPage]);
+  const TABS = [
+    {
+      label: "Admin",
+      value: "admin",
+    },
+    {
+      label: "Supervisor",
+      value: "supervisor",
+    },
+    {
+      label: "Bazar Manager",
+      value: "bazar-manager",
+    },
+  ];
 
   const columns = [
     { Header: "Username", accessor: "userName" },
@@ -58,35 +47,89 @@ export default function Users() {
     {
       Header: "Actions",
       accessor: "Actions",
-      Cell: ({ row }) => (
-        <div className="flex items-center gap-4">
-          <EditButton onClick={() => handleEdit(row.original)} />
-          <DeleteButton onClick={() => handleDelete(row.original.id)} />
+      Cell: () => (
+        <div className="flex gap-2">
+          <EditButton />
+          <DeleteButton />
         </div>
       ),
     },
   ];
 
-  const handleEdit = (data) => {
-    console.log("edit button clicked: ", data);
-    navigate(`/admin/basic/create-user`, {
-      state: {
-        edit: true,
-        data: data,
-      },
-    });
-  };
-
-  const handleDelete = async (id) => {
-    const d = await deleteAPI("users", id);
-    if (d.success) {
-      setUsers(users.filter((user) => user.id !== id));
-    } else {
-      console.log("Error in deleting user. ", d.error);
-    }
-
-    console.log("delete button clicked: ", id);
-  };
+  const data = [
+    {
+      Username: "JohnDoe",
+      Email: "john.doe@example.com",
+      Mobile: "123-456-7890",
+      CityName: "City A",
+      Status: "Active",
+      UserType: "Admin",
+      Actions: "",
+    },
+    {
+      Username: "AliceSmith",
+      Email: "alice.smith@example.com",
+      Mobile: "987-654-3210",
+      CityName: "City B",
+      Status: "Inactive",
+      UserType: "User",
+      Actions: "",
+    },
+    {
+      Username: "BobJohnson",
+      Email: "bob.johnson@example.com",
+      Mobile: "111-222-3333",
+      CityName: "City C",
+      Status: "Active",
+      UserType: "Admin",
+      Actions: "",
+    },
+    {
+      Username: "EvaWhite",
+      Email: "eva.white@example.com",
+      Mobile: "555-666-7777",
+      CityName: "City D",
+      Status: "Inactive",
+      UserType: "User",
+      Actions: "",
+    },
+    {
+      Username: "CharlieBrown",
+      Email: "charlie.brown@example.com",
+      Mobile: "999-888-7777",
+      CityName: "City E",
+      Status: "Active",
+      UserType: "Admin",
+      Actions: "",
+    },
+    {
+      Username: "GraceMiller",
+      Email: "grace.miller@example.com",
+      Mobile: "444-555-6666",
+      CityName: "City F",
+      Status: "Inactive",
+      UserType: "User",
+      Actions: "",
+    },
+    {
+      Username: "DavidJohnson",
+      Email: "david.johnson@example.com",
+      Mobile: "777-888-9999",
+      CityName: "City G",
+      Status: "Active",
+      UserType: "Admin",
+      Actions: "",
+    },
+    {
+      Username: "OliviaFoster",
+      Email: "olivia.foster@example.com",
+      Mobile: "123-987-6543",
+      CityName: "City H",
+      Status: "Inactive",
+      UserType: "User",
+      Actions: "",
+    },
+  ];
 
   return (
     <Card className="w-full bazar-list">

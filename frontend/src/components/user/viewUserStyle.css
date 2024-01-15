@@ -1,0 +1,78 @@
+.viewUser-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  z-index: 9999;
+}
+
+.viewUser-form {
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.466);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 9999;
+  width: 60%;
+  height: auto; /* Adjusted for content size */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(2px);
+  overflow: hidden;
+  padding: 2rem; /* Padding to match CreateUser form */
+}
+
+.viewUser-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #15518e;
+  margin-bottom: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.userInfo {
+  padding-left: 5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 2fr); 
+  gap: 1rem;
+}
+
+.userInfo-title {
+  font-weight: bold;
+  color: #123d79;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.userInfo-value {
+  color: #333;
+  background: transparent;
+  border-bottom: 2px solid #333;
+  width: 100%;
+  padding: 2px 0;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+}
+
+.userInfo-value:focus {
+  outline: none;
+  border-bottom: 4px solid #e74c3c;	
+}
+
+.viewUser-backbutton{
+  flex: 1;
+  background-color: rgb(9, 73, 5);
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: #fff;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
