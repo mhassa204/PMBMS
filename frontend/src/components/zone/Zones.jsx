@@ -14,6 +14,7 @@ import Tables from "@components/commonComponents/Tables";
 import { MdLocationCity } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
+import { deleteAPI } from "@hooks/deleteAPI";
 
 export default function Zones() {
   const navigate = useNavigate();
@@ -75,7 +76,16 @@ export default function Zones() {
     });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("zones", id);
+    if (d.success) {
+      const updatedZones = zones.filter((zone) => {
+        return zone.id !== id;
+      });
+      setZones(updatedZones);
+    } else {
+      console.log("Error in deleting the zone. ", d.error);
+    }
     console.log("delete button clicked: ", id);
   };
 

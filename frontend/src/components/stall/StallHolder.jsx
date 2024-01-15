@@ -82,8 +82,9 @@ export default function StallHolder() {
       try {
         const d = await getPaginatedData("shop-holders", currentPage, 10);
         if (d.success) {
-          setShopHolders(d.data.shopHolders);
+          // setShopHolders(d.data.shopHolders);
           const t = d.data.shopHolders.map((item) => ({
+            ...item,
             name: item.name,
             fatherName: item.fatherName,
             email: item.email,
@@ -98,7 +99,6 @@ export default function StallHolder() {
             biometricImage: item.biometricImage,
             status: item.status,
             id: item._id,
-            ...item,
           }));
           setShopHolders(t);
           setTotalPages(d.data.totalPages);
@@ -128,7 +128,6 @@ export default function StallHolder() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                dataSlot="icon"
                 className="w-6 h-6 me-1"
               >
                 <path

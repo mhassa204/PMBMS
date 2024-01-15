@@ -25,11 +25,6 @@ export default function Bazars() {
   const [bazars, setBazars] = useState([]);
   const isAvailable = useRef(false);
 
-  // const handleClick = (e) => {
-  //   console.log(e);
-  //   navigate("/admin/basic/create-bazar", { state: true });
-  // };
-
   const TABLE_HEAD = [
     { Header: "Bazar Name", accessor: "name" },
     { Header: "Bazar Address", accessor: "address" },
@@ -82,113 +77,6 @@ export default function Bazars() {
       isAvailable.current = true;
     }
   }, [isAvailable, currentPage]);
-
-  const TABLE_ROWS = [
-    {
-      bazarName: "Ahmed Bazar",
-      bazarAddress: "123 Main Street, Lahore",
-      Status: "Active",
-      totalStalls: 10,
-      Prefix: "ABZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Lahore",
-      bazarManager: "Ali Ahmed",
-      zoneManager: "Zohaib Khan",
-      Actions: "",
-    },
-    {
-      bazarName: "Faisalabad Market",
-      bazarAddress: "456 Elm Street, Faisalabad",
-      Status: "Inactive",
-      totalStalls: 8,
-      Prefix: "FBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Faisalabad",
-      bazarManager: "Farah Naz",
-      zoneManager: "Zain Ul Abidin",
-      Actions: "",
-    },
-    {
-      bazarName: "Karim Market",
-      bazarAddress: "789 Oak Street, Karachi",
-      Status: "Pending",
-      totalStalls: 12,
-      Prefix: "KBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Karachi",
-      bazarManager: "Khadija Javed",
-      zoneManager: "Bilal Ahmed",
-      Actions: "",
-    },
-    {
-      bazarName: "Rahim Market",
-      bazarAddress: "101 Pine Street, Rawalpindi",
-      Status: "Active",
-      totalStalls: 11,
-      Prefix: "RBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Rawalpindi",
-      bazarManager: "Rukhsar Shah",
-      zoneManager: "Tariq Mehmood",
-      Actions: "",
-    },
-    {
-      bazarName: "Saima Market",
-      bazarAddress: "202 Cedar Street, Islamabad",
-      Status: "Inactive",
-      totalStalls: 9,
-      Prefix: "SBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Islamabad",
-      bazarManager: "Saba Malik",
-      zoneManager: "Umar Khan",
-      Actions: "",
-    },
-    {
-      bazarName: "Gulshan Bazar",
-      bazarAddress: "303 Maple Street, Peshawar",
-      Status: "Active",
-      totalStalls: 13,
-      Prefix: "GBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Peshawar",
-      bazarManager: "Ghulam Abbas",
-      zoneManager: "Tahira Batool",
-      Actions: "",
-    },
-    {
-      bazarName: "Iqbal Market",
-      bazarAddress: "404 Birch Street, Quetta",
-      Status: "Blocked",
-      totalStalls: 10,
-      Prefix: "IBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Quetta",
-      bazarManager: "Imran Khan",
-      zoneManager: "Nadia Akhtar",
-      Actions: "",
-    },
-    {
-      bazarName: "Zia Bazar",
-      bazarAddress: "505 Elm Street, Multan",
-      Status: "Expired",
-      totalStalls: 8,
-      Prefix: "ZBZ",
-      bazarImage:
-        "https://propakistani.pk/wp-content/uploads/2022/12/Landa-Bazar.jpg",
-      City: "Multan",
-      bazarManager: "Zainab Ali",
-      zoneManager: "Usman Ghani",
-      Actions: "",
-    },
-  ];
 
   return (
     <Card className="w-full bazar-list">

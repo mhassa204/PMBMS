@@ -13,6 +13,7 @@ import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import { useEffect, useRef, useState } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
+import { deleteAPI } from "@hooks/deleteAPI";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -26,6 +27,7 @@ export default function Users() {
       const data = await getPaginatedData("users", currentPage, 10);
       if (data.success) {
         const u = data.data.users.map((user) => ({
+          ...user,
           userName: user.userName,
           email: user.email,
           mobile: user.mobile,
@@ -33,7 +35,6 @@ export default function Users() {
           status: user.status,
           userType: user.userType,
           id: user._id,
-          ...user,
         }));
         setUsers(u);
         setTotalPages(data.data.totalPages);
@@ -67,6 +68,7 @@ export default function Users() {
   ];
 
   const handleEdit = (data) => {
+    console.log("edit button clicked: ", data);
     navigate(`/admin/basic/create-user`, {
       state: {
         edit: true,
@@ -75,7 +77,14 @@ export default function Users() {
     });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    const d = await deleteAPI("users", id);
+    if (d.success) {
+      setUsers(users.filter((user) => user.id !== id));
+    } else {
+      console.log("Error in deleting user. ", d.error);
+    }
+
     console.log("delete button clicked: ", id);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
@@ -8,8 +8,10 @@ import Breadcrumb from "@components/commonComponents/Breadcrumb";
 import City from "../../City.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
+import activeOptions from "@data/active.json";
+import { updateAPI } from "@hooks/updateAPI";
 
-const CreateUser = ({ pageTitle }) => {
+const CreateUser = () => {
   const navigate = useNavigate();
   const methods = useForm();
   const location = useLocation();
@@ -19,25 +21,17 @@ const CreateUser = ({ pageTitle }) => {
   useEffect(() => {
     if (isEditMode) {
       methods.reset(data);
-
-      methods.setValue("city", {
-        label: data.city,
-        value: data.city,
-      });
-      // methods.setValue("userType", {
-      //   label: data.userType,
-      //   value: data.userType,
-      // });
-      // methods.setValue("status", {
-      //   label: data.status,
-      //   value: data.status,
-      // });
     }
-  }, []);
+  }, [data, isEditMode]);
 
   const onSubmit = async (data) => {
     if (isEditMode) {
-      console.log(data);
+      const d = await updateAPI("users", data, data._id);
+      if (d.success) {
+        navigate("/admin/basic/user-list");
+      } else {
+        console.log("Error in updating user. ", d.error);
+      }
     } else {
       const d = await postAPI("users", data);
       if (d.success) {
@@ -54,11 +48,6 @@ const CreateUser = ({ pageTitle }) => {
     { value: "ZoneManager", label: "Zone Manager" },
     { value: "BazarManager", label: "Bazar Manager" },
     { value: "Supervisor", label: "Supervisor" },
-  ];
-  const activeOptions = [
-    { value: "inactive", label: "Not Active" },
-    { value: "active", label: "Active" },
-    { value: "disabled", label: "Disabled" },
   ];
 
   const breadcrumbItems = [
@@ -100,9 +89,9 @@ const CreateUser = ({ pageTitle }) => {
               label="Password"
               name="password"
               placeholder="Enter Password"
-              required
+              required={isEditMode ? false : true}
               minLength={6}
-              maxLength={20}
+              maxLength={!isEditMode && 20}
             />
             <Dropdown
               label="City"
@@ -110,7 +99,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select City"
               options={City}
               searchable={true}
-              // value={data && { label: data.city, value: data.city }}
+              defaultValue={data && { label: data.city, value: data.city }}
               type="basic-single"
             />
             <InputField
@@ -125,7 +114,9 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select User Type"
               name="userType"
               options={userTypes}
-              // value={data && { label: data.userType, value: data.userType }}
+              defaultValue={
+                data && { label: data.userType, value: data.userType }
+              }
               type="basic-single"
             />
             <Dropdown
@@ -133,7 +124,7 @@ const CreateUser = ({ pageTitle }) => {
               placeholder="Select Status"
               name="status"
               options={activeOptions}
-              // value={data && { label: data.status, value: data.status }}
+              defaultValue={data && { label: data.status, value: data.status }}
               type="basic-single"
             />
             <div className="mt-5">

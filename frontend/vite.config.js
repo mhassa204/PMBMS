@@ -13,6 +13,7 @@ export default defineConfig({
       "@styles": "/src/styles",
       "@utils": "/src/utils",
       "@hooks": "/src/hooks",
+      "@data": "/src/dataArrays",
     },
   },
 });

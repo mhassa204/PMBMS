@@ -10,6 +10,7 @@ import DateField from "@components/commonComponents/DateField";
 import Cities from "@src/City.json";
 import { postAPI } from "@hooks/postAPI";
 import { getAPIData } from "@hooks/getAPIData";
+import activeOptions from "@data/active.json";
 
 const CreateBazaar = () => {
   const methods = useForm();
@@ -61,9 +62,10 @@ const CreateBazaar = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const d = await getAPIData("users/user");
-      if (d.success) {
-        const bazarManagers = d.data.users
+      const data = await getAPIData("common/shop-types-categories-zones-users");
+      console.log("data from common end point: ", data);
+      if (data.success) {
+        const bazarManagers = data.data.users
           .filter((user) => user.userType === "BazarManager")
           .map((u) => {
             return {
@@ -71,7 +73,7 @@ const CreateBazaar = () => {
               label: u.userName,
             };
           });
-        const supervisors = d.data.users
+        const supervisors = data.data.users
           .filter((user) => user.userType === "Supervisor")
           .map((u) => {
             return {
@@ -81,29 +83,13 @@ const CreateBazaar = () => {
           });
         setBazarManagers(bazarManagers);
         setSupervisors(supervisors);
-      } else {
-        console.log("error: ", d.error);
-      }
-    };
-
-    const getZones = async () => {
-      const zones = await getAPIData("zones/zone");
-      if (zones.success) {
-        const zoneData = zones.data.zones.map((zone) => ({
+        const zoneData = data.data.zones.map((zone) => ({
           value: zone.zoneName,
           label: zone.zoneName,
         }));
         setZone(zoneData);
-        setZonesData(zones.data.zones);
-      } else {
-        console.log("error: ", zones.error);
-      }
-    };
-
-    const getShopTypes = async () => {
-      const shopTypes = await getAPIData("shops/shop-types");
-      if (shopTypes.success) {
-        const shopTypeData = shopTypes.data.shopTypes.map((shopType) => {
+        setZonesData(data.data.zones);
+        const shopTypeData = data.data.shopTypes.map((shopType) => {
           return {
             value: shopType.name,
             label: shopType.name,
@@ -111,18 +97,15 @@ const CreateBazaar = () => {
         });
         setShopType(shopTypeData);
       } else {
-        console.log("error: ", shopTypes.error);
+        console.log("error: ", data.error);
       }
     };
-    getShopTypes();
 
     if (isAvailable.current === false) {
-      getShopTypes();
-      getZones();
       getData();
       isAvailable.current = true;
     }
-  }, [isAvailable]);
+  });
 
   const handleShopTypeChange = (selectedOptions, index) => {
     let newShopsTypes = [...shopType];
@@ -231,12 +214,6 @@ const CreateBazaar = () => {
     }
     console.log("Bazar data: ", updatedData);
   };
-
-  const activeOptions = [
-    { value: "not-active", label: "Not Active" },
-    { value: "active", label: "Active" },
-    { value: "disabled", label: "Disabled" },
-  ];
 
   const areaType = [
     { value: "Marla", label: "Marla" },
@@ -441,7 +418,6 @@ const CreateBazaar = () => {
                 options={zone}
                 required={true}
                 handleChange={(e) => {
-                  console.log("hi: ", e, zonesData);
                   const zoneManager = zonesData.find(
                     (zone) => zone.zoneName === e.value
                   ).zoneManager;
@@ -454,7 +430,7 @@ const CreateBazaar = () => {
                 placeholder="Zone manager"
                 name="zoneManager"
                 type="text"
-                value={zoneManager.userName}
+                value={zoneManager}
                 disabled={true}
               />
               <Dropdown

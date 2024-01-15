@@ -121,27 +121,81 @@ const Tables = ({ columns, data, totalPages, currentPage, setCurrentPage }) => {
                       ) : cell.column.id === "citiesInZone" &&
                         Array.isArray(cell.value) ? (
                         <p className="py-3">{cell.value.join(", ")}</p>
+                      ) : cell.column.id === "active" ||
+                        cell.column.id === "status" ||
+                        cell.column.id === "editable" ||
+                        cell.column.id === "vacant" ? (
+                        cell.value === "Active" || cell.value === true ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m4.5 12.75 6 6 9-13.5"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                        )
                       ) : (
                         <p className="py-3"> {cell.render("Cell")}</p>
                       )}
-                      {/* {cell.column.id === "Actions" ? (
-                        <td className="px-2">
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleEdit(row.original._id)}
-                              className="px-3 py-1 text-white bg-[#2f9149] rounded-md"
+                      {/* {(cell.column.id === "active" ||
+                        cell.column.id === "status" ||
+                        cell.column.id === "vacant") && (
+                        <div>
+                          {cell.value === "Active" || cell.value === true ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
                             >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDelete(row.original._id)}
-                              className="px-3 py-1 text-white bg-red-500 rounded-md"
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 12.75 6 6 9-13.5"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
                             >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      ) : null} */}
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18 18 6M6 6l12 12"
+                              />
+                            </svg>
+                          )}
+                        </div>
+                      )} */}
                     </td>
                   ))}
                 </tr>

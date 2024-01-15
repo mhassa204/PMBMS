@@ -1,20 +1,15 @@
-import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
   Typography,
-  Button,
   CardBody,
 } from "@material-tailwind/react";
-
-import { useNavigate } from "react-router-dom";
 import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
 import { useEffect, useRef, useState } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
-import SimpleInputField from "@components/commonComponents/SimpleInputField";
 import { updateAPI } from "@hooks/updateAPI";
 import { postAPI } from "@hooks/postAPI";
 import { deleteAPI } from "@hooks/deleteAPI";
@@ -28,12 +23,13 @@ export default function StallCategories() {
   const [categoryToEdit, setCategoryToEdit] = useState({
     id: "",
     name: "",
+    editable: "",
   });
   const [updateTable, setUpdateTable] = useState(false);
 
   const columns = [
     { Header: "Shop Category", accessor: "StallCategory" },
-    { Header: "Editable", accessor: "Editable" },
+    { Header: "Editable", accessor: "editable" },
     {
       Header: "Actions",
       accessor: "Actions",
@@ -59,6 +55,7 @@ export default function StallCategories() {
     setCategoryToEdit({
       id: data.id,
       name: data.StallCategory,
+      editable: data.editable,
     });
   };
 
@@ -75,7 +72,7 @@ export default function StallCategories() {
     if (edit) {
       const d = await updateAPI(
         `shops/shop-categories`,
-        { name: data.name },
+        { name: data.name, editable: data.editable },
         data.id
       );
       if (d.success) {
@@ -84,17 +81,22 @@ export default function StallCategories() {
         setCategoryToEdit({
           id: "",
           name: "",
+          editable: "",
         });
       } else {
         alert(d.error.response.data.message);
       }
     } else {
-      const d = await postAPI(`shops/shop-categories`, { name: data.name });
+      const d = await postAPI(`shops/shop-categories`, {
+        name: data.name,
+        editable: data.editable,
+      });
       if (d.success) {
         setUpdateTable(true);
         setCategoryToEdit({
           id: "",
           name: "",
+          editable: "",
         });
       } else {
         alert(d.error.response.data.message);
@@ -114,37 +116,7 @@ export default function StallCategories() {
           return {
             StallCategory: category.name,
             id: category._id,
-            Editable: category.editable ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m4.5 12.75 6 6 9-13.5"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            ),
+            editable: category.editable,
             actions: "",
           };
         });
@@ -161,6 +133,10 @@ export default function StallCategories() {
     }
   }, [isAvailable, currentPage, updateTable]);
 
+  const handleSelectChange = (e) => {
+    setCategoryToEdit({ ...categoryToEdit, editable: e.target.value });
+  };
+
   return (
     <Card className="w-full bazar-list">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -175,18 +151,36 @@ export default function StallCategories() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <div className="flex items-center ">
-              <SimpleInputField
-                type="text"
-                placeholder="Enter shop category"
-                label="Shop Category"
-                name="shopCategory"
-                value={categoryToEdit}
-                buttonType="submit"
-                buttonName={edit ? "Save" : "Add"}
-                handleChange={(val) => {
-                  handleAddUpdateCategory(val);
+              <select
+                value={categoryToEdit.editable}
+                onChange={handleSelectChange}
+                className="ml-2 outline-none border-1 border-dark px-1 h-[40px] me-2 rounded "
+              >
+                <option value={""}>Select Editable</option>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </select>
+              <input
+                type={"text"}
+                name={"shopCategory"}
+                value={categoryToEdit.name}
+                placeholder={"Enter shop category"}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setCategoryToEdit({
+                    ...categoryToEdit,
+                    name: e.target.value,
+                  });
                 }}
+                className={`w-full h-[40px] border-1 border-gray-900 ring-0 outline-none p-2 rounded-md `}
               />
+              <button
+                type={"submit"}
+                onClick={(e) => handleAddUpdateCategory(categoryToEdit)}
+                className="bg-[#0b6323] ms-2 h-[40px] hover:bg-darkblue-700 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                {edit ? "Save" : "Add"}
+              </button>
             </div>
           </div>
         </div>

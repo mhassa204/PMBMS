@@ -12,8 +12,8 @@ import { formatDate } from "@utils/formatDate";
 export default function CreateStallHolder() {
   const methods = useForm();
   const location = useLocation();
-  const isEditMode = location.state.edit;
-  const data = location.state.data;
+  const isEditMode = location?.state?.edit;
+  const data = location?.state?.data;
 
   useEffect(() => {
     if (isEditMode) {
@@ -87,7 +87,7 @@ export default function CreateStallHolder() {
 
             <DateField
               label="DOB"
-              value={formatDate(data.DOB)}
+              value={formatDate(data?.DOB)}
               name="DOB"
               required
             />
@@ -100,7 +100,7 @@ export default function CreateStallHolder() {
             />
             <DateField
               label="CNIC Expiry"
-              value={formatDate(data.cnicExpiry)}
+              value={formatDate(data?.cnicExpiry)}
               name="cnicExpiry"
               required
             />
@@ -112,8 +112,8 @@ export default function CreateStallHolder() {
               options={genders}
               value={
                 data && {
-                  value: data.gender,
-                  label: data.gender,
+                  value: data?.gender,
+                  label: data?.gender,
                 }
               }
               type="basic-single"
@@ -185,8 +185,8 @@ export default function CreateStallHolder() {
               options={blacklist}
               value={
                 data && {
-                  value: data.blacklist,
-                  label: data.blacklist,
+                  value: data?.blacklist,
+                  label: data?.blacklist,
                 }
               }
               type="basic-single"
@@ -208,8 +208,8 @@ export default function CreateStallHolder() {
               options={activeOptions}
               value={
                 data && {
-                  value: data.status,
-                  label: data.status,
+                  value: data?.status,
+                  label: data?.status,
                 }
               }
               type="basic-single"
