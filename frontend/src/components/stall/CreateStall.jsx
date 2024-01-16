@@ -4,7 +4,6 @@ import InputField from "@components/commonComponents/InputField";
 import ButtonComponent from "@components/commonComponents/ButtonComponent";
 import Dropdown from "@components/commonComponents/Dropdown";
 import Breadcrumb from "@components/commonComponents/Breadcrumb";
-import stallStatus from "@data/active.json";
 import { getAPIData } from "@hooks/getAPIData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postAPI } from "@hooks/postAPI";
@@ -49,24 +48,24 @@ const CreateStall = () => {
         console.log("error: ", res.error);
       }
     } else {
-      // const res = await postAPI("shops/shop", {
-      //   shopCategory: data.shopCategory && data.shopCategoryId,
-      //   shopID: data.shopID,
-      //   shopName: data.shopName,
-      //   vacant: data.vacant,
-      //   monthlyRent: data.monthlyRent,
-      //   shopType: data.shopType && data.shopTypeId,
-      //   bazar: data.bazarId,
-      //   shopWidth: data.shopWidth && data.shopWidth,
-      //   shopLength: data.shopLength && data.shopLength,
-      //   modifiedBy: userId,
-      //   createdBy: userId,
-      // });
-      // if (res.success) {
-      //   navigate("/admin/transaction/shop-list");
-      // } else {
-      //   console.log("error: ", res.error);
-      // }
+      const res = await postAPI("shops/shop", {
+        shopCategory: shopCategory,
+        shopID: data.shopID,
+        shopName: data.shopName,
+        vacant: data.vacant,
+        monthlyRent: data.monthlyRent,
+        shopType: shopType,
+        bazar: data.bazar,
+        shopWidth: data.shopWidth && data.shopWidth,
+        shopLength: data.shopLength && data.shopLength,
+        modifiedBy: userId,
+        createdBy: userId,
+      });
+      if (res.success) {
+        navigate("/admin/transaction/shop-list");
+      } else {
+        console.log("error: ", res.error);
+      }
     }
   };
 
@@ -116,15 +115,18 @@ const CreateStall = () => {
 
   useEffect(() => {
     if (isEditMode) {
-      console.log("d is: ", data);
       methods.reset(data);
     }
   }, []);
-  console.log("types and categories are: ", shopCategories, shopTypes);
 
   const breadcrumbItems = [
     { label: "Shop List", path: "/admin/transaction/shop-list" },
     { label: "Create Shop" },
+  ];
+
+  const vacant = [
+    { label: "Yes", value: true },
+    { label: "No", value: false },
   ];
 
   return (
@@ -213,13 +215,13 @@ const CreateStall = () => {
               <Dropdown
                 label="Vacant"
                 name="vacant"
-                options={stallStatus}
+                options={vacant}
                 searchable={true}
                 type="basic-single"
                 defaultValue={
                   data && {
-                    label: data.status ? "Active" : "Inactive" || data.vacant,
-                    value: data.status ? "Active" : "Inactive" || data.vacant,
+                    label: data.status ? "Yes" : "No",
+                    value: data.status,
                   }
                 }
                 placeholder="Select a status"

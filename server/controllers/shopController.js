@@ -9,7 +9,7 @@ const BazarModel = require("../models/BazarModel");
 const verifyToken = require("../middleware/accessAuth");
 const { isSuperAdmin } = require("../middleware/roles");
 
-// Get all shops
+// Get all shops -done
 exports.getAllShops = async (req, res) => {
   try {
     const currentPage = parseInt(req.params.currentPage);
@@ -44,30 +44,30 @@ exports.getAllShops = async (req, res) => {
   }
 };
 
-// Create a new shop
+// Create a new shop -done
 exports.createShop = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
     try {
-      const shop = await Shop.findOne({ shopID: req.body.shopID });
-      if (!shop) {
-        let type = await ShopType.findById(req.body.shopType);
-        let category = await ShopCategory.findById(req.body.shopCategory);
-        // req.body.income_cat = IncomeCategory.CASH;
-        const newShop = new Shop({
-          ...req.body,
-          shopType: type,
-          typeCategory: category,
-        });
-        const result = await newShop.save();
-        res.status(201).json({
-          message: "New shop created Successfully!",
-          shop: result,
-        });
-      } else {
-        return res.status(409).json({ message: "This shop already exists." });
-      }
+      let bazar = await BazarModel.findById(req.body.bazar);
+      const body = req.body;
+      const randomNumber = Math.floor(100 + Math.random() * 900);
+      const shopID =
+        bazar.name.substring(0, 4) +
+        body.shopName.substring(0, 3) +
+        randomNumber;
+
+      const shop = new Shop({
+        ...req.body,
+        shopID: shopID,
+      });
+      console.log("shop is: ", shop);
+      const result = await shop.save();
+      res.status(201).json({
+        message: "New shop created Successfully!",
+        shop: result,
+      });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -91,16 +91,22 @@ exports.getShopByID = [
   },
 ];
 
-// Edit a shop by ID
+// Edit a shop by ID -done
 exports.editShopByID = [
   verifyToken,
   isSuperAdmin,
   async (req, res) => {
     try {
-      console.log(req.body);
-      const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const shop = await Shop.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+        },
+        {
+          new: true,
+        }
+      );
+
       if (!shop) {
         return res.status(404).json({ error: "Shop not found" });
       }
@@ -111,7 +117,7 @@ exports.editShopByID = [
   },
 ];
 
-// Delete a shop by ID
+// Delete a shop by ID -done
 exports.deleteShopByID = [
   verifyToken,
   isSuperAdmin,
@@ -122,16 +128,11 @@ exports.deleteShopByID = [
         return res.status(404).json({ error: "Shop not found" });
       }
       if (shop) {
-        const bazar = await BazarModel.findById(req.params.bazarId);
-        const updatedBazar = bazar.approvedShops.filter((shop) => {
+        let bazar = await BazarModel.findById(req.params.bazarId);
+        bazar.approvedShops = bazar.approvedShops.filter((shop) => {
           return String(shop._id) !== String(req.params.id);
         });
         await bazar.save();
-        // await BazarModel.updateOne(
-        //   { _id: req.params.bazarId },
-        //   { approvedShops: updatedBazar }
-        // );
-
         res.status(200).json({ message: "Shop deleted successfully" });
       }
     } catch (error) {
@@ -142,7 +143,7 @@ exports.deleteShopByID = [
 
 //--------------------------------------------------
 //Shop categories controllers
-//Create new shop category
+//Create new shop category -done
 exports.createShopCategory = [
   verifyToken,
   isSuperAdmin,
@@ -169,7 +170,7 @@ exports.createShopCategory = [
   },
 ];
 
-//Get all shop categories
+//Get all shop categories -done
 exports.getSimpleShopCategory = [
   verifyToken,
   isSuperAdmin,
@@ -188,7 +189,7 @@ exports.getSimpleShopCategory = [
   },
 ];
 
-//get all shop categories
+//get all shop categories paginated -done
 exports.getShopCategories = [
   verifyToken,
   isSuperAdmin,
@@ -232,7 +233,7 @@ exports.getShopCategoryById = [
   },
 ];
 
-//delete a category by id
+//delete a category by id -done
 exports.deleteShopCategory = [
   verifyToken,
   isSuperAdmin,
@@ -250,7 +251,7 @@ exports.deleteShopCategory = [
   },
 ];
 
-//update a category by id
+//update a category by id -done
 exports.updateShopCategory = [
   verifyToken,
   isSuperAdmin,
@@ -273,7 +274,7 @@ exports.updateShopCategory = [
 
 //--------------------------------------------------
 //shop type controllers
-//post a shop type
+//post a shop type -done
 exports.createShopType = [
   verifyToken,
   isSuperAdmin,
@@ -298,7 +299,7 @@ exports.createShopType = [
   },
 ];
 
-//get all the shop types
+//get all the shop types -done
 exports.getShopTypes = [
   verifyToken,
   isSuperAdmin,
@@ -343,7 +344,7 @@ exports.getShopTypeById = [
   },
 ];
 
-//update a shop type by id
+//update a shop type by id -done
 exports.updateShopTypeById = [
   verifyToken,
   isSuperAdmin,
@@ -369,7 +370,7 @@ exports.updateShopTypeById = [
   },
 ];
 
-//delete a shop type by id
+//delete a shop type by id -done
 exports.deleteShopTypeById = [
   verifyToken,
   isSuperAdmin,

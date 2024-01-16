@@ -1,20 +1,10 @@
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import EditButton from "@components/commonComponents/EditButton";
 import DeleteButton from "@components/commonComponents/DeleteButton";
@@ -23,6 +13,7 @@ import "@src/styles/tableStyles.css";
 import Tables from "@components/commonComponents/Tables";
 import { useState, useRef, useEffect } from "react";
 import { getPaginatedData } from "@hooks/getPaginatedData";
+import axios from "axios";
 
 export default function StallList() {
   const navigate = useNavigate();
@@ -30,20 +21,6 @@ export default function StallList() {
   const [totalPages, setTotalPages] = useState(1);
   const [shops, setShops] = useState([]);
   const isAvailable = useRef(false);
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
 
   const columns = [
     { Header: "Shop ID", accessor: "shopID" },
@@ -60,7 +37,7 @@ export default function StallList() {
       Cell: ({ row }) => (
         <div className="flex items-center gap-4">
           <EditButton onClick={() => handleEdit(row.original)} />
-          <DeleteButton onClick={() => handleDelete(row.original.id)} />
+          <DeleteButton onClick={() => handleDelete(row.original)} />
         </div>
       ),
     },
@@ -107,108 +84,23 @@ export default function StallList() {
     });
   };
 
-  const handleDelete = (id) => {
-    console.log("delete button clicked: ", id);
+  const handleDelete = async (data) => {
+    const res = await axios.delete(
+      `http://localhost:3000/shops/shop/${data.id}/${data.bazarId}`,
+      {
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem("token")),
+          userType: JSON.parse(localStorage.getItem("user")).userType,
+        },
+      }
+    );
+    if (res.status === 200) {
+      const d = shops.filter((shop) => shop.id !== data.id);
+      setShops(d);
+    } else {
+      console.log("Error in deleting shop");
+    }
   };
-
-  const data = [
-    {
-      StallID: "1",
-      StallCode: "SC001",
-      Size: "Medium",
-      BazarName: "Central Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$10",
-      MonthlyRent: "$500",
-      Actions: "",
-    },
-    {
-      StallID: "2",
-      StallCode: "SC002",
-      Size: "Small",
-      BazarName: "Eastern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$5",
-      MonthlyRent: "$300",
-      Actions: "",
-    },
-    {
-      StallID: "3",
-      StallCode: "SC003",
-      Size: "Large",
-      BazarName: "Western Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$15",
-      MonthlyRent: "$600",
-      Actions: "",
-    },
-    {
-      StallID: "4",
-      StallCode: "SC004",
-      Size: "Medium",
-      BazarName: "Northern Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$8",
-      MonthlyRent: "$450",
-      Actions: "",
-    },
-    {
-      StallID: "5",
-      StallCode: "SC005",
-      Size: "Small",
-      BazarName: "Southern Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$12",
-      MonthlyRent: "$550",
-      Actions: "",
-    },
-    {
-      StallID: "6",
-      StallCode: "SC006",
-      Size: "Large",
-      BazarName: "Central-East Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$7",
-      MonthlyRent: "$400",
-      Actions: "",
-    },
-    {
-      StallID: "7",
-      StallCode: "SC007",
-      Size: "Medium",
-      BazarName: "South-West Bazar",
-      StallCategory: "General",
-      StallType: "Permanent",
-      Status: "Active",
-      LateFine: "$11",
-      MonthlyRent: "$520",
-      Actions: "",
-    },
-    {
-      StallID: "8",
-      StallCode: "SC008",
-      Size: "Small",
-      BazarName: "North-West Bazar",
-      StallCategory: "Premium",
-      StallType: "Temporary",
-      Status: "Inactive",
-      LateFine: "$6",
-      MonthlyRent: "$380",
-      Actions: "",
-    },
-  ];
 
   return (
     <Card className="w-full bazar-list">

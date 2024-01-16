@@ -285,13 +285,13 @@ export default function VoucherCreation() {
               placeholder="Enter an amount"
               required
             />
-            <InputField
+            {/* <InputField
               label="Waiver"
               type="number"
               name="waiver"
               placeholder="Enter a waiver"
               required
-            />
+            /> */}
           </div>
           <h4 className="text-md text-start font-semibold mb-3">
             4. Payment Information

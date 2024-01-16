@@ -60,6 +60,22 @@ const shopSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  modifiedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  modifyDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Define models
