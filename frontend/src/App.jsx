@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "@pages/home/Home";
-import Dashboard from "@pages/dashboard/Dashboard";
+import Dashboard from "./pages/dashboard/Dashboard";
 import Settings from "@pages/settings/settings";
 import LandingPage from "@pages/LandingPage";
 //Basic Setup
