@@ -2,45 +2,45 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "@pages/home/Home";
-import Dashboard from "@pages/dashboard/Dashboard";
-import Settings from "@pages/settings/settings";
-import LandingPage from "@pages/LandingPage";
+import Home from "./pages/home/Home";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Settings from "./pages/settings/settings";
+import LandingPage from "./pages/LandingPage";
 //Basic Setup
-import ViewZone from "@components/zone/viewZone";
-import EditZone from "@components/zone/editZone";
-import CreateZone from "@components/zone/createZone";
-import CreateUser from "@components/user/CreateUser";
-import CreateBazaar from "@components/bazar/CreateBazaar";
+import ViewZone from "./components/zone/ViewZone";
+import EditZone from "./components/zone/editZone";
+import CreateZone from "./components/zone/createZone";
+import CreateUser from "./components/user/CreateUser";
+import CreateBazaar from "./components/bazar/CreateBazaar";
 // import ViewUser from "@components/user/ViewUser";
-import StallCategories from "@components/stall/StallCategories";
-import Bazars from "@components/bazar/Bazars";
-import StallHolder from "@components/stall/StallHolder";
-import CancellationReasons from "@components/cancellation/CancellationReasons";
-import Zones from "@components/zone/Zones";
-import ShopTypes from "@components/stall/ShopTypes";
-import IncomeCategories from "@components/income/IncomeCategories";
+import StallCategories from "./components/stall/StallCategories";
+import Bazars from "./components/bazar/Bazars";
+import StallHolder from "./components/stall/StallHolder";
+import CancellationReasons from "./components/cancellation/CancellationReasons";
+import Zones from "./components/zone/Zones";
+import ShopTypes from "./components/stall/ShopTypes";
+import IncomeCategories from "./components/income/IncomeCategories";
 
 //Transaction
-import VoucherGeneration from "@components/voucher/VoucherGeneration";
-import VoucherCreation from "@components/voucher/VoucherCreation";
-import StallList from "@components/stall/StallList";
-import FinePolicyForm from "@components/fine/FinePolicyForm";
-import CreatePolicyForm from "@components/fine/FinePolicyForm";
-import Voucher from "@components/voucher/Voucher";
-import Allotments from "@components/allotments/Allotments";
-import SecurityAdjustiment from "@components/security/SecurityAdjustments";
-import FinePolicies from "@components/fine/FinePolicies";
-import VoucherGenerations from "@components/voucher/VoucherGenerations";
-import AdminVouchers from "@components/voucher/AdminVouchers";
+import VoucherGeneration from "./components/voucher/VoucherGeneration";
+import VoucherCreation from "./components/voucher/VoucherCreation";
+import StallList from "./components/stall/StallList";
+import FinePolicyForm from "./components/fine/FinePolicyForm";
+import CreatePolicyForm from "./components/fine/FinePolicyForm";
+import Voucher from "./components/voucher/Voucher";
+import Allotments from "./components/allotments/Allotments";
+import SecurityAdjustiment from "./components/security/SecurityAdjustments";
+import FinePolicies from "./components/fine/FinePolicies";
+import VoucherGenerations from "./components/voucher/VoucherGenerations";
+import AdminVouchers from "./components/voucher/AdminVouchers";
 
 //forms
-import CreateStall from "@components/stall/CreateStall";
-import Users from "@components/user/Users";
-import CreateStallHolder from "@components/stall/CreateStallHolder";
-import Login from "@pages/authentication/Login";
-import CreateSecurityAdjustments from "@components/security/CreateSecurityAdjustments";
-import CreateAllotment from "@components/allotments/CreateAllotment";
+import CreateStall from "./components/stall/CreateStall";
+import Users from "./components/user/Users";
+import CreateStallHolder from "./components/stall/CreateStallHolder";
+import Login from "./pages/authentication/Login";
+import CreateSecurityAdjustments from "./components/security/CreateSecurityAdjustments";
+import CreateAllotment from "./components/allotments/CreateAllotment";
 // import Signup from "@pages/authentication/Signup";
 
 function App() {
