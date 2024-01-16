@@ -42,7 +42,8 @@ const InputField = ({
         type={type || "text"}
         id={name}
         name={name}
-        value={value}
+        // value={value}
+        value={value !== undefined ? String(value) : undefined}
         placeholder={placeholder}
         min={min && min}
         max={max && max}

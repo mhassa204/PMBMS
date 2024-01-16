@@ -208,7 +208,7 @@ const CreateBazaar = () => {
     const response = await postAPI("bazars", updatedData);
     if (response.success) {
       console.log("Bazar created successfully.");
-      // navigate("/admin/basic/bazar-list");
+      navigate("/admin/basic/bazar-list");
     } else {
       console.log("Bazar creation failed.");
     }
